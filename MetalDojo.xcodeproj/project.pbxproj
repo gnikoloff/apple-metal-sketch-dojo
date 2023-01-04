@@ -1,0 +1,652 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FF15619D29608765007D14E4 /* ExampleScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF15619C29608765007D14E4 /* ExampleScreen.swift */; };
+		FF15619F29608791007D14E4 /* PointsShadowmap.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF15619E29608791007D14E4 /* PointsShadowmap.swift */; };
+		FF1561A129608D49007D14E4 /* PointsShadowmapPipelineStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1561A029608D49007D14E4 /* PointsShadowmapPipelineStates.swift */; };
+		FF25C918296338650056C317 /* Submesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25C917296338650056C317 /* Submesh.swift */; };
+		FF25C91A296338BC0056C317 /* Drawable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25C919296338BC0056C317 /* Drawable.swift */; };
+		FF25C91C296339E30056C317 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = FF25C91B296339E30056C317 /* Shaders.metal */; };
+		FF25C91F29633D040056C317 /* InputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25C91E29633D040056C317 /* InputController.swift */; };
+		FF25C923296351AD0056C317 /* WelcomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25C922296351AD0056C317 /* WelcomeScreen.swift */; };
+		FF44A1CC29645BB700C7A4F3 /* Attributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF44A1CB29645BB700C7A4F3 /* Attributes.swift */; };
+		FF44A1CE29645BCC00C7A4F3 /* BufferIndices.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF44A1CD29645BCC00C7A4F3 /* BufferIndices.swift */; };
+		FF44A1D129648C2100C7A4F3 /* PointsShadowmap_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF44A1D029648C2100C7A4F3 /* PointsShadowmap_Extensions.swift */; };
+		FF63BD462963655D00A08F8F /* ExampleScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF63BD452963655D00A08F8F /* ExampleScene.swift */; };
+		FF63BD4B29642E0400A08F8F /* Cube.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF63BD4A29642E0400A08F8F /* Cube.swift */; };
+		FF63BD4D29642F1000A08F8F /* Sphere.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF63BD4C29642F1000A08F8F /* Sphere.swift */; };
+		FF979BBF295DA1DE00021E5D /* Tween.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF979BBE295DA1DE00021E5D /* Tween.swift */; };
+		FF979BC1295DAA9D00021E5D /* EaseFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF979BC0295DAA9D00021E5D /* EaseFunc.swift */; };
+		FF979BC3295DC22C00021E5D /* RangeReplaceableCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF979BC2295DC22C00021E5D /* RangeReplaceableCollection.swift */; };
+		FF979BC6295DC36000021E5D /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF979BC5295DC36000021E5D /* Project.swift */; };
+		FFB840AF295B243B00B9338D /* MetalDojoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840AE295B243B00B9338D /* MetalDojoApp.swift */; };
+		FFB840B3295B243B00B9338D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFB840B2295B243B00B9338D /* Assets.xcassets */; };
+		FFB840B6295B243B00B9338D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFB840B5295B243B00B9338D /* Preview Assets.xcassets */; };
+		FFB840BB295B243B00B9338D /* MetalDojo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FFB840B9295B243B00B9338D /* MetalDojo.xcdatamodeld */; };
+		FFB840C7295B279D00B9338D /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840C6295B279D00B9338D /* MetalView.swift */; };
+		FFB840CA295B28CB00B9338D /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840C9295B28CB00B9338D /* GameController.swift */; };
+		FFB840CC295B28F000B9338D /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840CB295B28F000B9338D /* Renderer.swift */; };
+		FFB840D1295B2E5D00B9338D /* MathLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840D0295B2E5D00B9338D /* MathLibrary.swift */; };
+		FFB840D3295B2EBD00B9338D /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840D2295B2EBD00B9338D /* Transform.swift */; };
+		FFB840D5295B2FB100B9338D /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840D4295B2FB100B9338D /* Camera.swift */; };
+		FFB840D8295B39D000B9338D /* RenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840D7295B39D000B9338D /* RenderPass.swift */; };
+		FFB840DC295B3BB100B9338D /* PipelineStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840DB295B3BB100B9338D /* PipelineStates.swift */; };
+		FFB840DE295B3F3D00B9338D /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = FFB840DD295B3F3D00B9338D /* Shaders.metal */; };
+		FFB840E2295B425A00B9338D /* Dot.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840E1295B425A00B9338D /* Dot.swift */; };
+		FFB840E4295B43B500B9338D /* Stick.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840E3295B43B500B9338D /* Stick.swift */; };
+		FFB840E6295B451700B9338D /* Panel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840E5295B451700B9338D /* Panel.swift */; };
+		FFB840EA295B639E00B9338D /* ProjectsGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840E9295B639E00B9338D /* ProjectsGrid.swift */; };
+		FFB840EC295B78C000B9338D /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840EB295B78C000B9338D /* Options.swift */; };
+		FFB840F1295B82B300B9338D /* VertexDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840F0295B82B300B9338D /* VertexDescriptor.swift */; };
+		FFB840F5295C90FA00B9338D /* CGPointExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840F4295C90FA00B9338D /* CGPointExtension.swift */; };
+		FFB840F7295CA97900B9338D /* ClickGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840F6295CA97900B9338D /* ClickGesture.swift */; };
+		FFB840F9295CA99800B9338D /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840F8295CA99800B9338D /* ViewExtension.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		FF15619C29608765007D14E4 /* ExampleScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleScreen.swift; sourceTree = "<group>"; };
+		FF15619E29608791007D14E4 /* PointsShadowmap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsShadowmap.swift; sourceTree = "<group>"; };
+		FF1561A029608D49007D14E4 /* PointsShadowmapPipelineStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsShadowmapPipelineStates.swift; sourceTree = "<group>"; };
+		FF25C917296338650056C317 /* Submesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submesh.swift; sourceTree = "<group>"; };
+		FF25C919296338BC0056C317 /* Drawable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drawable.swift; sourceTree = "<group>"; };
+		FF25C91B296339E30056C317 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		FF25C91E29633D040056C317 /* InputController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputController.swift; sourceTree = "<group>"; };
+		FF25C922296351AD0056C317 /* WelcomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreen.swift; sourceTree = "<group>"; };
+		FF44A1CB29645BB700C7A4F3 /* Attributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attributes.swift; sourceTree = "<group>"; };
+		FF44A1CD29645BCC00C7A4F3 /* BufferIndices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferIndices.swift; sourceTree = "<group>"; };
+		FF44A1CF2964601600C7A4F3 /* PointsShadowmap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointsShadowmap.h; sourceTree = "<group>"; };
+		FF44A1D029648C2100C7A4F3 /* PointsShadowmap_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsShadowmap_Extensions.swift; sourceTree = "<group>"; };
+		FF63BD452963655D00A08F8F /* ExampleScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleScene.swift; sourceTree = "<group>"; };
+		FF63BD4A29642E0400A08F8F /* Cube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cube.swift; sourceTree = "<group>"; };
+		FF63BD4C29642F1000A08F8F /* Sphere.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sphere.swift; sourceTree = "<group>"; };
+		FF979BBE295DA1DE00021E5D /* Tween.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tween.swift; sourceTree = "<group>"; };
+		FF979BC0295DAA9D00021E5D /* EaseFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EaseFunc.swift; sourceTree = "<group>"; };
+		FF979BC2295DC22C00021E5D /* RangeReplaceableCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeReplaceableCollection.swift; sourceTree = "<group>"; };
+		FF979BC5295DC36000021E5D /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		FFB840AB295B243B00B9338D /* MetalDojo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetalDojo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFB840AE295B243B00B9338D /* MetalDojoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalDojoApp.swift; sourceTree = "<group>"; };
+		FFB840B2295B243B00B9338D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FFB840B5295B243B00B9338D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		FFB840BA295B243B00B9338D /* MetalDojo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MetalDojo.xcdatamodel; sourceTree = "<group>"; };
+		FFB840C6295B279D00B9338D /* MetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
+		FFB840C9295B28CB00B9338D /* GameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
+		FFB840CB295B28F000B9338D /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		FFB840CE295B2D8800B9338D /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
+		FFB840D0295B2E5D00B9338D /* MathLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathLibrary.swift; sourceTree = "<group>"; };
+		FFB840D2295B2EBD00B9338D /* Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform.swift; sourceTree = "<group>"; };
+		FFB840D4295B2FB100B9338D /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		FFB840D7295B39D000B9338D /* RenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderPass.swift; sourceTree = "<group>"; };
+		FFB840DB295B3BB100B9338D /* PipelineStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineStates.swift; sourceTree = "<group>"; };
+		FFB840DD295B3F3D00B9338D /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		FFB840E1295B425A00B9338D /* Dot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dot.swift; sourceTree = "<group>"; };
+		FFB840E3295B43B500B9338D /* Stick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stick.swift; sourceTree = "<group>"; };
+		FFB840E5295B451700B9338D /* Panel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Panel.swift; sourceTree = "<group>"; };
+		FFB840E9295B639E00B9338D /* ProjectsGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsGrid.swift; sourceTree = "<group>"; };
+		FFB840EB295B78C000B9338D /* Options.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
+		FFB840F0295B82B300B9338D /* VertexDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VertexDescriptor.swift; sourceTree = "<group>"; };
+		FFB840F4295C90FA00B9338D /* CGPointExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPointExtension.swift; sourceTree = "<group>"; };
+		FFB840F6295CA97900B9338D /* ClickGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickGesture.swift; sourceTree = "<group>"; };
+		FFB840F8295CA99800B9338D /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FFB840A8295B243B00B9338D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FF15619A296086B9007D14E4 /* Example Screnes */ = {
+			isa = PBXGroup;
+			children = (
+				FF15619C29608765007D14E4 /* ExampleScreen.swift */,
+				FF63BD452963655D00A08F8F /* ExampleScene.swift */,
+				FF25C9202963502C0056C317 /* Welcome Screen */,
+				FF15619B2960872B007D14E4 /* Points Shadowmap */,
+			);
+			path = "Example Screnes";
+			sourceTree = "<group>";
+		};
+		FF15619B2960872B007D14E4 /* Points Shadowmap */ = {
+			isa = PBXGroup;
+			children = (
+				FF44A1CF2964601600C7A4F3 /* PointsShadowmap.h */,
+				FF25C91B296339E30056C317 /* Shaders.metal */,
+				FF44A1D029648C2100C7A4F3 /* PointsShadowmap_Extensions.swift */,
+				FF1561A029608D49007D14E4 /* PointsShadowmapPipelineStates.swift */,
+				FF15619E29608791007D14E4 /* PointsShadowmap.swift */,
+				FF63BD4929642DC400A08F8F /* Draw Meshes */,
+			);
+			path = "Points Shadowmap";
+			sourceTree = "<group>";
+		};
+		FF25C91D29633CF60056C317 /* Input */ = {
+			isa = PBXGroup;
+			children = (
+				FF25C91E29633D040056C317 /* InputController.swift */,
+			);
+			path = Input;
+			sourceTree = "<group>";
+		};
+		FF25C9202963502C0056C317 /* Welcome Screen */ = {
+			isa = PBXGroup;
+			children = (
+				FFB840DD295B3F3D00B9338D /* Shaders.metal */,
+				FF25C922296351AD0056C317 /* WelcomeScreen.swift */,
+				FFB840DF295B421C00B9338D /* Draw Meshes */,
+			);
+			path = "Welcome Screen";
+			sourceTree = "<group>";
+		};
+		FF25C921296350490056C317 /* Rendering */ = {
+			isa = PBXGroup;
+			children = (
+				FFB840DB295B3BB100B9338D /* PipelineStates.swift */,
+				FFB840D7295B39D000B9338D /* RenderPass.swift */,
+				FFB840C9295B28CB00B9338D /* GameController.swift */,
+				FFB840CB295B28F000B9338D /* Renderer.swift */,
+				FFB840D2295B2EBD00B9338D /* Transform.swift */,
+				FFB840D4295B2FB100B9338D /* Camera.swift */,
+				FFB840EB295B78C000B9338D /* Options.swift */,
+				FF25C917296338650056C317 /* Submesh.swift */,
+				FF25C919296338BC0056C317 /* Drawable.swift */,
+			);
+			path = Rendering;
+			sourceTree = "<group>";
+		};
+		FF63BD4929642DC400A08F8F /* Draw Meshes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Draw Meshes";
+			sourceTree = "<group>";
+		};
+		FF63BD4E2964318B00A08F8F /* Meshes */ = {
+			isa = PBXGroup;
+			children = (
+				FF63BD4A29642E0400A08F8F /* Cube.swift */,
+				FF63BD4C29642F1000A08F8F /* Sphere.swift */,
+			);
+			path = Meshes;
+			sourceTree = "<group>";
+		};
+		FF979BBD295DA1D500021E5D /* Tween */ = {
+			isa = PBXGroup;
+			children = (
+				FF979BBE295DA1DE00021E5D /* Tween.swift */,
+				FF979BC0295DAA9D00021E5D /* EaseFunc.swift */,
+			);
+			path = Tween;
+			sourceTree = "<group>";
+		};
+		FF979BC4295DC2F500021E5D /* Data Models */ = {
+			isa = PBXGroup;
+			children = (
+				FF979BC5295DC36000021E5D /* Project.swift */,
+			);
+			path = "Data Models";
+			sourceTree = "<group>";
+		};
+		FFB840A2295B243B00B9338D = {
+			isa = PBXGroup;
+			children = (
+				FFB840AD295B243B00B9338D /* MetalDojo */,
+				FFB840AC295B243B00B9338D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FFB840AC295B243B00B9338D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FFB840AB295B243B00B9338D /* MetalDojo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FFB840AD295B243B00B9338D /* MetalDojo */ = {
+			isa = PBXGroup;
+			children = (
+				FF15619A296086B9007D14E4 /* Example Screnes */,
+				FFB840ED295B7C6700B9338D /* Extensions */,
+				FF979BC4295DC2F500021E5D /* Data Models */,
+				FFB840C8295B28BC00B9338D /* Shared */,
+				FFB840C5295B274B00B9338D /* SwiftUI Views */,
+				FFB840B2295B243B00B9338D /* Assets.xcassets */,
+				FFB840B9295B243B00B9338D /* MetalDojo.xcdatamodeld */,
+				FFB840B4295B243B00B9338D /* Preview Content */,
+			);
+			path = MetalDojo;
+			sourceTree = "<group>";
+		};
+		FFB840B4295B243B00B9338D /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				FFB840B5295B243B00B9338D /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		FFB840C5295B274B00B9338D /* SwiftUI Views */ = {
+			isa = PBXGroup;
+			children = (
+				FFB840AE295B243B00B9338D /* MetalDojoApp.swift */,
+				FFB840C6295B279D00B9338D /* MetalView.swift */,
+			);
+			path = "SwiftUI Views";
+			sourceTree = "<group>";
+		};
+		FFB840C8295B28BC00B9338D /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				FFB840CE295B2D8800B9338D /* Common.h */,
+				FF63BD4E2964318B00A08F8F /* Meshes */,
+				FF25C91D29633CF60056C317 /* Input */,
+				FF979BBD295DA1D500021E5D /* Tween */,
+				FFB840CF295B2E5200B9338D /* Utility */,
+				FF25C921296350490056C317 /* Rendering */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		FFB840CF295B2E5200B9338D /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				FFB840D0295B2E5D00B9338D /* MathLibrary.swift */,
+				FFB840F6295CA97900B9338D /* ClickGesture.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		FFB840DF295B421C00B9338D /* Draw Meshes */ = {
+			isa = PBXGroup;
+			children = (
+				FFB840E0295B424100B9338D /* ProjectsGrid */,
+			);
+			path = "Draw Meshes";
+			sourceTree = "<group>";
+		};
+		FFB840E0295B424100B9338D /* ProjectsGrid */ = {
+			isa = PBXGroup;
+			children = (
+				FFB840E1295B425A00B9338D /* Dot.swift */,
+				FFB840E3295B43B500B9338D /* Stick.swift */,
+				FFB840E5295B451700B9338D /* Panel.swift */,
+				FFB840E9295B639E00B9338D /* ProjectsGrid.swift */,
+			);
+			path = ProjectsGrid;
+			sourceTree = "<group>";
+		};
+		FFB840ED295B7C6700B9338D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				FFB840F0295B82B300B9338D /* VertexDescriptor.swift */,
+				FFB840F4295C90FA00B9338D /* CGPointExtension.swift */,
+				FFB840F8295CA99800B9338D /* ViewExtension.swift */,
+				FF979BC2295DC22C00021E5D /* RangeReplaceableCollection.swift */,
+				FF44A1CB29645BB700C7A4F3 /* Attributes.swift */,
+				FF44A1CD29645BCC00C7A4F3 /* BufferIndices.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FFB840AA295B243B00B9338D /* MetalDojo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FFB840BE295B243B00B9338D /* Build configuration list for PBXNativeTarget "MetalDojo" */;
+			buildPhases = (
+				FFB840A7295B243B00B9338D /* Sources */,
+				FFB840C2295B25D000B9338D /* ShellScript */,
+				FFB840A8295B243B00B9338D /* Frameworks */,
+				FFB840A9295B243B00B9338D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MetalDojo;
+			productName = MetalDojo;
+			productReference = FFB840AB295B243B00B9338D /* MetalDojo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FFB840A3295B243B00B9338D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1420;
+				LastUpgradeCheck = 1420;
+				TargetAttributes = {
+					FFB840AA295B243B00B9338D = {
+						CreatedOnToolsVersion = 14.2;
+					};
+				};
+			};
+			buildConfigurationList = FFB840A6295B243B00B9338D /* Build configuration list for PBXProject "MetalDojo" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FFB840A2295B243B00B9338D;
+			productRefGroup = FFB840AC295B243B00B9338D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FFB840AA295B243B00B9338D /* MetalDojo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FFB840A9295B243B00B9338D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FFB840B6295B243B00B9338D /* Preview Assets.xcassets in Resources */,
+				FFB840B3295B243B00B9338D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		FFB840C2295B25D000B9338D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FFB840A7295B243B00B9338D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FFB840C7295B279D00B9338D /* MetalView.swift in Sources */,
+				FF15619F29608791007D14E4 /* PointsShadowmap.swift in Sources */,
+				FFB840D1295B2E5D00B9338D /* MathLibrary.swift in Sources */,
+				FF25C91C296339E30056C317 /* Shaders.metal in Sources */,
+				FF44A1D129648C2100C7A4F3 /* PointsShadowmap_Extensions.swift in Sources */,
+				FFB840F5295C90FA00B9338D /* CGPointExtension.swift in Sources */,
+				FF63BD4D29642F1000A08F8F /* Sphere.swift in Sources */,
+				FFB840CA295B28CB00B9338D /* GameController.swift in Sources */,
+				FF979BBF295DA1DE00021E5D /* Tween.swift in Sources */,
+				FF979BC6295DC36000021E5D /* Project.swift in Sources */,
+				FF25C918296338650056C317 /* Submesh.swift in Sources */,
+				FF25C91F29633D040056C317 /* InputController.swift in Sources */,
+				FFB840E2295B425A00B9338D /* Dot.swift in Sources */,
+				FFB840DE295B3F3D00B9338D /* Shaders.metal in Sources */,
+				FFB840F9295CA99800B9338D /* ViewExtension.swift in Sources */,
+				FFB840BB295B243B00B9338D /* MetalDojo.xcdatamodeld in Sources */,
+				FF63BD4B29642E0400A08F8F /* Cube.swift in Sources */,
+				FF63BD462963655D00A08F8F /* ExampleScene.swift in Sources */,
+				FF979BC3295DC22C00021E5D /* RangeReplaceableCollection.swift in Sources */,
+				FFB840E6295B451700B9338D /* Panel.swift in Sources */,
+				FFB840F7295CA97900B9338D /* ClickGesture.swift in Sources */,
+				FF979BC1295DAA9D00021E5D /* EaseFunc.swift in Sources */,
+				FF1561A129608D49007D14E4 /* PointsShadowmapPipelineStates.swift in Sources */,
+				FF44A1CE29645BCC00C7A4F3 /* BufferIndices.swift in Sources */,
+				FF25C91A296338BC0056C317 /* Drawable.swift in Sources */,
+				FFB840F1295B82B300B9338D /* VertexDescriptor.swift in Sources */,
+				FFB840D8295B39D000B9338D /* RenderPass.swift in Sources */,
+				FF25C923296351AD0056C317 /* WelcomeScreen.swift in Sources */,
+				FFB840CC295B28F000B9338D /* Renderer.swift in Sources */,
+				FFB840E4295B43B500B9338D /* Stick.swift in Sources */,
+				FFB840D3295B2EBD00B9338D /* Transform.swift in Sources */,
+				FFB840EC295B78C000B9338D /* Options.swift in Sources */,
+				FFB840AF295B243B00B9338D /* MetalDojoApp.swift in Sources */,
+				FFB840DC295B3BB100B9338D /* PipelineStates.swift in Sources */,
+				FFB840D5295B2FB100B9338D /* Camera.swift in Sources */,
+				FFB840EA295B639E00B9338D /* ProjectsGrid.swift in Sources */,
+				FF44A1CC29645BB700C7A4F3 /* Attributes.swift in Sources */,
+				FF15619D29608765007D14E4 /* ExampleScreen.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		FFB840BC295B243B00B9338D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		FFB840BD295B243B00B9338D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FFB840BF295B243B00B9338D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"MetalDojo/Preview Content\"";
+				DEVELOPMENT_TEAM = KSAD48KSZ4;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = georgi.MetalDojo2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = MetalDojo/Shared/Common.h;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FFB840C0295B243B00B9338D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"MetalDojo/Preview Content\"";
+				DEVELOPMENT_TEAM = KSAD48KSZ4;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = georgi.MetalDojo2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = MetalDojo/Shaders/Common.h;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FFB840A6295B243B00B9338D /* Build configuration list for PBXProject "MetalDojo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FFB840BC295B243B00B9338D /* Debug */,
+				FFB840BD295B243B00B9338D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FFB840BE295B243B00B9338D /* Build configuration list for PBXNativeTarget "MetalDojo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FFB840BF295B243B00B9338D /* Debug */,
+				FFB840C0295B243B00B9338D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		FFB840B9295B243B00B9338D /* MetalDojo.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				FFB840BA295B243B00B9338D /* MetalDojo.xcdatamodel */,
+			);
+			currentVersion = FFB840BA295B243B00B9338D /* MetalDojo.xcdatamodel */;
+			path = MetalDojo.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = FFB840A3295B243B00B9338D /* Project object */;
+}
