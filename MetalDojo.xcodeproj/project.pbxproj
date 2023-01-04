@@ -21,6 +21,11 @@
 		FF63BD462963655D00A08F8F /* ExampleScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF63BD452963655D00A08F8F /* ExampleScene.swift */; };
 		FF63BD4B29642E0400A08F8F /* Cube.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF63BD4A29642E0400A08F8F /* Cube.swift */; };
 		FF63BD4D29642F1000A08F8F /* Sphere.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF63BD4C29642F1000A08F8F /* Sphere.swift */; };
+		FF6BD4F62965A72200EB957B /* PerspectiveCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6BD4F52965A72200EB957B /* PerspectiveCamera.swift */; };
+		FF6BD4F82965A74000EB957B /* FPCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6BD4F72965A74000EB957B /* FPCamera.swift */; };
+		FF6BD4FA2965A74E00EB957B /* ArcballCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6BD4F92965A74E00EB957B /* ArcballCamera.swift */; };
+		FF6BD4FC2965A7A500EB957B /* OrthographicCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6BD4FB2965A7A500EB957B /* OrthographicCamera.swift */; };
+		FF6BD4FE2965A7B200EB957B /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6BD4FD2965A7B200EB957B /* Camera.swift */; };
 		FF979BBF295DA1DE00021E5D /* Tween.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF979BBE295DA1DE00021E5D /* Tween.swift */; };
 		FF979BC1295DAA9D00021E5D /* EaseFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF979BC0295DAA9D00021E5D /* EaseFunc.swift */; };
 		FF979BC3295DC22C00021E5D /* RangeReplaceableCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF979BC2295DC22C00021E5D /* RangeReplaceableCollection.swift */; };
@@ -34,7 +39,6 @@
 		FFB840CC295B28F000B9338D /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840CB295B28F000B9338D /* Renderer.swift */; };
 		FFB840D1295B2E5D00B9338D /* MathLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840D0295B2E5D00B9338D /* MathLibrary.swift */; };
 		FFB840D3295B2EBD00B9338D /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840D2295B2EBD00B9338D /* Transform.swift */; };
-		FFB840D5295B2FB100B9338D /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840D4295B2FB100B9338D /* Camera.swift */; };
 		FFB840D8295B39D000B9338D /* RenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840D7295B39D000B9338D /* RenderPass.swift */; };
 		FFB840DC295B3BB100B9338D /* PipelineStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840DB295B3BB100B9338D /* PipelineStates.swift */; };
 		FFB840DE295B3F3D00B9338D /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = FFB840DD295B3F3D00B9338D /* Shaders.metal */; };
@@ -65,6 +69,11 @@
 		FF63BD452963655D00A08F8F /* ExampleScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleScene.swift; sourceTree = "<group>"; };
 		FF63BD4A29642E0400A08F8F /* Cube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cube.swift; sourceTree = "<group>"; };
 		FF63BD4C29642F1000A08F8F /* Sphere.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sphere.swift; sourceTree = "<group>"; };
+		FF6BD4F52965A72200EB957B /* PerspectiveCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerspectiveCamera.swift; sourceTree = "<group>"; };
+		FF6BD4F72965A74000EB957B /* FPCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPCamera.swift; sourceTree = "<group>"; };
+		FF6BD4F92965A74E00EB957B /* ArcballCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArcballCamera.swift; sourceTree = "<group>"; };
+		FF6BD4FB2965A7A500EB957B /* OrthographicCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrthographicCamera.swift; sourceTree = "<group>"; };
+		FF6BD4FD2965A7B200EB957B /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		FF979BBE295DA1DE00021E5D /* Tween.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tween.swift; sourceTree = "<group>"; };
 		FF979BC0295DAA9D00021E5D /* EaseFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EaseFunc.swift; sourceTree = "<group>"; };
 		FF979BC2295DC22C00021E5D /* RangeReplaceableCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeReplaceableCollection.swift; sourceTree = "<group>"; };
@@ -80,7 +89,6 @@
 		FFB840CE295B2D8800B9338D /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		FFB840D0295B2E5D00B9338D /* MathLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathLibrary.swift; sourceTree = "<group>"; };
 		FFB840D2295B2EBD00B9338D /* Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform.swift; sourceTree = "<group>"; };
-		FFB840D4295B2FB100B9338D /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		FFB840D7295B39D000B9338D /* RenderPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderPass.swift; sourceTree = "<group>"; };
 		FFB840DB295B3BB100B9338D /* PipelineStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineStates.swift; sourceTree = "<group>"; };
 		FFB840DD295B3F3D00B9338D /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
@@ -156,7 +164,6 @@
 				FFB840C9295B28CB00B9338D /* GameController.swift */,
 				FFB840CB295B28F000B9338D /* Renderer.swift */,
 				FFB840D2295B2EBD00B9338D /* Transform.swift */,
-				FFB840D4295B2FB100B9338D /* Camera.swift */,
 				FFB840EB295B78C000B9338D /* Options.swift */,
 				FF25C917296338650056C317 /* Submesh.swift */,
 				FF25C919296338BC0056C317 /* Drawable.swift */,
@@ -178,6 +185,18 @@
 				FF63BD4C29642F1000A08F8F /* Sphere.swift */,
 			);
 			path = Meshes;
+			sourceTree = "<group>";
+		};
+		FF6BD4F42965A71500EB957B /* Cameras */ = {
+			isa = PBXGroup;
+			children = (
+				FF6BD4F52965A72200EB957B /* PerspectiveCamera.swift */,
+				FF6BD4F72965A74000EB957B /* FPCamera.swift */,
+				FF6BD4F92965A74E00EB957B /* ArcballCamera.swift */,
+				FF6BD4FB2965A7A500EB957B /* OrthographicCamera.swift */,
+				FF6BD4FD2965A7B200EB957B /* Camera.swift */,
+			);
+			path = Cameras;
 			sourceTree = "<group>";
 		};
 		FF979BBD295DA1D500021E5D /* Tween */ = {
@@ -249,6 +268,7 @@
 			isa = PBXGroup;
 			children = (
 				FFB840CE295B2D8800B9338D /* Common.h */,
+				FF6BD4F42965A71500EB957B /* Cameras */,
 				FF63BD4E2964318B00A08F8F /* Meshes */,
 				FF25C91D29633CF60056C317 /* Input */,
 				FF979BBD295DA1D500021E5D /* Tween */,
@@ -406,6 +426,8 @@
 				FFB840DE295B3F3D00B9338D /* Shaders.metal in Sources */,
 				FFB840F9295CA99800B9338D /* ViewExtension.swift in Sources */,
 				FFB840BB295B243B00B9338D /* MetalDojo.xcdatamodeld in Sources */,
+				FF6BD4FC2965A7A500EB957B /* OrthographicCamera.swift in Sources */,
+				FF6BD4F82965A74000EB957B /* FPCamera.swift in Sources */,
 				FF63BD4B29642E0400A08F8F /* Cube.swift in Sources */,
 				FF63BD462963655D00A08F8F /* ExampleScene.swift in Sources */,
 				FF979BC3295DC22C00021E5D /* RangeReplaceableCollection.swift in Sources */,
@@ -413,18 +435,20 @@
 				FFB840F7295CA97900B9338D /* ClickGesture.swift in Sources */,
 				FF979BC1295DAA9D00021E5D /* EaseFunc.swift in Sources */,
 				FF1561A129608D49007D14E4 /* PointsShadowmapPipelineStates.swift in Sources */,
+				FF6BD4FA2965A74E00EB957B /* ArcballCamera.swift in Sources */,
 				FF44A1CE29645BCC00C7A4F3 /* BufferIndices.swift in Sources */,
 				FF25C91A296338BC0056C317 /* Drawable.swift in Sources */,
 				FFB840F1295B82B300B9338D /* VertexDescriptor.swift in Sources */,
 				FFB840D8295B39D000B9338D /* RenderPass.swift in Sources */,
 				FF25C923296351AD0056C317 /* WelcomeScreen.swift in Sources */,
 				FFB840CC295B28F000B9338D /* Renderer.swift in Sources */,
+				FF6BD4F62965A72200EB957B /* PerspectiveCamera.swift in Sources */,
 				FFB840E4295B43B500B9338D /* Stick.swift in Sources */,
 				FFB840D3295B2EBD00B9338D /* Transform.swift in Sources */,
 				FFB840EC295B78C000B9338D /* Options.swift in Sources */,
 				FFB840AF295B243B00B9338D /* MetalDojoApp.swift in Sources */,
 				FFB840DC295B3BB100B9338D /* PipelineStates.swift in Sources */,
-				FFB840D5295B2FB100B9338D /* Camera.swift in Sources */,
+				FF6BD4FE2965A7B200EB957B /* Camera.swift in Sources */,
 				FFB840EA295B639E00B9338D /* ProjectsGrid.swift in Sources */,
 				FF44A1CC29645BB700C7A4F3 /* Attributes.swift in Sources */,
 				FF15619D29608765007D14E4 /* ExampleScreen.swift in Sources */,
