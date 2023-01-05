@@ -26,8 +26,6 @@ typedef struct {
 } PointsShadowmap_View;
 
 typedef enum {
-  UniformsBuffer = 11,
-  CameraUniformsBuffer = 12,
   ShadowCameraUniformsBuffer = 13
 } PointsShadowmap_BufferIndices;
 

@@ -29,6 +29,7 @@
 		FF6E29E1296736D600D2E59A /* InfiniteSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6E29E0296736D600D2E59A /* InfiniteSpace.swift */; };
 		FF6E29E8296739A900D2E59A /* InfiniteSpace_Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = FF6E29E7296739A900D2E59A /* InfiniteSpace_Shaders.metal */; };
 		FF6E29EA29673C5600D2E59A /* InfiniteSpace_PipelineStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6E29E929673C5600D2E59A /* InfiniteSpace_PipelineStates.swift */; };
+		FF6E29ED2967550300D2E59A /* InfintieSpace_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6E29EC2967550300D2E59A /* InfintieSpace_Extensions.swift */; };
 		FF979BBF295DA1DE00021E5D /* Tween.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF979BBE295DA1DE00021E5D /* Tween.swift */; };
 		FF979BC1295DAA9D00021E5D /* EaseFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF979BC0295DAA9D00021E5D /* EaseFunc.swift */; };
 		FF979BC3295DC22C00021E5D /* RangeReplaceableCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF979BC2295DC22C00021E5D /* RangeReplaceableCollection.swift */; };
@@ -81,6 +82,8 @@
 		FF6E29E0296736D600D2E59A /* InfiniteSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfiniteSpace.swift; sourceTree = "<group>"; };
 		FF6E29E7296739A900D2E59A /* InfiniteSpace_Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = InfiniteSpace_Shaders.metal; sourceTree = "<group>"; };
 		FF6E29E929673C5600D2E59A /* InfiniteSpace_PipelineStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfiniteSpace_PipelineStates.swift; sourceTree = "<group>"; };
+		FF6E29EB2967513900D2E59A /* InfiniteSpace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfiniteSpace.h; sourceTree = "<group>"; };
+		FF6E29EC2967550300D2E59A /* InfintieSpace_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfintieSpace_Extensions.swift; sourceTree = "<group>"; };
 		FF979BBE295DA1DE00021E5D /* Tween.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tween.swift; sourceTree = "<group>"; };
 		FF979BC0295DAA9D00021E5D /* EaseFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EaseFunc.swift; sourceTree = "<group>"; };
 		FF979BC2295DC22C00021E5D /* RangeReplaceableCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeReplaceableCollection.swift; sourceTree = "<group>"; };
@@ -211,9 +214,11 @@
 		FF6E29DF296736B600D2E59A /* Infinite Space */ = {
 			isa = PBXGroup;
 			children = (
+				FF6E29EB2967513900D2E59A /* InfiniteSpace.h */,
 				FF6E29E7296739A900D2E59A /* InfiniteSpace_Shaders.metal */,
-				FF6E29E0296736D600D2E59A /* InfiniteSpace.swift */,
 				FF6E29E929673C5600D2E59A /* InfiniteSpace_PipelineStates.swift */,
+				FF6E29E0296736D600D2E59A /* InfiniteSpace.swift */,
+				FF6E29EC2967550300D2E59A /* InfintieSpace_Extensions.swift */,
 			);
 			path = "Infinite Space";
 			sourceTree = "<group>";
@@ -462,6 +467,7 @@
 				FFB840D8295B39D000B9338D /* RenderPass.swift in Sources */,
 				FF25C923296351AD0056C317 /* WelcomeScreen.swift in Sources */,
 				FFB840CC295B28F000B9338D /* Renderer.swift in Sources */,
+				FF6E29ED2967550300D2E59A /* InfintieSpace_Extensions.swift in Sources */,
 				FF6BD4F62965A72200EB957B /* PerspectiveCamera.swift in Sources */,
 				FFB840E4295B43B500B9338D /* Stick.swift in Sources */,
 				FFB840D3295B2EBD00B9338D /* Transform.swift in Sources */,

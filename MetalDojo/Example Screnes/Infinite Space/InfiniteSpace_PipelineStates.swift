@@ -8,8 +8,17 @@
 import Foundation
 import Metal
 
-enum InfiniteSpacePipelineStates {
+enum InfiniteSpacePipelineStatesErrors: Error {
+  case invalidComputeFunction
+}
 
+enum InfiniteSpacePipelineStates {
+  static func createComputePSO() throws -> MTLComputePipelineState {
+    guard let computeFunction = Renderer.library.makeFunction(name: "InfiniteSpace_compute") else {
+      throw InfiniteSpacePipelineStatesErrors.invalidComputeFunction
+    }
+    return try Renderer.device.makeComputePipelineState(function: computeFunction)
+  }
   static func createForwardPSO(
     colorPixelFormat: MTLPixelFormat
   ) throws -> MTLRenderPipelineState {

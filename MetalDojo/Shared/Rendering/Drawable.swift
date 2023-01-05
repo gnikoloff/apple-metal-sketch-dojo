@@ -59,7 +59,7 @@ extension Drawable {
 
     for submesh in submeshes {
       renderEncoder.drawIndexedPrimitives(
-        type: .line,
+        type: .triangle,
         indexCount: submesh.indexCount,
         indexType: submesh.indexType,
         indexBuffer: submesh.indexBuffer,

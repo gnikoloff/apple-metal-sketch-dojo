@@ -26,8 +26,8 @@ final class GameController: NSObject {
     fps = Double(metalView.preferredFramesPerSecond)
 
     screens.append(WelcomeScreen(options: options))
-//    screens.append(PointsShadowmap())
-    screens.append(InfiniteSpace())
+    screens.append(PointsShadowmap())
+//    screens.append(InfiniteSpace())
   }
 }
 

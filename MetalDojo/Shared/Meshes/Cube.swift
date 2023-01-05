@@ -28,7 +28,7 @@ struct Cube: Drawable {
       boxWithExtent: size,
       segments: segments,
       inwardNormals: false,
-      geometryType: .lines,
+      geometryType: .triangles,
       allocator: Renderer.meshAllocator
     )
     let cubeMTKMesh = try! MTKMesh(mesh: cubeMDLMesh, device: Renderer.device)
