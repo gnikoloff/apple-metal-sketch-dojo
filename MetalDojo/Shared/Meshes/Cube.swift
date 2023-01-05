@@ -1,5 +1,5 @@
 //
-//  EnvCube.swift
+//  Cube.swift
 //  MetalDojo
 //
 //  Created by Georgi Nikoloff on 03.01.23.
@@ -9,7 +9,7 @@
 
 import MetalKit
 
-struct EnvCube: Drawable {
+struct Cube: Drawable {
   var instanceCount: Int = 1
   var baseInstace: Int = 0
   var uniforms = Uniforms()
@@ -23,12 +23,12 @@ struct EnvCube: Drawable {
     // ...
   }
 
-  init(size: Float) {
+  init(size: float3 = [1, 1, 1], segments: vector_uint3 = [1, 1, 1]) {
     let cubeMDLMesh = MDLMesh(
-      boxWithExtent: float3(size, size, size),
-      segments: [1, 1, 1],
+      boxWithExtent: size,
+      segments: segments,
       inwardNormals: false,
-      geometryType: .triangles,
+      geometryType: .lines,
       allocator: Renderer.meshAllocator
     )
     let cubeMTKMesh = try! MTKMesh(mesh: cubeMDLMesh, device: Renderer.device)

@@ -52,6 +52,7 @@ struct ArcballCamera: Camera {
   mutating func update(deltaTime: Float) {
     let input = InputController.shared
     let scrollSensitivity = Settings.mouseScrollSensitivity
+
     distance -= (input.mouseScroll.x + input.mouseScroll.y)
       * scrollSensitivity
     distance = min(maxDistance, distance)

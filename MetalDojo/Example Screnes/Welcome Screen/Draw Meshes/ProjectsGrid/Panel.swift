@@ -89,6 +89,7 @@ extension Panel {
     cameraUniforms: CameraUniforms
   ) {
     var camUniforms = cameraUniforms
+    
     encoder.setVertexBytes(
       &camUniforms,
       length: MemoryLayout<CameraUniforms>.stride,

@@ -9,89 +9,96 @@
 
 import MetalKit
 
-var a: Float = 0
-
 class PointsShadowmap: ExampleScreen {
-  private static let SHADOW_CUBE_SIDES = 6
-  private static let SHADOWMAP_SIZE: CGFloat = 512
   private static let SHADOW_PASS_LABEL = "Point Shadow Pass"
-  private static let FORWARD_PASS_LABEL = "Point Shadow Map Pass"
-  private static let SHADOW_CAMERA_LOOK_ATS = [
-    float3(1, 0, 0),
-    float3(-1, 0, 0),
-    float3(0, 1, 0),
-    float3(0, -1, 0),
-    float3(0, 0, 1),
-    float3(0, 0, -1)
-  ]
-  private static let SHADOW_CAMERA_UPS = [
-    float3(0, 1, 0),
-    float3(0, 1, 0),
-    float3(0, 0, -1),
-    float3(0, 0, 1),
-    float3(0, 1, 0),
-    float3(0, 1, 0)
-  ]
+  private static let FORWARD_PASS_LABEL = "Point ShadowMap Pass"
 
-  private let shadowDescriptor: MTLRenderPassDescriptor
-  private let shadowPipelineState: MTLRenderPipelineState
   private var cubeRenderPipeline: MTLRenderPipelineState
-  private let sphereRenderPipeline: MTLRenderPipelineState
+  private let sphereRenderPipelineFront: MTLRenderPipelineState
+  private let sphereRenderPipelineBack: MTLRenderPipelineState
+  private let centerSphereRenderPipeline: MTLRenderPipelineState
   private let depthStencilState: MTLDepthStencilState?
 
-  private var cube: EnvCube
-  private var sphere: DottedSphere
+  private var cube: Cube
+  private var sphere0: SphereLightCaster
+  private var sphere1: SphereLightCaster
 
   private var perspCameraUniforms = CameraUniforms()
   private var perspCamera = ArcballCamera()
 
-  private var cubeShadowTexture: MTLTexture
-  private var shadowCameraUniforms = CameraUniforms()
-  private var shadowLightUniforms = PointsShadowmap_Light()
-  private var shadowPerspCamera = PerspectiveCamera(
-    aspect: Float(PointsShadowmap.SHADOWMAP_SIZE / PointsShadowmap.SHADOWMAP_SIZE),
-    fov: Float(90).degreesToRadians,
-    near: 0.1,
-    far: 25
-  )
-  private var shadowCamUniformBuffer: MTLBuffer
-
-  var cubeSidesContents: UnsafeMutablePointer<PointsShadowmap_View>
+  private var shadowCastersUniformsBuffer: MTLBuffer
+  private var shadowCasrersUniformsBufferContents: UnsafeMutablePointer<PointsShadowmap_Light>
 
   init() {
-    shadowPipelineState = PointsShadowmapPipelineStates.createShadowPSO()
-    cubeRenderPipeline = PointsShadowmapPipelineStates.createCubePSO(
-      colorPixelFormat: Renderer.viewColorFormat
-    )
-    sphereRenderPipeline = PointsShadowmapPipelineStates.createSpherePSO(
-      colorPixelFormat: Renderer.viewColorFormat
-    )
+    do {
+      try cubeRenderPipeline = PointsShadowmapPipelineStates.createForwardPSO(
+        colorPixelFormat: Renderer.viewColorFormat,
+        isSolidColor: false,
+        isShadedAndShadowed: true
+      )
+      try sphereRenderPipelineFront = PointsShadowmapPipelineStates.createForwardPSO(
+        colorPixelFormat: Renderer.viewColorFormat,
+        isCutOffAlpha: true
+      )
+      try sphereRenderPipelineBack = PointsShadowmapPipelineStates.createForwardPSO(
+        colorPixelFormat: Renderer.viewColorFormat,
+        isSolidColor: true,
+        isCutOffAlpha: true
+      )
+      try centerSphereRenderPipeline = PointsShadowmapPipelineStates.createForwardPSO(
+        colorPixelFormat: Renderer.viewColorFormat,
+        isSolidColor: true
+      )
+    } catch {
+      fatalError(error.localizedDescription)
+    }
+
+    perspCamera.distance = 3
+
     depthStencilState = Renderer.buildDepthStencilState()
 
-    cube = EnvCube(size: 1.5)
+    cube = Cube(size: [2, 2, 2])
     cube.cullMode = .front
-    sphere = DottedSphere(size: 0.1435)
-    sphere.cullMode = .front
 
-    shadowDescriptor = MTLRenderPassDescriptor()
-    cubeShadowTexture = RenderPass.makeCubeTexture(
-      size: PointsShadowmap.SHADOWMAP_SIZE,
-      pixelFormat: .depth32Float,
-      label: "Shadow Cube Map Texture"
-    )!
-    self.shadowCamUniformBuffer = Renderer.device.makeBuffer(
-      length: MemoryLayout<PointsShadowmap_View>.stride * PointsShadowmap.SHADOW_CUBE_SIDES
-    )!
-    cubeSidesContents = shadowCamUniformBuffer.contents().bindMemory(to: PointsShadowmap_View.self, capacity: PointsShadowmap.SHADOW_CUBE_SIDES)
+    sphere0 = SphereLightCaster()
+    sphere1 = SphereLightCaster()
 
+    shadowCastersUniformsBuffer = Renderer.device.makeBuffer(
+      length: MemoryLayout<PointsShadowmap_Light>.stride * 2
+    )!
+    shadowCasrersUniformsBufferContents = shadowCastersUniformsBuffer
+      .contents()
+      .bindMemory(to: PointsShadowmap_Light.self, capacity: 2)
+
+    shadowCasrersUniformsBufferContents[0].color = float3(0.203, 0.596, 0.858)
+    shadowCasrersUniformsBufferContents[0].cutoffDistance = 1.3
+    shadowCasrersUniformsBufferContents[1].color = float3(0.905, 0.596, 0.235)
+    shadowCasrersUniformsBufferContents[1].cutoffDistance = 1.3
   }
 
   func resize(view: MTKView, size: CGSize) {
     self.perspCamera.update(size: size)
   }
 
-  func update(deltaTime: Float) {
+  func update(elapsedTime: Float, deltaTime: Float) {
     perspCamera.update(deltaTime: deltaTime)
+
+    let moveRadius: Float = 0.4
+    sphere0.position.x = sin(elapsedTime) * moveRadius
+    sphere0.position.y = sin(elapsedTime + 10) * moveRadius
+    sphere0.position.z = cos(elapsedTime) * moveRadius
+
+    sphere0.rotation.x = elapsedTime * 0.2
+    sphere0.rotation.y = elapsedTime * 0.2
+    sphere0.rotation.z = -elapsedTime
+
+    sphere1.position.x = sin(-elapsedTime) * moveRadius
+    sphere1.position.y = sin(elapsedTime * 2) * moveRadius
+    sphere1.position.z = cos(-elapsedTime + 10) * moveRadius
+
+    sphere1.rotation.x = -elapsedTime * 0.8
+    sphere1.rotation.y = elapsedTime * 0.8
+    sphere1.rotation.z = -elapsedTime
   }
 
   func updateUniforms() {
@@ -99,47 +106,23 @@ class PointsShadowmap: ExampleScreen {
     perspCameraUniforms.projectionMatrix = perspCamera.projectionMatrix
     perspCameraUniforms.position = perspCamera.position
 
-    shadowLightUniforms.position = shadowPerspCamera.position
+    shadowCasrersUniformsBufferContents[0].position = sphere0.position
+    shadowCasrersUniformsBufferContents[1].position = sphere1.position
   }
 
   func drawShadowCubeMap(commandBuffer: MTLCommandBuffer) {
-    let lightPos = shadowPerspCamera.position
-
-    for i in 0 ..< PointsShadowmap.SHADOW_CUBE_SIDES {
-      shadowPerspCamera.target = lightPos + PointsShadowmap.SHADOW_CAMERA_LOOK_ATS[i]
-      shadowPerspCamera.up = PointsShadowmap.SHADOW_CAMERA_UPS[i]
-      cubeSidesContents[i].viewProjectionMatrix = shadowPerspCamera.projectionMatrix * shadowPerspCamera.viewMatrix
-    }
-
-    shadowDescriptor.depthAttachment.texture = cubeShadowTexture
-    shadowDescriptor.depthAttachment.storeAction = .store
-    shadowDescriptor.renderTargetArrayLength = PointsShadowmap.SHADOW_CUBE_SIDES
-
-    guard let shadowRenderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: shadowDescriptor) else {
-      return
-    }
-
-    shadowRenderEncoder.setVertexBuffer(
-      shadowCamUniformBuffer,
-      offset: 0,
-      index: UniformsBuffer.index + 1
+    sphere0.cullMode = .none
+    sphere1.cullMode = .none
+    sphere0.drawCubeShadow(
+      commandBuffer: commandBuffer,
+      idx: 0,
+      shadowCastersBuffer: shadowCastersUniformsBuffer
     )
-    shadowRenderEncoder.setFragmentBytes(
-      &shadowLightUniforms,
-      length: MemoryLayout<PointsShadowmap_Light>.stride,
-      index: UniformsBuffer.index + 2
+    sphere1.drawCubeShadow(
+      commandBuffer: commandBuffer,
+      idx: 1,
+      shadowCastersBuffer: shadowCastersUniformsBuffer
     )
-    shadowRenderEncoder.label = PointsShadowmap.SHADOW_PASS_LABEL
-    shadowRenderEncoder.setDepthStencilState(depthStencilState)
-    shadowRenderEncoder.setRenderPipelineState(shadowPipelineState)
-
-    sphere.instanceCount = PointsShadowmap.SHADOW_CUBE_SIDES
-    sphere.cullMode = .none
-    sphere.scale = 2
-    sphere.draw(renderEncoder: shadowRenderEncoder)
-    sphere.scale = 1
-
-    shadowRenderEncoder.endEncoding()
   }
 
   func draw(in view: MTKView, commandBuffer: MTLCommandBuffer) {
@@ -149,9 +132,7 @@ class PointsShadowmap: ExampleScreen {
       return
     }
 
-    view.clearColor = MTLClearColor(red: 1, green: 0.2, blue: 1, alpha: 1)
-
-//    descriptor.colorAttachments[0].loadAction = .load
+//    view.clearColor = MTLClearColor(red: 1, green: 0.2, blue: 1, alpha: 1)
 
     var camUniforms = perspCameraUniforms
     updateUniforms()
@@ -163,17 +144,16 @@ class PointsShadowmap: ExampleScreen {
     renderEncoder.setVertexBytes(
       &camUniforms,
       length: MemoryLayout<CameraUniforms>.stride,
-      index: UniformsBuffer.index + 1
+      index: CameraUniformsBuffer.index
     )
-    renderEncoder.setFragmentBytes(
-      &shadowLightUniforms,
-      length: MemoryLayout<PointsShadowmap_Light>.stride,
-      index: UniformsBuffer.index + 2
+    renderEncoder.setFragmentBuffer(
+      shadowCastersUniformsBuffer,
+      offset: 0,
+      index: ShadowCameraUniformsBuffer.index
     )
-
-    renderEncoder.setFragmentTexture(
-      cubeShadowTexture,
-      index: PointsShadowmap_CubeShadowTexture.index
+    renderEncoder.setFragmentTextures(
+      [sphere0.cubeShadowTexture, sphere1.cubeShadowTexture],
+      range: 0..<2
     )
 
     renderEncoder.label = PointsShadowmap.FORWARD_PASS_LABEL
@@ -181,23 +161,25 @@ class PointsShadowmap: ExampleScreen {
     renderEncoder.setRenderPipelineState(cubeRenderPipeline)
 
     cube.instanceCount = 1
-
     cube.draw(renderEncoder: renderEncoder)
 
-    renderEncoder.setRenderPipelineState(sphereRenderPipeline)
-    sphere.position.x = sin(a) * 0.3
-    sphere.position.y = cos(a) * 0.3
+    renderEncoder.setRenderPipelineState(centerSphereRenderPipeline)
+    sphere0.drawCenterSphere(renderEncoder: renderEncoder)
+    sphere1.drawCenterSphere(renderEncoder: renderEncoder)
 
-    sphere.rotation.x = a * 0.2
-    sphere.rotation.y = a * 0.2
-    sphere.rotation.z = -a
-    sphere.position.z = cos(a) * 0.3
-    sphere.instanceCount = 1
-    shadowPerspCamera.position = sphere.position
-    shadowPerspCamera.rotation = sphere.rotation
-    sphere.draw(renderEncoder: renderEncoder)
+    renderEncoder.setRenderPipelineState(sphereRenderPipelineBack)
+    sphere0.cullMode = .front
+    sphere1.cullMode = .front
+    sphere0.draw(renderEncoder: renderEncoder)
+    sphere1.draw(renderEncoder: renderEncoder)
 
-    a += 0.02
+    renderEncoder.setRenderPipelineState(sphereRenderPipelineFront)
+
+    sphere0.cullMode = .back
+    sphere1.cullMode = .back
+    sphere0.draw(renderEncoder: renderEncoder)
+    sphere1.draw(renderEncoder: renderEncoder)
+
 
     renderEncoder.endEncoding()
   }

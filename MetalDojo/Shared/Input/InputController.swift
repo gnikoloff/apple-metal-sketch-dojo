@@ -21,7 +21,7 @@ class InputController {
   var leftMouseDown = false
   var mouseDelta = Point.zero
   var mouseScroll = Point.zero
-  var touchLocation: CGPoint?
+  var touchLocation = CGPoint()
   var touchDelta: CGSize? {
     didSet {
       touchDelta?.height *= -1

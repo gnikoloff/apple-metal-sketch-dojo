@@ -10,7 +10,7 @@ import MetalKit
 protocol ExampleScreen {
   mutating func resize(view: MTKView, size: CGSize)
   mutating func updateUniforms()
-  mutating func update(deltaTime: Float)
+  mutating func update(elapsedTime: Float, deltaTime: Float)
   mutating func draw(in view: MTKView, commandBuffer: MTLCommandBuffer)
 }
 

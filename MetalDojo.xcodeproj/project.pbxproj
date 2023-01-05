@@ -9,16 +9,16 @@
 /* Begin PBXBuildFile section */
 		FF15619D29608765007D14E4 /* ExampleScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF15619C29608765007D14E4 /* ExampleScreen.swift */; };
 		FF15619F29608791007D14E4 /* PointsShadowmap.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF15619E29608791007D14E4 /* PointsShadowmap.swift */; };
-		FF1561A129608D49007D14E4 /* PointsShadowmapPipelineStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1561A029608D49007D14E4 /* PointsShadowmapPipelineStates.swift */; };
+		FF1561A129608D49007D14E4 /* PointsShadowmap_PipelineStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1561A029608D49007D14E4 /* PointsShadowmap_PipelineStates.swift */; };
+		FF2433572965C43F00041EF6 /* SphereLightCaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2433562965C43F00041EF6 /* SphereLightCaster.swift */; };
 		FF25C918296338650056C317 /* Submesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25C917296338650056C317 /* Submesh.swift */; };
 		FF25C91A296338BC0056C317 /* Drawable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25C919296338BC0056C317 /* Drawable.swift */; };
-		FF25C91C296339E30056C317 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = FF25C91B296339E30056C317 /* Shaders.metal */; };
+		FF25C91C296339E30056C317 /* PointsShadowmap_Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = FF25C91B296339E30056C317 /* PointsShadowmap_Shaders.metal */; };
 		FF25C91F29633D040056C317 /* InputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25C91E29633D040056C317 /* InputController.swift */; };
 		FF25C923296351AD0056C317 /* WelcomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25C922296351AD0056C317 /* WelcomeScreen.swift */; };
 		FF44A1CC29645BB700C7A4F3 /* Attributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF44A1CB29645BB700C7A4F3 /* Attributes.swift */; };
 		FF44A1CE29645BCC00C7A4F3 /* BufferIndices.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF44A1CD29645BCC00C7A4F3 /* BufferIndices.swift */; };
 		FF44A1D129648C2100C7A4F3 /* PointsShadowmap_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF44A1D029648C2100C7A4F3 /* PointsShadowmap_Extensions.swift */; };
-		FF63BD462963655D00A08F8F /* ExampleScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF63BD452963655D00A08F8F /* ExampleScene.swift */; };
 		FF63BD4B29642E0400A08F8F /* Cube.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF63BD4A29642E0400A08F8F /* Cube.swift */; };
 		FF63BD4D29642F1000A08F8F /* Sphere.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF63BD4C29642F1000A08F8F /* Sphere.swift */; };
 		FF6BD4F62965A72200EB957B /* PerspectiveCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6BD4F52965A72200EB957B /* PerspectiveCamera.swift */; };
@@ -26,6 +26,9 @@
 		FF6BD4FA2965A74E00EB957B /* ArcballCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6BD4F92965A74E00EB957B /* ArcballCamera.swift */; };
 		FF6BD4FC2965A7A500EB957B /* OrthographicCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6BD4FB2965A7A500EB957B /* OrthographicCamera.swift */; };
 		FF6BD4FE2965A7B200EB957B /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6BD4FD2965A7B200EB957B /* Camera.swift */; };
+		FF6E29E1296736D600D2E59A /* InfiniteSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6E29E0296736D600D2E59A /* InfiniteSpace.swift */; };
+		FF6E29E8296739A900D2E59A /* InfiniteSpace_Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = FF6E29E7296739A900D2E59A /* InfiniteSpace_Shaders.metal */; };
+		FF6E29EA29673C5600D2E59A /* InfiniteSpace_PipelineStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6E29E929673C5600D2E59A /* InfiniteSpace_PipelineStates.swift */; };
 		FF979BBF295DA1DE00021E5D /* Tween.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF979BBE295DA1DE00021E5D /* Tween.swift */; };
 		FF979BC1295DAA9D00021E5D /* EaseFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF979BC0295DAA9D00021E5D /* EaseFunc.swift */; };
 		FF979BC3295DC22C00021E5D /* RangeReplaceableCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF979BC2295DC22C00021E5D /* RangeReplaceableCollection.swift */; };
@@ -56,17 +59,17 @@
 /* Begin PBXFileReference section */
 		FF15619C29608765007D14E4 /* ExampleScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleScreen.swift; sourceTree = "<group>"; };
 		FF15619E29608791007D14E4 /* PointsShadowmap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsShadowmap.swift; sourceTree = "<group>"; };
-		FF1561A029608D49007D14E4 /* PointsShadowmapPipelineStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsShadowmapPipelineStates.swift; sourceTree = "<group>"; };
+		FF1561A029608D49007D14E4 /* PointsShadowmap_PipelineStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsShadowmap_PipelineStates.swift; sourceTree = "<group>"; };
+		FF2433562965C43F00041EF6 /* SphereLightCaster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphereLightCaster.swift; sourceTree = "<group>"; };
 		FF25C917296338650056C317 /* Submesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submesh.swift; sourceTree = "<group>"; };
 		FF25C919296338BC0056C317 /* Drawable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drawable.swift; sourceTree = "<group>"; };
-		FF25C91B296339E30056C317 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		FF25C91B296339E30056C317 /* PointsShadowmap_Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = PointsShadowmap_Shaders.metal; sourceTree = "<group>"; };
 		FF25C91E29633D040056C317 /* InputController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputController.swift; sourceTree = "<group>"; };
 		FF25C922296351AD0056C317 /* WelcomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreen.swift; sourceTree = "<group>"; };
 		FF44A1CB29645BB700C7A4F3 /* Attributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attributes.swift; sourceTree = "<group>"; };
 		FF44A1CD29645BCC00C7A4F3 /* BufferIndices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferIndices.swift; sourceTree = "<group>"; };
 		FF44A1CF2964601600C7A4F3 /* PointsShadowmap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointsShadowmap.h; sourceTree = "<group>"; };
 		FF44A1D029648C2100C7A4F3 /* PointsShadowmap_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsShadowmap_Extensions.swift; sourceTree = "<group>"; };
-		FF63BD452963655D00A08F8F /* ExampleScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleScene.swift; sourceTree = "<group>"; };
 		FF63BD4A29642E0400A08F8F /* Cube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cube.swift; sourceTree = "<group>"; };
 		FF63BD4C29642F1000A08F8F /* Sphere.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sphere.swift; sourceTree = "<group>"; };
 		FF6BD4F52965A72200EB957B /* PerspectiveCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerspectiveCamera.swift; sourceTree = "<group>"; };
@@ -74,6 +77,10 @@
 		FF6BD4F92965A74E00EB957B /* ArcballCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArcballCamera.swift; sourceTree = "<group>"; };
 		FF6BD4FB2965A7A500EB957B /* OrthographicCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrthographicCamera.swift; sourceTree = "<group>"; };
 		FF6BD4FD2965A7B200EB957B /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		FF6BD4FF2965B1A300EB957B /* WelcomeScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WelcomeScreen.h; sourceTree = "<group>"; };
+		FF6E29E0296736D600D2E59A /* InfiniteSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfiniteSpace.swift; sourceTree = "<group>"; };
+		FF6E29E7296739A900D2E59A /* InfiniteSpace_Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = InfiniteSpace_Shaders.metal; sourceTree = "<group>"; };
+		FF6E29E929673C5600D2E59A /* InfiniteSpace_PipelineStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfiniteSpace_PipelineStates.swift; sourceTree = "<group>"; };
 		FF979BBE295DA1DE00021E5D /* Tween.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tween.swift; sourceTree = "<group>"; };
 		FF979BC0295DAA9D00021E5D /* EaseFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EaseFunc.swift; sourceTree = "<group>"; };
 		FF979BC2295DC22C00021E5D /* RangeReplaceableCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeReplaceableCollection.swift; sourceTree = "<group>"; };
@@ -118,9 +125,9 @@
 			isa = PBXGroup;
 			children = (
 				FF15619C29608765007D14E4 /* ExampleScreen.swift */,
-				FF63BD452963655D00A08F8F /* ExampleScene.swift */,
 				FF25C9202963502C0056C317 /* Welcome Screen */,
 				FF15619B2960872B007D14E4 /* Points Shadowmap */,
+				FF6E29DF296736B600D2E59A /* Infinite Space */,
 			);
 			path = "Example Screnes";
 			sourceTree = "<group>";
@@ -128,14 +135,22 @@
 		FF15619B2960872B007D14E4 /* Points Shadowmap */ = {
 			isa = PBXGroup;
 			children = (
+				FF2433552965C42C00041EF6 /* Light Casters */,
 				FF44A1CF2964601600C7A4F3 /* PointsShadowmap.h */,
-				FF25C91B296339E30056C317 /* Shaders.metal */,
+				FF25C91B296339E30056C317 /* PointsShadowmap_Shaders.metal */,
 				FF44A1D029648C2100C7A4F3 /* PointsShadowmap_Extensions.swift */,
-				FF1561A029608D49007D14E4 /* PointsShadowmapPipelineStates.swift */,
+				FF1561A029608D49007D14E4 /* PointsShadowmap_PipelineStates.swift */,
 				FF15619E29608791007D14E4 /* PointsShadowmap.swift */,
-				FF63BD4929642DC400A08F8F /* Draw Meshes */,
 			);
 			path = "Points Shadowmap";
+			sourceTree = "<group>";
+		};
+		FF2433552965C42C00041EF6 /* Light Casters */ = {
+			isa = PBXGroup;
+			children = (
+				FF2433562965C43F00041EF6 /* SphereLightCaster.swift */,
+			);
+			path = "Light Casters";
 			sourceTree = "<group>";
 		};
 		FF25C91D29633CF60056C317 /* Input */ = {
@@ -149,6 +164,7 @@
 		FF25C9202963502C0056C317 /* Welcome Screen */ = {
 			isa = PBXGroup;
 			children = (
+				FF6BD4FF2965B1A300EB957B /* WelcomeScreen.h */,
 				FFB840DD295B3F3D00B9338D /* Shaders.metal */,
 				FF25C922296351AD0056C317 /* WelcomeScreen.swift */,
 				FFB840DF295B421C00B9338D /* Draw Meshes */,
@@ -171,13 +187,6 @@
 			path = Rendering;
 			sourceTree = "<group>";
 		};
-		FF63BD4929642DC400A08F8F /* Draw Meshes */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Draw Meshes";
-			sourceTree = "<group>";
-		};
 		FF63BD4E2964318B00A08F8F /* Meshes */ = {
 			isa = PBXGroup;
 			children = (
@@ -197,6 +206,16 @@
 				FF6BD4FD2965A7B200EB957B /* Camera.swift */,
 			);
 			path = Cameras;
+			sourceTree = "<group>";
+		};
+		FF6E29DF296736B600D2E59A /* Infinite Space */ = {
+			isa = PBXGroup;
+			children = (
+				FF6E29E7296739A900D2E59A /* InfiniteSpace_Shaders.metal */,
+				FF6E29E0296736D600D2E59A /* InfiniteSpace.swift */,
+				FF6E29E929673C5600D2E59A /* InfiniteSpace_PipelineStates.swift */,
+			);
+			path = "Infinite Space";
 			sourceTree = "<group>";
 		};
 		FF979BBD295DA1D500021E5D /* Tween */ = {
@@ -352,6 +371,7 @@
 				TargetAttributes = {
 					FFB840AA295B243B00B9338D = {
 						CreatedOnToolsVersion = 14.2;
+						LastSwiftMigration = 1420;
 					};
 				};
 			};
@@ -413,7 +433,7 @@
 				FFB840C7295B279D00B9338D /* MetalView.swift in Sources */,
 				FF15619F29608791007D14E4 /* PointsShadowmap.swift in Sources */,
 				FFB840D1295B2E5D00B9338D /* MathLibrary.swift in Sources */,
-				FF25C91C296339E30056C317 /* Shaders.metal in Sources */,
+				FF25C91C296339E30056C317 /* PointsShadowmap_Shaders.metal in Sources */,
 				FF44A1D129648C2100C7A4F3 /* PointsShadowmap_Extensions.swift in Sources */,
 				FFB840F5295C90FA00B9338D /* CGPointExtension.swift in Sources */,
 				FF63BD4D29642F1000A08F8F /* Sphere.swift in Sources */,
@@ -429,12 +449,12 @@
 				FF6BD4FC2965A7A500EB957B /* OrthographicCamera.swift in Sources */,
 				FF6BD4F82965A74000EB957B /* FPCamera.swift in Sources */,
 				FF63BD4B29642E0400A08F8F /* Cube.swift in Sources */,
-				FF63BD462963655D00A08F8F /* ExampleScene.swift in Sources */,
 				FF979BC3295DC22C00021E5D /* RangeReplaceableCollection.swift in Sources */,
 				FFB840E6295B451700B9338D /* Panel.swift in Sources */,
+				FF6E29E1296736D600D2E59A /* InfiniteSpace.swift in Sources */,
 				FFB840F7295CA97900B9338D /* ClickGesture.swift in Sources */,
 				FF979BC1295DAA9D00021E5D /* EaseFunc.swift in Sources */,
-				FF1561A129608D49007D14E4 /* PointsShadowmapPipelineStates.swift in Sources */,
+				FF1561A129608D49007D14E4 /* PointsShadowmap_PipelineStates.swift in Sources */,
 				FF6BD4FA2965A74E00EB957B /* ArcballCamera.swift in Sources */,
 				FF44A1CE29645BCC00C7A4F3 /* BufferIndices.swift in Sources */,
 				FF25C91A296338BC0056C317 /* Drawable.swift in Sources */,
@@ -448,10 +468,13 @@
 				FFB840EC295B78C000B9338D /* Options.swift in Sources */,
 				FFB840AF295B243B00B9338D /* MetalDojoApp.swift in Sources */,
 				FFB840DC295B3BB100B9338D /* PipelineStates.swift in Sources */,
+				FF6E29EA29673C5600D2E59A /* InfiniteSpace_PipelineStates.swift in Sources */,
+				FF2433572965C43F00041EF6 /* SphereLightCaster.swift in Sources */,
 				FF6BD4FE2965A7B200EB957B /* Camera.swift in Sources */,
 				FFB840EA295B639E00B9338D /* ProjectsGrid.swift in Sources */,
 				FF44A1CC29645BB700C7A4F3 /* Attributes.swift in Sources */,
 				FF15619D29608765007D14E4 /* ExampleScreen.swift in Sources */,
+				FF6E29E8296739A900D2E59A /* InfiniteSpace_Shaders.metal in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -577,6 +600,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -599,6 +623,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = MetalDojo/Shared/Common.h;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -609,6 +634,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -630,7 +656,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = MetalDojo/Shaders/Common.h;
+				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = MetalDojo/Shared/Common.h;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -9,7 +9,7 @@
 
 import MetalKit
 
-struct DottedSphere: Drawable {
+struct Sphere: Drawable {
   var instanceCount: Int = 1
   var baseInstace: Int = 0
   var uniforms = Uniforms()

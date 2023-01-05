@@ -39,6 +39,7 @@ struct MetalView: View {
       }
       .onEnded { _ in
 //        options.mouse = CGPoint(x: -1000, y: -1000)
+        previousTranslation = .zero
       }
     return ZStack {
       MetalViewRepresentable(metalView: $metalView, gameController: gameController)

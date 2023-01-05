@@ -45,8 +45,8 @@ class WelcomeScreen: ExampleScreen {
     orthoCameraUniforms.position = orthoCamera.position
   }
 
-  func update(deltaTime: Float) {
-    self.projectsGrid.updateVertices()
+  func update(elapsedTime: Float, deltaTime: Float) {
+    self.projectsGrid.updateVertices(deltaTime: deltaTime)
   }
 
   func draw(in view: MTKView, commandBuffer: MTLCommandBuffer) {

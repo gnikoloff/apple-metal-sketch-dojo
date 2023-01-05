@@ -9,21 +9,26 @@
 #define PointsShadowmap_h
 
 #import <simd/simd.h>
-
-//typedef struct {
-//
-//}
+#import "../../Shared/Common.h"
 
 typedef enum {
-  PointsShadowmap_CubeShadowTexture = 0
+  PointsShadowmap_CubeShadowTextures = 0
 } PointsShadowmap_TextureIndices;
 
 typedef struct {
   vector_float3 position;
+  vector_float3 color;
+  float cutoffDistance;
 } PointsShadowmap_Light;
 
 typedef struct {
   matrix_float4x4 viewProjectionMatrix;
 } PointsShadowmap_View;
+
+typedef enum {
+  UniformsBuffer = 11,
+  CameraUniformsBuffer = 12,
+  ShadowCameraUniformsBuffer = 13
+} PointsShadowmap_BufferIndices;
 
 #endif /* PointsShadowmap_h */

@@ -10,3 +10,9 @@ extension PointsShadowmap_TextureIndices {
     return Int(rawValue)
   }
 }
+
+extension PointsShadowmap_BufferIndices {
+  var index: Int {
+    return Int(rawValue)
+  }
+}

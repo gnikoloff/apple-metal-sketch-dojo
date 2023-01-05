@@ -8,6 +8,8 @@
 #ifndef Common_h
 #define Common_h
 
+#import <simd/simd.h>
+#import "../Example Screnes/Welcome Screen/WelcomeScreen.h"
 #import "../Example Screnes/Points Shadowmap/PointsShadowmap.h"
 
 typedef struct {
@@ -30,13 +32,11 @@ typedef enum {
 } Attributes;
 
 typedef enum {
-//  VertexBuffer = 0,
-//  UVBuffer = 1,
-//  ColorBuffer = 2,
-//  TangentBuffer = 3,
-//  BitangentBuffer = 4,
-
-  UniformsBuffer = 11
+  VertexBuffer = 0,
+  UVBuffer = 1,
+  ColorBuffer = 2,
+  TangentBuffer = 3,
+  BitangentBuffer = 4
 } BufferIndices;
 
 #endif /* Common_h */

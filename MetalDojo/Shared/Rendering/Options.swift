@@ -19,6 +19,5 @@ class Options: ObservableObject {
   var mouse: CGPoint = CGPoint(x: -2000, y: -2000)
   var drawableSize: CGSize = .zero
   var mouseDown: Bool = false
-  var dt: Float = 0.0
 
 }

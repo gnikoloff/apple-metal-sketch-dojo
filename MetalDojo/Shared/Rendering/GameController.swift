@@ -13,6 +13,7 @@ final class GameController: NSObject {
   var fps: Double = 0
   var deltaTime: Double = 0
   var lastTime: Double = CFAbsoluteTimeGetCurrent()
+  var elapsedTime: Double = 0
 
   // Screens
   var screens: [ExampleScreen] = []
@@ -25,7 +26,8 @@ final class GameController: NSObject {
     fps = Double(metalView.preferredFramesPerSecond)
 
     screens.append(WelcomeScreen(options: options))
-    screens.append(PointsShadowmap())
+//    screens.append(PointsShadowmap())
+    screens.append(InfiniteSpace())
   }
 }
 
@@ -38,11 +40,12 @@ extension GameController: MTKViewDelegate {
   }
   func draw(in view: MTKView) {
     let currentTime = CFAbsoluteTimeGetCurrent()
-    options.dt = Float(currentTime - lastTime)
+    let dt = currentTime - lastTime
+    elapsedTime += dt
     lastTime = currentTime
 
     for var screen in screens {
-      screen.update(deltaTime: options.dt)
+      screen.update(elapsedTime: Float(elapsedTime), deltaTime: Float(dt))
     }
 
     renderer.draw(screens: screens, in: view)

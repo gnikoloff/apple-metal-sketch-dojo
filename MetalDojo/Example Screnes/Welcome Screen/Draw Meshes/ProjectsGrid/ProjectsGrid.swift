@@ -82,7 +82,7 @@ class ProjectsGrid {
     }
   }
 
-  func updateVertices() {
+  func updateVertices(deltaTime: Float) {
     let allowInteractionWithVertices = !options.isProjectTransition && options.activeProjectName == nil
     for i in 0 ..< panels.count {
       let p = panels[i]
@@ -111,7 +111,7 @@ class ProjectsGrid {
       }
       d.update(
         size: options.drawableSize,
-        dt: options.dt
+        dt: deltaTime
       )
     }
     for s in sticks {
