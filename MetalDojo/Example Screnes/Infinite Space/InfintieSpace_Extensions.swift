@@ -10,3 +10,15 @@ extension InfiniteSpace_BufferIndices {
     return Int(rawValue)
   }
 }
+
+extension InfiniteSpace_RenderTargets {
+  var index: Int {
+    return Int(rawValue)
+  }
+}
+
+extension InfiniteSpace_Textures {
+  var index: Int {
+    return Int(rawValue)
+  }
+}

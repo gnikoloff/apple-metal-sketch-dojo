@@ -1,15 +1,15 @@
 //
-//  Cube.swift
+//  Icosahedron.swift
 //  MetalDojo
 //
-//  Created by Georgi Nikoloff on 03.01.23.
+//  Created by Georgi Nikoloff on 17.01.23.
 //
 
 // swiftlint:disable force_try
 
 import MetalKit
 
-struct Cube: Drawable {
+struct Icosahedron: Drawable {
   var instanceCount: Int = 1
   var baseInstace: Int = 0
   var uniforms = Uniforms()
@@ -25,19 +25,17 @@ struct Cube: Drawable {
 
   init(
     size: float3 = [1, 1, 1],
-    segments: vector_uint3 = [1, 1, 1],
     inwardNormals: Bool = false
   ) {
-    let cubeMDLMesh = MDLMesh(
-      boxWithExtent: size,
-      segments: segments,
+    let mdlMesh = MDLMesh(
+      icosahedronWithExtent: size,
       inwardNormals: inwardNormals,
       geometryType: .triangles,
       allocator: Renderer.meshAllocator
     )
-    
-    let cubeMTKMesh = try! MTKMesh(mesh: cubeMDLMesh, device: Renderer.device)
-    self.init(mdlMesh: cubeMDLMesh, mtkMesh: cubeMTKMesh)
+
+    let mtkMesh = try! MTKMesh(mesh: mdlMesh, device: Renderer.device)
+    self.init(mdlMesh: mdlMesh, mtkMesh: mtkMesh)
   }
 
 }

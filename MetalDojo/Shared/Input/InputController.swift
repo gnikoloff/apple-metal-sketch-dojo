@@ -8,6 +8,7 @@
 // swiftlint:disable identifier_name
 
 import GameController
+import CoreMotion
 
 class InputController {
   struct Point {
@@ -22,6 +23,10 @@ class InputController {
   var mouseDelta = Point.zero
   var mouseScroll = Point.zero
   var touchLocation = CGPoint()
+
+  var motion: CMMotionManager
+  var gyroOffsets: [Float] = [0, 0, 0]
+
   var touchDelta: CGSize? {
     didSet {
       touchDelta?.height *= -1
@@ -33,6 +38,16 @@ class InputController {
   }
 
   private init() {
+    motion = CMMotionManager()
+    if motion.isAccelerometerAvailable {
+      self.motion.accelerometerUpdateInterval = 1 / 60
+      self.motion.startAccelerometerUpdates()
+    }
+//      if motion.isGyroAvailable {
+//        self.motion.gyroUpdateInterval = 1 / 60
+//        self.motion.startGyroUpdates()
+//      }
+
     let center = NotificationCenter.default
     center.addObserver(
       forName: .GCKeyboardDidConnect,
@@ -65,6 +80,7 @@ class InputController {
   NSEvent.addLocalMonitorForEvents(
     matching: [.keyUp, .keyDown]) { _ in nil }
 #endif
+
   }
 }
 

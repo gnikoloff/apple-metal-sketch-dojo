@@ -14,14 +14,6 @@ final class Renderer {
   static var meshAllocator: MTKMeshBufferAllocator!
   static var viewColorFormat: MTLPixelFormat!
 
-  static func buildDepthStencilState() -> MTLDepthStencilState? {
-    let descriptor = MTLDepthStencilDescriptor()
-    descriptor.depthCompareFunction = .less
-    descriptor.isDepthWriteEnabled = true
-    return Renderer.device.makeDepthStencilState(
-      descriptor: descriptor)
-  }
-
   var perspCameraUniforms = CameraUniforms()
 
   init(metalView: MTKView) {

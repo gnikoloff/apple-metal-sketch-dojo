@@ -75,7 +75,7 @@ struct SphereLightCaster: Transformable {
     }
 
     if depthStencilState == nil {
-      depthStencilState = Renderer.buildDepthStencilState()
+      depthStencilState = PipelineState.buildDepthStencilState()
     }
   }
 

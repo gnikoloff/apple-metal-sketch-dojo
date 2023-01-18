@@ -82,14 +82,14 @@ float getDistanceAttenuation(float lightDistance,
 
 fragment FragmentOut pointsShadowmap_depthFragmentSphere(VertexOut in [[stage_in]],
                                                          constant PointsShadowmap_Light &light [[buffer(ShadowCameraUniformsBuffer)]]) {
-FragmentOut out;
-float a = computeOpacity(in.uv);
-if (a < 0.5) {
-  discard_fragment();
-}
-out.depth = length(in.worldPos - light.position);
-out.depth /= shadow_camera_depth;
-return out;
+  FragmentOut out;
+  float a = computeOpacity(in.uv);
+  if (a < 0.5) {
+    discard_fragment();
+  }
+  out.depth = length(in.worldPos - light.position);
+  out.depth /= shadow_camera_depth;
+  return out;
 }
 
 fragment FragmentOut pointsShadowmap_fragmentMain(VertexOut in [[stage_in]],
@@ -99,10 +99,8 @@ fragment FragmentOut pointsShadowmap_fragmentMain(VertexOut in [[stage_in]],
   FragmentOut out;
 
   if (is_shaded_and_shadowed) {
-
-
     float3 normal = normalize(-in.normal);
-    float3 ambient = float3(0.3);
+    float3 ambient = 0.3;
 
     out.color = float4(0.0);
 
@@ -124,8 +122,6 @@ fragment FragmentOut pointsShadowmap_fragmentMain(VertexOut in [[stage_in]],
 
       out.color += float4((ambient + (1.0 - shadow)) * diffuse, 1.0);
     }
-
-
   } else {
     if (is_cut_off_alpha) {
       float a = computeOpacity(in.uv);
@@ -149,19 +145,19 @@ vertex VertexOut pointsShadowmap_vertex(const VertexIn in [[stage_in]],
                                         constant Uniforms &uniforms [[buffer(UniformsBuffer)]],
                                         constant CameraUniforms &perspCameraUniforms [[buffer(CameraUniformsBuffer), function_constant(is_not_cubemap_render)]],
                                         constant PointsShadowmap_View *sideUniforms [[buffer(ShadowCameraUniformsBuffer), function_constant(is_cubemap_render)]]) {
-float4 worldPos = uniforms.modelMatrix * in.position;
-VertexOut out;
-if (is_cubemap_render) {
-  out.face = instanceId;
-  float4 screenPos = sideUniforms[out.face].viewProjectionMatrix * worldPos;
-  out.position = screenPos;
-} else {
-  out.position = perspCameraUniforms.projectionMatrix *
-    perspCameraUniforms.viewMatrix *
-    worldPos;
-}
-out.uv = in.uv;
-out.normal = in.normal;
-out.worldPos = worldPos.xyz;
-return out;
+  float4 worldPos = uniforms.modelMatrix * in.position;
+  VertexOut out;
+  if (is_cubemap_render) {
+    out.face = instanceId;
+    float4 screenPos = sideUniforms[out.face].viewProjectionMatrix * worldPos;
+    out.position = screenPos;
+  } else {
+    out.position = perspCameraUniforms.projectionMatrix *
+      perspCameraUniforms.viewMatrix *
+      worldPos;
+  }
+  out.uv = in.uv;
+  out.normal = in.normal;
+  out.worldPos = worldPos.xyz;
+  return out;
 }

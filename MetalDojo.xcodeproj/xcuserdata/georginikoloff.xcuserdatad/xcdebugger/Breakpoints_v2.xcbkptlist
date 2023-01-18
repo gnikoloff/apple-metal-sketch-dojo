@@ -190,9 +190,9 @@
             filePath = "MetalDojo/Shared/Meshes/Sphere.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
-            landmarkName = "init(size:)"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
+            landmarkName = "init(size:inwardNormals:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -222,8 +222,8 @@
             filePath = "MetalDojo/Shared/Meshes/Sphere.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
             landmarkName = "Sphere"
             landmarkType = "14">
          </BreakpointContent>
@@ -338,6 +338,22 @@
             endingLineNumber = "55"
             landmarkName = "update(deltaTime:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "15AD6D24-1D7B-4E02-A308-2294F94FBFBD"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MetalDojo/Example Screnes/Infinite Space/Shaders/InfiniteSpace_Deferred.metal"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "struct"
+            landmarkType = "14">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

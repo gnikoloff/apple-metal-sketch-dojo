@@ -7,45 +7,89 @@
 
 import Foundation
 import Metal
+import ModelIO
 
 enum InfiniteSpacePipelineStatesErrors: Error {
-  case invalidComputeFunction
+  case invalidBoxesComputeFunction
+  case invalidPointLightsComputeFunction
+}
+
+extension MTLRenderPipelineDescriptor {
+  func setColorAttachmentPixelFormatsForInfiniteSpace(_ colorPixelFormat: MTLPixelFormat) {
+    colorAttachments[0].pixelFormat = colorPixelFormat
+    colorAttachments[RenderTargetNormal.index].pixelFormat = .rgba16Float
+    colorAttachments[RenderTargetPosition.index].pixelFormat = .rgba16Float
+  }
 }
 
 enum InfiniteSpacePipelineStates {
-  static func createComputePSO() throws -> MTLComputePipelineState {
-    guard let computeFunction = Renderer.library.makeFunction(name: "InfiniteSpace_compute") else {
-      throw InfiniteSpacePipelineStatesErrors.invalidComputeFunction
-    }
-    return try Renderer.device.makeComputePipelineState(function: computeFunction)
+
+  static func buildLightingDepthStencilState() -> MTLDepthStencilState? {
+    let descriptor = MTLDepthStencilDescriptor()
+    descriptor.isDepthWriteEnabled = false
+    return Renderer.device.makeDepthStencilState(descriptor: descriptor)
   }
-  static func createForwardPSO(
-    colorPixelFormat: MTLPixelFormat
-  ) throws -> MTLRenderPipelineState {
-    let fnConstantValues = MTLFunctionConstantValues()
-//    var isCubemapRender = false
-//    fnConstantValues.setConstantValue(
-//      &isCubemapRender,
-//      type: .bool,
-//      index: 0
-//    )
-    let vertexFunction = try Renderer.library?.makeFunction(
-      name: "infiniteSpace_vertex",
-      constantValues: fnConstantValues
-    )
-    let fragmentFunction = try Renderer.library?.makeFunction(
-      name: "infiniteSpace_fragment",
-      constantValues: fnConstantValues
-    )
+
+  static func createGBufferPSO(colorPixelFormat: MTLPixelFormat) -> MTLRenderPipelineState {
+    let vertexFunction = Renderer.library?.makeFunction(name: "infiniteSpace_vertexCube")
+    let fragmentFunction = Renderer.library?.makeFunction(name: "infiniteSpace_fragmentCube")
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
-    pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
-
-    pipelineDescriptor.vertexDescriptor = PipelineState.createDefaultVertexDescriptor()
+    pipelineDescriptor.setColorAttachmentPixelFormatsForInfiniteSpace(colorPixelFormat)
     pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
-
+    pipelineDescriptor.vertexDescriptor = MDLVertexDescriptor.defaultLayout
     return PipelineState.createPSO(descriptor: pipelineDescriptor)
   }
-}
 
+  static func createPointLightPSO(
+    colorPixelFormat: MTLPixelFormat
+  ) -> MTLRenderPipelineState {
+    let vertexFunction = Renderer.library?.makeFunction(name: "InfiniteSpace_vertexPointLight")
+    let fragmentFunction = Renderer.library?.makeFunction(name: "InfiniteSpace_fragmentPointLight")
+    let pipelineDescriptor = MTLRenderPipelineDescriptor()
+    pipelineDescriptor.vertexFunction = vertexFunction
+    pipelineDescriptor.fragmentFunction = fragmentFunction
+    pipelineDescriptor.setColorAttachmentPixelFormatsForInfiniteSpace(colorPixelFormat)
+    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+    pipelineDescriptor.vertexDescriptor = MDLVertexDescriptor.defaultLayout
+    let attachment = pipelineDescriptor.colorAttachments[0]
+    attachment?.isBlendingEnabled = true
+    attachment?.rgbBlendOperation = .add
+    attachment?.alphaBlendOperation = .add
+    attachment?.sourceRGBBlendFactor = .one
+    attachment?.sourceAlphaBlendFactor = .one
+    attachment?.destinationRGBBlendFactor = .one
+    attachment?.destinationAlphaBlendFactor = .zero
+    attachment?.sourceRGBBlendFactor = .one
+    attachment?.sourceAlphaBlendFactor = .one
+    return PipelineState.createPSO(descriptor: pipelineDescriptor)
+  }
+
+  static func createSunLightPSO(
+    colorPixelFormat: MTLPixelFormat
+  ) -> MTLRenderPipelineState {
+    let vertexFunction = Renderer.library?.makeFunction(name: "infiniteSpace_vertexQuad")
+    let fragmentFunction = Renderer.library?.makeFunction(name: "InfiniteSpace_fragmentDeferredSun")
+    let pipelineDescriptor = MTLRenderPipelineDescriptor()
+    pipelineDescriptor.vertexFunction = vertexFunction
+    pipelineDescriptor.fragmentFunction = fragmentFunction
+    pipelineDescriptor.setColorAttachmentPixelFormatsForInfiniteSpace(colorPixelFormat)
+    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+    return PipelineState.createPSO(descriptor: pipelineDescriptor)
+  }
+
+  static func createBoxesComputePSO() throws -> MTLComputePipelineState {
+    guard let computeFunction = Renderer.library.makeFunction(name: "InfiniteSpace_computeBoxes") else {
+      throw InfiniteSpacePipelineStatesErrors.invalidBoxesComputeFunction
+    }
+    return try Renderer.device.makeComputePipelineState(function: computeFunction)
+  }
+
+  static func createPointLightsComputePSO() throws -> MTLComputePipelineState {
+    guard let computeFunction = Renderer.library.makeFunction(name: "InfiniteSpace_computePointLights") else {
+      throw InfiniteSpacePipelineStatesErrors.invalidPointLightsComputeFunction
+    }
+    return try Renderer.device.makeComputePipelineState(function: computeFunction)
+  }
+}

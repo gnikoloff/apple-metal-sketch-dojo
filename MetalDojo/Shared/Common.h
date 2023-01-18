@@ -9,9 +9,9 @@
 #define Common_h
 
 #import <simd/simd.h>
-#import "../Example Screnes/Welcome Screen/WelcomeScreen.h"
-#import "../Example Screnes/Points Shadowmap/PointsShadowmap.h"
-#import "../Example Screnes/Infinite Space/InfiniteSpace.h"
+#import "../Example Screnes/Welcome Screen/Shaders/WelcomeScreen.h"
+#import "../Example Screnes/Points Shadowmap/Shaders/PointsShadowmap.h"
+#import "../Example Screnes/Infinite Space/Shaders/InfiniteSpace.h"
 
 typedef struct {
   matrix_float4x4 viewMatrix;
@@ -42,6 +42,5 @@ typedef enum {
   UniformsBuffer = 11,
   CameraUniformsBuffer = 12,
 } BufferIndices;
-
 
 #endif /* Common_h */

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Metal
+import MetalKit
 
 enum PointsShadowmapPipelineStates {
   static func createShadowPSO() throws -> MTLRenderPipelineState {
@@ -31,7 +31,7 @@ enum PointsShadowmapPipelineStates {
     pipelineDescriptor.inputPrimitiveTopology = .triangle
     pipelineDescriptor.colorAttachments[0].pixelFormat = .invalid
     pipelineDescriptor.depthAttachmentPixelFormat = .depth16Unorm
-    pipelineDescriptor.vertexDescriptor = PipelineState.createDefaultVertexDescriptor()
+    pipelineDescriptor.vertexDescriptor = MDLVertexDescriptor.defaultLayout
     return PipelineState.createPSO(descriptor: pipelineDescriptor)
   }
 
@@ -82,7 +82,7 @@ enum PointsShadowmapPipelineStates {
     pipelineDescriptor.fragmentFunction = fragmentFunction
     pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
 
-    pipelineDescriptor.vertexDescriptor = PipelineState.createDefaultVertexDescriptor()
+    pipelineDescriptor.vertexDescriptor = MDLVertexDescriptor.defaultLayout
     pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
 
     return PipelineState.createPSO(descriptor: pipelineDescriptor)

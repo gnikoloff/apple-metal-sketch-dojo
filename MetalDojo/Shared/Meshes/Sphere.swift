@@ -23,11 +23,14 @@ struct Sphere: Drawable {
     // ...
   }
 
-  init(size: Float) {
+  init(
+    size: Float,
+    inwardNormals: Bool = false
+  ) {
     let sphereMDLMesh = MDLMesh(
       sphereWithExtent: float3(size, size, size),
       segments: SIMD2<UInt32>(50, 50),
-      inwardNormals: false,
+      inwardNormals: inwardNormals,
       geometryType: .triangles,
       allocator: Renderer.meshAllocator
     )

@@ -9,7 +9,7 @@
 
 import MetalKit
 
-class PointsShadowmap: ExampleScreen {
+final class PointsShadowmap: ExampleScreen {
   private static let SHADOW_PASS_LABEL = "Point Shadow Pass"
   private static let FORWARD_PASS_LABEL = "Point ShadowMap Pass"
 
@@ -55,7 +55,7 @@ class PointsShadowmap: ExampleScreen {
 
     perspCamera.distance = 3
 
-    depthStencilState = Renderer.buildDepthStencilState()
+    depthStencilState = PipelineState.buildDepthStencilState()
 
     cube = Cube(size: [2, 2, 2])
     cube.cullMode = .front

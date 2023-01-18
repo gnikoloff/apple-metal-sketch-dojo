@@ -19,6 +19,9 @@
 		FF44A1CC29645BB700C7A4F3 /* Attributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF44A1CB29645BB700C7A4F3 /* Attributes.swift */; };
 		FF44A1CE29645BCC00C7A4F3 /* BufferIndices.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF44A1CD29645BCC00C7A4F3 /* BufferIndices.swift */; };
 		FF44A1D129648C2100C7A4F3 /* PointsShadowmap_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF44A1D029648C2100C7A4F3 /* PointsShadowmap_Extensions.swift */; };
+		FF4BABA22976BB5100FE734C /* InfiniteSpace_Deferred.metal in Sources */ = {isa = PBXBuildFile; fileRef = FF4BABA12976BB5100FE734C /* InfiniteSpace_Deferred.metal */; };
+		FF4BABA62976BEFE00FE734C /* InfiniteSpace_Lighting.metal in Sources */ = {isa = PBXBuildFile; fileRef = FF4BABA52976BEFE00FE734C /* InfiniteSpace_Lighting.metal */; };
+		FF4BABAB2976C9B500FE734C /* Icosahedron.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4BABAA2976C9B500FE734C /* Icosahedron.swift */; };
 		FF63BD4B29642E0400A08F8F /* Cube.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF63BD4A29642E0400A08F8F /* Cube.swift */; };
 		FF63BD4D29642F1000A08F8F /* Sphere.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF63BD4C29642F1000A08F8F /* Sphere.swift */; };
 		FF6BD4F62965A72200EB957B /* PerspectiveCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6BD4F52965A72200EB957B /* PerspectiveCamera.swift */; };
@@ -27,7 +30,7 @@
 		FF6BD4FC2965A7A500EB957B /* OrthographicCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6BD4FB2965A7A500EB957B /* OrthographicCamera.swift */; };
 		FF6BD4FE2965A7B200EB957B /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6BD4FD2965A7B200EB957B /* Camera.swift */; };
 		FF6E29E1296736D600D2E59A /* InfiniteSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6E29E0296736D600D2E59A /* InfiniteSpace.swift */; };
-		FF6E29E8296739A900D2E59A /* InfiniteSpace_Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = FF6E29E7296739A900D2E59A /* InfiniteSpace_Shaders.metal */; };
+		FF6E29E8296739A900D2E59A /* InfiniteSpace_Compute.metal in Sources */ = {isa = PBXBuildFile; fileRef = FF6E29E7296739A900D2E59A /* InfiniteSpace_Compute.metal */; };
 		FF6E29EA29673C5600D2E59A /* InfiniteSpace_PipelineStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6E29E929673C5600D2E59A /* InfiniteSpace_PipelineStates.swift */; };
 		FF6E29ED2967550300D2E59A /* InfintieSpace_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6E29EC2967550300D2E59A /* InfintieSpace_Extensions.swift */; };
 		FF979BBF295DA1DE00021E5D /* Tween.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF979BBE295DA1DE00021E5D /* Tween.swift */; };
@@ -71,6 +74,11 @@
 		FF44A1CD29645BCC00C7A4F3 /* BufferIndices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferIndices.swift; sourceTree = "<group>"; };
 		FF44A1CF2964601600C7A4F3 /* PointsShadowmap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointsShadowmap.h; sourceTree = "<group>"; };
 		FF44A1D029648C2100C7A4F3 /* PointsShadowmap_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsShadowmap_Extensions.swift; sourceTree = "<group>"; };
+		FF4BABA12976BB5100FE734C /* InfiniteSpace_Deferred.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = InfiniteSpace_Deferred.metal; sourceTree = "<group>"; };
+		FF4BABA42976BE1100FE734C /* Vertex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vertex.h; sourceTree = "<group>"; };
+		FF4BABA52976BEFE00FE734C /* InfiniteSpace_Lighting.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = InfiniteSpace_Lighting.metal; sourceTree = "<group>"; };
+		FF4BABA92976C04400FE734C /* Lighting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Lighting.h; sourceTree = "<group>"; };
+		FF4BABAA2976C9B500FE734C /* Icosahedron.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icosahedron.swift; sourceTree = "<group>"; };
 		FF63BD4A29642E0400A08F8F /* Cube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cube.swift; sourceTree = "<group>"; };
 		FF63BD4C29642F1000A08F8F /* Sphere.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sphere.swift; sourceTree = "<group>"; };
 		FF6BD4F52965A72200EB957B /* PerspectiveCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerspectiveCamera.swift; sourceTree = "<group>"; };
@@ -80,7 +88,7 @@
 		FF6BD4FD2965A7B200EB957B /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		FF6BD4FF2965B1A300EB957B /* WelcomeScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WelcomeScreen.h; sourceTree = "<group>"; };
 		FF6E29E0296736D600D2E59A /* InfiniteSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfiniteSpace.swift; sourceTree = "<group>"; };
-		FF6E29E7296739A900D2E59A /* InfiniteSpace_Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = InfiniteSpace_Shaders.metal; sourceTree = "<group>"; };
+		FF6E29E7296739A900D2E59A /* InfiniteSpace_Compute.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = InfiniteSpace_Compute.metal; sourceTree = "<group>"; };
 		FF6E29E929673C5600D2E59A /* InfiniteSpace_PipelineStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfiniteSpace_PipelineStates.swift; sourceTree = "<group>"; };
 		FF6E29EB2967513900D2E59A /* InfiniteSpace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfiniteSpace.h; sourceTree = "<group>"; };
 		FF6E29EC2967550300D2E59A /* InfintieSpace_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfintieSpace_Extensions.swift; sourceTree = "<group>"; };
@@ -138,22 +146,13 @@
 		FF15619B2960872B007D14E4 /* Points Shadowmap */ = {
 			isa = PBXGroup;
 			children = (
-				FF2433552965C42C00041EF6 /* Light Casters */,
-				FF44A1CF2964601600C7A4F3 /* PointsShadowmap.h */,
-				FF25C91B296339E30056C317 /* PointsShadowmap_Shaders.metal */,
+				FF4BABA72976BFFB00FE734C /* Shaders */,
+				FF2433562965C43F00041EF6 /* SphereLightCaster.swift */,
 				FF44A1D029648C2100C7A4F3 /* PointsShadowmap_Extensions.swift */,
 				FF1561A029608D49007D14E4 /* PointsShadowmap_PipelineStates.swift */,
 				FF15619E29608791007D14E4 /* PointsShadowmap.swift */,
 			);
 			path = "Points Shadowmap";
-			sourceTree = "<group>";
-		};
-		FF2433552965C42C00041EF6 /* Light Casters */ = {
-			isa = PBXGroup;
-			children = (
-				FF2433562965C43F00041EF6 /* SphereLightCaster.swift */,
-			);
-			path = "Light Casters";
 			sourceTree = "<group>";
 		};
 		FF25C91D29633CF60056C317 /* Input */ = {
@@ -167,10 +166,9 @@
 		FF25C9202963502C0056C317 /* Welcome Screen */ = {
 			isa = PBXGroup;
 			children = (
-				FF6BD4FF2965B1A300EB957B /* WelcomeScreen.h */,
-				FFB840DD295B3F3D00B9338D /* Shaders.metal */,
-				FF25C922296351AD0056C317 /* WelcomeScreen.swift */,
+				FF4BABA82976C01700FE734C /* Shaders */,
 				FFB840DF295B421C00B9338D /* Draw Meshes */,
+				FF25C922296351AD0056C317 /* WelcomeScreen.swift */,
 			);
 			path = "Welcome Screen";
 			sourceTree = "<group>";
@@ -190,11 +188,42 @@
 			path = Rendering;
 			sourceTree = "<group>";
 		};
+		FF4BABA32976BB5700FE734C /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				FF6E29EB2967513900D2E59A /* InfiniteSpace.h */,
+				FF4BABA92976C04400FE734C /* Lighting.h */,
+				FF4BABA12976BB5100FE734C /* InfiniteSpace_Deferred.metal */,
+				FF4BABA52976BEFE00FE734C /* InfiniteSpace_Lighting.metal */,
+				FF6E29E7296739A900D2E59A /* InfiniteSpace_Compute.metal */,
+			);
+			path = Shaders;
+			sourceTree = "<group>";
+		};
+		FF4BABA72976BFFB00FE734C /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				FF44A1CF2964601600C7A4F3 /* PointsShadowmap.h */,
+				FF25C91B296339E30056C317 /* PointsShadowmap_Shaders.metal */,
+			);
+			path = Shaders;
+			sourceTree = "<group>";
+		};
+		FF4BABA82976C01700FE734C /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				FF6BD4FF2965B1A300EB957B /* WelcomeScreen.h */,
+				FFB840DD295B3F3D00B9338D /* Shaders.metal */,
+			);
+			path = Shaders;
+			sourceTree = "<group>";
+		};
 		FF63BD4E2964318B00A08F8F /* Meshes */ = {
 			isa = PBXGroup;
 			children = (
 				FF63BD4A29642E0400A08F8F /* Cube.swift */,
 				FF63BD4C29642F1000A08F8F /* Sphere.swift */,
+				FF4BABAA2976C9B500FE734C /* Icosahedron.swift */,
 			);
 			path = Meshes;
 			sourceTree = "<group>";
@@ -214,8 +243,7 @@
 		FF6E29DF296736B600D2E59A /* Infinite Space */ = {
 			isa = PBXGroup;
 			children = (
-				FF6E29EB2967513900D2E59A /* InfiniteSpace.h */,
-				FF6E29E7296739A900D2E59A /* InfiniteSpace_Shaders.metal */,
+				FF4BABA32976BB5700FE734C /* Shaders */,
 				FF6E29E929673C5600D2E59A /* InfiniteSpace_PipelineStates.swift */,
 				FF6E29E0296736D600D2E59A /* InfiniteSpace.swift */,
 				FF6E29EC2967550300D2E59A /* InfintieSpace_Extensions.swift */,
@@ -292,6 +320,7 @@
 			isa = PBXGroup;
 			children = (
 				FFB840CE295B2D8800B9338D /* Common.h */,
+				FF4BABA42976BE1100FE734C /* Vertex.h */,
 				FF6BD4F42965A71500EB957B /* Cameras */,
 				FF63BD4E2964318B00A08F8F /* Meshes */,
 				FF25C91D29633CF60056C317 /* Input */,
@@ -471,16 +500,19 @@
 				FF6BD4F62965A72200EB957B /* PerspectiveCamera.swift in Sources */,
 				FFB840E4295B43B500B9338D /* Stick.swift in Sources */,
 				FFB840D3295B2EBD00B9338D /* Transform.swift in Sources */,
+				FF4BABA62976BEFE00FE734C /* InfiniteSpace_Lighting.metal in Sources */,
+				FF4BABA22976BB5100FE734C /* InfiniteSpace_Deferred.metal in Sources */,
 				FFB840EC295B78C000B9338D /* Options.swift in Sources */,
 				FFB840AF295B243B00B9338D /* MetalDojoApp.swift in Sources */,
 				FFB840DC295B3BB100B9338D /* PipelineStates.swift in Sources */,
 				FF6E29EA29673C5600D2E59A /* InfiniteSpace_PipelineStates.swift in Sources */,
 				FF2433572965C43F00041EF6 /* SphereLightCaster.swift in Sources */,
+				FF4BABAB2976C9B500FE734C /* Icosahedron.swift in Sources */,
 				FF6BD4FE2965A7B200EB957B /* Camera.swift in Sources */,
 				FFB840EA295B639E00B9338D /* ProjectsGrid.swift in Sources */,
 				FF44A1CC29645BB700C7A4F3 /* Attributes.swift in Sources */,
 				FF15619D29608765007D14E4 /* ExampleScreen.swift in Sources */,
-				FF6E29E8296739A900D2E59A /* InfiniteSpace_Shaders.metal in Sources */,
+				FF6E29E8296739A900D2E59A /* InfiniteSpace_Compute.metal in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
