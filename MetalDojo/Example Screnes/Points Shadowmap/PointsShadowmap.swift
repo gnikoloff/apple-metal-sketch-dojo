@@ -99,9 +99,7 @@ final class PointsShadowmap: ExampleScreen {
     sphere1.rotation.x = -elapsedTime * 0.8
     sphere1.rotation.y = elapsedTime * 0.8
     sphere1.rotation.z = -elapsedTime
-  }
 
-  func updateUniforms() {
     perspCameraUniforms.viewMatrix = perspCamera.viewMatrix
     perspCameraUniforms.projectionMatrix = perspCamera.projectionMatrix
     perspCameraUniforms.position = perspCamera.position
@@ -135,7 +133,6 @@ final class PointsShadowmap: ExampleScreen {
 //    view.clearColor = MTLClearColor(red: 1, green: 0.2, blue: 1, alpha: 1)
 
     var camUniforms = perspCameraUniforms
-    updateUniforms()
 
     guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
       return

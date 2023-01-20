@@ -9,10 +9,7 @@ import Foundation
 import Metal
 import ModelIO
 
-enum InfiniteSpacePipelineStatesErrors: Error {
-  case invalidBoxesComputeFunction
-  case invalidPointLightsComputeFunction
-}
+
 
 extension MTLRenderPipelineDescriptor {
   func setColorAttachmentPixelFormatsForInfiniteSpace(_ colorPixelFormat: MTLPixelFormat) {
@@ -81,14 +78,14 @@ enum InfiniteSpacePipelineStates {
 
   static func createBoxesComputePSO() throws -> MTLComputePipelineState {
     guard let computeFunction = Renderer.library.makeFunction(name: "InfiniteSpace_computeBoxes") else {
-      throw InfiniteSpacePipelineStatesErrors.invalidBoxesComputeFunction
+      throw EngineError.invalidComputeFunction
     }
     return try Renderer.device.makeComputePipelineState(function: computeFunction)
   }
 
   static func createPointLightsComputePSO() throws -> MTLComputePipelineState {
     guard let computeFunction = Renderer.library.makeFunction(name: "InfiniteSpace_computePointLights") else {
-      throw InfiniteSpacePipelineStatesErrors.invalidPointLightsComputeFunction
+      throw EngineError.invalidComputeFunction
     }
     return try Renderer.device.makeComputePipelineState(function: computeFunction)
   }

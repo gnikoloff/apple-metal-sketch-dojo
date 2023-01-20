@@ -23,11 +23,13 @@ final class GameController: NSObject {
     self.options = options
     super.init()
     metalView.delegate = self
+    metalView.framebufferOnly = false
     fps = Double(metalView.preferredFramesPerSecond)
 
 //    screens.append(WelcomeScreen(options: options))
 //    screens.append(PointsShadowmap())
-    screens.append(InfiniteSpace())
+//    screens.append(InfiniteSpace())
+    screens.append(AppleMetalScreen())
   }
 }
 

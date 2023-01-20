@@ -18,16 +18,16 @@ constant bool is_cut_off_alpha [[function_constant(3)]];
 constant float shadow_camera_depth = 25.0;
 
 struct VertexIn {
-  float4 position [[attribute(Position)]];
-  float3 normal [[attribute(Normal)]];
-  float2 uv [[attribute(UV)]];
+  vector_float4 position [[attribute(Position)]];
+  vector_float3 normal [[attribute(Normal)]];
+  vector_float2 uv [[attribute(UV)]];
 };
 
 struct VertexOut {
-  float4 position [[position]];
-  float3 normal;
-  float2 uv;
-  float3 worldPos;
+  vector_float4 position [[position]];
+  vector_float3 normal;
+  vector_float2 uv;
+  vector_float3 worldPos;
   uint face [[render_target_array_index, function_constant(is_cubemap_render)]];
 };
 

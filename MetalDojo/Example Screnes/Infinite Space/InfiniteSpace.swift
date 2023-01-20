@@ -53,12 +53,12 @@ final class InfiniteSpace: ExampleScreen {
 
   private static func createCubesMaterialsBuffer() -> MTLBuffer {
     let materialsBuffer = Renderer.device.makeBuffer(
-      length: MemoryLayout<InfiniteSpace_CubeMaterial>.stride * Self.BOXES_COUNT,
+      length: MemoryLayout<Material>.stride * Self.BOXES_COUNT,
       options: []
     )!
     let bufferPointer = materialsBuffer
       .contents()
-      .bindMemory(to: InfiniteSpace_CubeMaterial.self, capacity: Self.BOXES_COUNT)
+      .bindMemory(to: Material.self, capacity: Self.BOXES_COUNT)
     for i in 0 ..< Self.BOXES_COUNT {
       bufferPointer[i].shininess = Float.random(in: 0..<1)
       bufferPointer[i].baseColor = Float.random(in: 0..<0.3)
@@ -67,27 +67,8 @@ final class InfiniteSpace: ExampleScreen {
     return materialsBuffer
   }
 
-  private static func buildDefaultLight() -> InfiniteSpace_Light {
-    var light = InfiniteSpace_Light()
-    light.position = [0, 0, 0]
-    light.color = float3(repeating: 1.0)
-    light.specularColor = float3(repeating: 0.6)
-    light.attenuation = [1, 0, 0]
-    light.type = Sun
-    return light
-  }
-
-  private static func createLightBuffer(lights: [InfiniteSpace_Light]) -> MTLBuffer {
-    var lights = lights
-    return Renderer.device.makeBuffer(
-      bytes: &lights,
-      length: MemoryLayout<InfiniteSpace_Light>.stride * lights.count,
-      options: []
-    )!
-  }
-
   private static func createSunLightsBuffer() -> MTLBuffer {
-    var lights: [InfiniteSpace_Light] = []
+    var lights: [Light] = []
     var sunLight0 = Self.buildDefaultLight()
     sunLight0.position = [100, -100, 100]
     sunLight0.color = float3(repeating: 0.7)
@@ -102,7 +83,7 @@ final class InfiniteSpace: ExampleScreen {
   private static func createPointLightsBuffer() -> MTLBuffer {
 //    let worldX = Self.WORLD_SIZE[0]
 //    let worldY = Self.WORLD_SIZE[1]
-    var pointLights: [InfiniteSpace_Light] = []
+    var pointLights: [Light] = []
     for i in 0 ..< InfiniteSpace.POINT_LIGHTS_COUNT {
       var light = Self.buildDefaultLight()
       light.type = Point
@@ -114,7 +95,7 @@ final class InfiniteSpace: ExampleScreen {
         sin(Float(i)) * Float.random(in: 0 ..< WORLD_SIZE[1]) + 1,
         Float.random(in: 0 ..< WORLD_SIZE[2])
       )
-      light.attenuation = float3(repeating: 0.3)
+      light.attenuation = 0.3
       light.speed = Float.random(in: 0..<0.15)
       pointLights.append(light)
     }
@@ -235,9 +216,7 @@ final class InfiniteSpace: ExampleScreen {
 //    let camSpeed = deltaTime * 5
 //    perspCamera.position.x += (rotX - perspCamera.position.x) * camSpeed
 //    perspCamera.position.y += (rotY - perspCamera.position.y) * camSpeed
-  }
 
-  func updateUniforms() {
     let camBufferPointer = cameraBuffer.contents().bindMemory(
       to: CameraUniforms.self,
       capacity: 1
@@ -390,7 +369,7 @@ final class InfiniteSpace: ExampleScreen {
   }
 
   func draw(in view: MTKView, commandBuffer: MTLCommandBuffer) {
-    updateUniforms()
+    
     computePointLightsPositions(commandBuffer: commandBuffer)
     computeBoxesPositions(commandBuffer: commandBuffer)
 

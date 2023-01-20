@@ -22,7 +22,6 @@ typedef enum {
   ControlPointsBuffer = 13,
   BoidsSettingsBuffer = 14,
   DeferredSettingsBuffer = 15,
-  LightBuffer = 16,
   MaterialsBuffer = 17
 } InfiniteSpace_BufferIndices;
 
@@ -46,28 +45,5 @@ typedef struct {
   matrix_float4x4 cameraViewInverse;
   vector_uint2 viewportSize;
 } InfiniteSpace_DeferredSettings;
-
-typedef enum {
-  unused = 0,
-  Sun = 1,
-  Spot = 2,
-  Point = 3,
-  Ambient = 4
-} InfiniteSpace_LightType;
-
-typedef struct {
-  vector_float3 position;
-  vector_float3 color;
-  vector_float3 specularColor;
-  vector_float3 attenuation;
-  InfiniteSpace_LightType type;
-  float speed;
-} InfiniteSpace_Light;
-
-typedef struct {
-  float shininess;
-  float baseColor;
-  float specularColor;
-} InfiniteSpace_CubeMaterial;
 
 #endif /* InfiniteSpace_h */

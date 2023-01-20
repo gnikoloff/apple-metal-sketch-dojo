@@ -1,80 +1,72 @@
 //
-//  InfiniteSpace_Lighting.metal
+//  Lighting.metal
 //  MetalDojo
 //
-//  Created by Georgi Nikoloff on 17.01.23.
+//  Created by Georgi Nikoloff on 19.01.23.
 //
 
 #include <metal_stdlib>
-#import "./InfiniteSpace.h"
-
+#import "./Common.h"
 using namespace metal;
 
-float3 calculateSun(InfiniteSpace_Light light,
+float3 calculateSun(Light light,
                     float3 normal,
                     float3 cameraPosition,
-                    InfiniteSpace_CubeMaterial material) {
+                    Material material) {
   float3 diffuseColor = 0;
   float3 specularColor = 0;
   float3 lightDirection = normalize(-light.position);
 
-  float diffuseIntensity =
-    saturate(-dot(lightDirection, normal));
+  float diffuseIntensity = saturate(-dot(lightDirection, normal));
 
   diffuseColor += light.color * material.baseColor * diffuseIntensity;
 
   if (diffuseIntensity > 0) {
-    float3 reflection =
-        reflect(lightDirection, normal);
-    float3 viewDirection =
-        normalize(cameraPosition);
-    float specularIntensity =
-        pow(saturate(dot(reflection, viewDirection)),
-            material.shininess);
-    specularColor +=
-        light.specularColor * material.specularColor
-* specularIntensity;
+    float3 reflection = reflect(lightDirection, normal);
+    float3 viewDirection = normalize(cameraPosition);
+    float specularIntensity = pow(saturate(dot(reflection, viewDirection)), material.shininess);
+    specularColor += light.specularColor * material.specularColor * specularIntensity;
   }
   return diffuseColor + specularColor;
 }
 
-float3 calculatePoint(InfiniteSpace_Light light,
+float3 calculatePoint(Light light,
                       float3 position,
                       float3 normal,
-                      InfiniteSpace_CubeMaterial material) {
+                      Material material) {
   float d = distance(light.position, position);
+//  if (d > 0.2) {
+//    return 0.0;
+//  }
   float3 lightDirection = normalize(light.position - position);
-//  float attenuation = 1.0 / (light.attenuation.x +
-//      light.attenuation.y * d + light.attenuation.z * d * d);
   float attenuation = d / (1 - d) * d;
   attenuation = attenuation + 1;
   attenuation = 1 / (attenuation * attenuation);
-//  float attenuation = dist / (1.0 - (dist / lightR) * (dist / lightR));
-//      attenuation = attenuation / lightR + 1.0;
-//      attenuation = 1.0 / (attenuation * attenuation);
-  float diffuseIntensity =
-      saturate(dot(lightDirection, normal));
-  float3 color = light.color * diffuseIntensity * attenuation;
+//  attenuation *= light.attenuation;
+  float diffuseIntensity = saturate(dot(lightDirection, normal));
+
+  float3 color = light.color * diffuseIntensity * attenuation * light.attenuation;
   return color;
 }
 
 float3 phongLighting(float3 normal,
                      float3 position,
-                     constant CameraUniforms &cameraUniforms,
-                     constant InfiniteSpace_Light *lights,
-                     InfiniteSpace_CubeMaterial material) {
+                     float3 cameraPosition,
+                     uint lightsCount,
+                     constant Light *lights,
+                     Material material) {
 
   float3 ambientColor = 0;
   float3 accumulatedLighting = 0;
 
-  for (uint i = 0; i < 2; i++) {
-    InfiniteSpace_Light light = lights[i];
+  for (uint i = 0; i < lightsCount; i++) {
+    Light light = lights[i];
     switch (light.type) {
       case Sun: {
-        accumulatedLighting += calculateSun(light,
-                                            normal,
-                                            cameraUniforms.position,
-                                            material);
+//        accumulatedLighting += calculateSun(light,
+//                                            normal,
+//                                            cameraPosition,
+//                                            material);
         break;
       }
       case Point: {

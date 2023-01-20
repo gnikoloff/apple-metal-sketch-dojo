@@ -7,13 +7,12 @@
 
 #include <metal_stdlib>
 #import "./InfiniteSpace.h"
-#import "../../../Shared/Vertex.h"
 
 using namespace metal;
 
 kernel void InfiniteSpace_computeBoxes(device InfiniteSpace_ControlPoint *controlPoints [[buffer(ControlPointsBuffer)]],
-                                  constant InfiniteSpace_BoidsSettings &boidsSettings [[buffer(BoidsSettingsBuffer)]],
-                                  uint id [[thread_position_in_grid]]) {
+                                       constant InfiniteSpace_BoidsSettings &boidsSettings [[buffer(BoidsSettingsBuffer)]],
+                                       uint id [[thread_position_in_grid]]) {
 
   uint cubeIdx = id * boidsSettings.boxSegmentsCount;
 
@@ -45,9 +44,9 @@ kernel void InfiniteSpace_computeBoxes(device InfiniteSpace_ControlPoint *contro
   }
 }
 
-kernel void InfiniteSpace_computePointLights(device InfiniteSpace_Light *lights [[buffer(LightBuffer)]],
+kernel void InfiniteSpace_computePointLights(device Light *lights [[buffer(LightBuffer)]],
                                              uint id [[thread_position_in_grid]]) {
-  device InfiniteSpace_Light &light = lights[id];
+  device Light &light = lights[id];
   light.position.z += light.speed;
   if (light.position.z > 40) {
     light.position.z = -2;
