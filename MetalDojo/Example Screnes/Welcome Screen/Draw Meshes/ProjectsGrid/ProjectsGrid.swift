@@ -35,12 +35,12 @@ class ProjectsGrid {
       let realy = Float(y) * rowHeight
       dots.append(
         Dot(
-          pos: float2(-colWidth / 2 + 1284 / 2, realy)
+          pos: float2(-colWidth / 2 + 1284 / 2, realy + 200)
         )
       )
       dots.append(
         Dot(
-          pos: float2(colWidth / 2 + 1284 / 2, realy)
+          pos: float2(colWidth / 2 + 1284 / 2, realy + 200)
         )
       )
       sticks.append(Stick(
@@ -70,6 +70,7 @@ class ProjectsGrid {
     for i in 0 ..< projects.count {
       let project = projects[i]
       let panel = Panel(
+        size: float2(colWidth, rowHeight),
         dots: [
           dots[i * 2 + 0],
           dots[i * 2 + 1],

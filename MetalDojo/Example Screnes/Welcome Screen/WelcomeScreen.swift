@@ -7,13 +7,14 @@
 
 import MetalKit
 
-class WelcomeScreen: ExampleScreen {
+class WelcomeScreen {
   private let label = "Welcome Screen Render Pass"
-  private var projectsGrid: ProjectsGrid
-  private var pipelineState: MTLRenderPipelineState
 
+  private var pipelineState: MTLRenderPipelineState
   private var orthoCameraUniforms = CameraUniforms()
   private var orthoCamera = OrthographicCamera()
+
+  var projectsGrid: ProjectsGrid
 
   init(options: Options) {
     pipelineState = PipelineState.createWelcomeScreenPSO(
@@ -22,10 +23,8 @@ class WelcomeScreen: ExampleScreen {
     projectsGrid = ProjectsGrid(
       projects: [
         ProjectModel(name: "Whatever"),
-        ProjectModel(name: "Lorem"),
-        ProjectModel(name: "Ipsum"),
-        ProjectModel(name: "Ipsem"),
-        ProjectModel(name: "Lorum")
+        ProjectModel(name: "Whatever"),
+        ProjectModel(name: "Whatever")
       ],
       colWidth: 900,
       rowHeight: 400,
@@ -50,8 +49,13 @@ class WelcomeScreen: ExampleScreen {
   }
 
   func draw(in view: MTKView, commandBuffer: MTLCommandBuffer) {
-    guard let descriptor = view.currentRenderPassDescriptor,
-          let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
+    guard let descriptor = view.currentRenderPassDescriptor else {
+      return
+    }
+    let clearColor = MTLClearColor(red: 1, green: 1, blue: 1, alpha: 1)
+    descriptor.colorAttachments[0].clearColor = clearColor
+    guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
+
       return
     }
 

@@ -10,8 +10,14 @@
 import MetalKit
 
 final class PointsShadowmap: ExampleScreen {
+
+
   private static let SHADOW_PASS_LABEL = "Point Shadow Pass"
   private static let FORWARD_PASS_LABEL = "Point ShadowMap Pass"
+
+  var outputTexture: MTLTexture!
+  var outputDepthTexture: MTLTexture!
+  var outputPassDescriptor: MTLRenderPassDescriptor
 
   private var cubeRenderPipeline: MTLRenderPipelineState
   private let sphereRenderPipelineFront: MTLRenderPipelineState
@@ -30,6 +36,8 @@ final class PointsShadowmap: ExampleScreen {
   private var shadowCasrersUniformsBufferContents: UnsafeMutablePointer<PointsShadowmap_Light>
 
   init() {
+    outputPassDescriptor = MTLRenderPassDescriptor()
+
     do {
       try cubeRenderPipeline = PointsShadowmapPipelineStates.createForwardPSO(
         colorPixelFormat: Renderer.viewColorFormat,
@@ -77,6 +85,11 @@ final class PointsShadowmap: ExampleScreen {
   }
 
   func resize(view: MTKView, size: CGSize) {
+    outputTexture = Self.createOutputTexture(
+      size: size,
+      label: "PointsShadowmap output texture"
+    )
+    outputDepthTexture = Self.createDepthOutputTexture(size: size)
     self.perspCamera.update(size: size)
   }
 
@@ -126,13 +139,21 @@ final class PointsShadowmap: ExampleScreen {
   func draw(in view: MTKView, commandBuffer: MTLCommandBuffer) {
     drawShadowCubeMap(commandBuffer: commandBuffer)
 
-    guard let descriptor = view.currentRenderPassDescriptor else {
-      return
-    }
+//    guard let descriptor = view.currentRenderPassDescriptor else {
+//      return
+//    }
+
 
 //    view.clearColor = MTLClearColor(red: 1, green: 0.2, blue: 1, alpha: 1)
 
     var camUniforms = perspCameraUniforms
+
+    let descriptor = outputPassDescriptor
+    descriptor.colorAttachments[0].texture = outputTexture
+    descriptor.colorAttachments[0].storeAction = .store
+    descriptor.depthAttachment.texture = outputDepthTexture
+    descriptor.depthAttachment.storeAction = .dontCare
+//    descriptor.depthAttachment.texture?.pixelFormat = .depth16Unorm
 
     guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
       return

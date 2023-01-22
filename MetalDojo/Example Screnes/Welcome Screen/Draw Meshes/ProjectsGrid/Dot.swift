@@ -15,8 +15,8 @@ class Dot {
   var mainScreenOldPos: float2
   var targetPos: float2
 
-  var gravity = float2(0, 0)
-  var friction = float2(0.2, 0.2)
+  var gravity = float2(0, 6.2)
+  var friction = float2(0.2, 0.02)
   var groundFriction = Float(0.7)
   var mass = Float(1)
 
@@ -46,7 +46,7 @@ extension Dot {
     oldPos = pos
     pos += vel
     pos += gravity
-    pos += (targetPos - pos) * dt * 10
+//    pos += (targetPos - pos) * dt * 10
   }
 
   func interactMouse(mousePos: CGPoint) {
@@ -70,6 +70,13 @@ extension Dot {
     }
     if pos.x < 20 {
       pos.x = 20
+    }
+
+    if pos.y > h - 20 {
+      pos.y = h - 20
+    }
+    if pos.y < 20 {
+      pos.y = 20
     }
   }
 }

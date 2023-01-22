@@ -9,6 +9,8 @@
 #define ShaderHelpers_h
 #import <simd/simd.h>
 
+float2 uvBackgroundSizeCover(float2 uv, float2 imageSize, float2 surfaceSize);
+
 float2 encodeNormals(float3 n);
 
 float3 decodeNormals(float2 n);

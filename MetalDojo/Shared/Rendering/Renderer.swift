@@ -42,20 +42,6 @@ extension Renderer {
   }
 
   func draw(screens: [ExampleScreen], in view: MTKView) {
-    guard
-      var descriptor = view.currentRenderPassDescriptor,
-      let commandBuffer = Renderer.commandQueue.makeCommandBuffer() else {
-      return
-    }
-
-    for var screen in screens {
-      screen.draw(in: view, commandBuffer: commandBuffer)
-    }
-
-    guard let drawable = view.currentDrawable else {
-      return
-    }
-    commandBuffer.present(drawable)
-    commandBuffer.commit()
+    
   }
 }

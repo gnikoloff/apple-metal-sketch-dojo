@@ -6,8 +6,10 @@
 //
 
 #include <metal_stdlib>
-using namespace metal;
 #import "../../../Shared/Common.h"
+#import "../../../Shared/ShaderHelpers.h"
+#import "./WelcomeScreen.h"
+using namespace metal;
 
 struct VertexIn {
   float4 position [[attribute(Position)]];
@@ -31,6 +33,16 @@ vertex VertexOut vertex_welcomeScreen(const VertexIn in [[stage_in]],
   return out;
 }
 
-fragment float4 fragment_welcomeScreen(VertexOut in [[stage_in]]) {
-  return float4(in.uv, 0.0, 1.0);
+fragment float4 fragment_welcomeScreen(VertexOut in [[stage_in]],
+                                       texture2d<float> projectTexture [[texture(ProjectTexture)]],
+                                       constant WelcomeScreen_FragmentSettings &settings [[buffer(FragmentSettingsBuffer)]]) {
+  uint texWidth = projectTexture.get_width();
+  uint texHeight = projectTexture.get_height();
+  float2 imageSize = float2(texWidth, texHeight);
+  float2 uv = uvBackgroundSizeCover(in.uv, imageSize, settings.surfaceSize);
+  constexpr sampler s(mip_filter::linear,
+                      mag_filter::linear,
+                      min_filter::linear);
+  return projectTexture.sample(s, uv);
+//  return float4(in.uv, 0.0, 1.0);
 }

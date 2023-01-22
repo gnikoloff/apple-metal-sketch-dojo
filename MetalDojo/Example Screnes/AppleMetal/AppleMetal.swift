@@ -22,6 +22,11 @@ class AppleMetalScreen: ExampleScreen {
   private static let MESHES_COUNT = APPLE_WORD_POSITIONS.count / 2
   private static let LIGHTS_COUNT = 15
 
+  var outputTexture: MTLTexture!
+  var postFXTexture: MTLTexture!
+  var outputDepthTexture: MTLTexture!
+  var outputPassDescriptor: MTLRenderPassDescriptor
+
   private var mode: AnimMode = .word
   private var wordMode: WordAnimMode = .word0
   private let depthStencilState: MTLDepthStencilState?
@@ -33,7 +38,6 @@ class AppleMetalScreen: ExampleScreen {
   private let instanceBuffer: MTLBuffer
   private let animSettingsBuffer: MTLBuffer
   private let lightsBuffer: MTLBuffer
-  private var outputTexture: MTLTexture!
   private var finalTexture: MTLTexture!
 
   private var perspCamera = ArcballCamera()
@@ -67,7 +71,7 @@ class AppleMetalScreen: ExampleScreen {
   }
 
   init() {
-    print(APPLE_WORD_POSITIONS.count / 2)
+    outputPassDescriptor = MTLRenderPassDescriptor()
     do {
       try meshPipelineState = AppleMetalPipelineStates.createForwardPSO(
         colorPixelFormat: Renderer.viewColorFormat,
@@ -177,12 +181,17 @@ class AppleMetalScreen: ExampleScreen {
 
   func resize(view: MTKView, size: CGSize) {
     perspCamera.update(size: size)
-    outputTexture = RenderPass.makeTexture(
+    postFXTexture = RenderPass.makeTexture(
       size: size,
       pixelFormat: Renderer.viewColorFormat,
       label: "Output Texture",
       usage: [.shaderRead, .shaderWrite]
     )
+    outputTexture = Self.createOutputTexture(
+      size: size,
+      label: "PointsShadowmap output texture"
+    )
+    outputDepthTexture = Self.createDepthOutputTexture(size: size)
     finalTexture = RenderPass.makeTexture(
       size: size,
       pixelFormat: Renderer.viewColorFormat,
@@ -276,7 +285,7 @@ class AppleMetalScreen: ExampleScreen {
     brightness.encode(
       commandBuffer: commandBuffer,
       sourceTexture: drawableTexture,
-      destinationTexture: outputTexture
+      destinationTexture: postFXTexture
     )
 
     let blur = MPSImageGaussianBlur(
@@ -286,7 +295,7 @@ class AppleMetalScreen: ExampleScreen {
     blur.label = "MPS blur"
     blur.encode(
       commandBuffer: commandBuffer,
-      inPlaceTexture: &outputTexture,
+      inPlaceTexture: &postFXTexture,
       fallbackCopyAllocator: nil
     )
 
@@ -294,11 +303,11 @@ class AppleMetalScreen: ExampleScreen {
     add.encode(
       commandBuffer: commandBuffer,
       primaryTexture: drawableTexture,
-      secondaryTexture: outputTexture,
+      secondaryTexture: postFXTexture,
       destinationTexture: finalTexture
     )
 
-//    finalTexture = outputTexture
+//    finalTexture = postFXTexture
 
     guard let blitEncoder = commandBuffer.makeBlitCommandEncoder() else {
       return
@@ -329,8 +338,16 @@ class AppleMetalScreen: ExampleScreen {
       updatePoints(commandBuffer: commandBuffer)
     }
 
-    guard let descriptor = view.currentRenderPassDescriptor,
-          let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
+//    guard let descriptor = view.currentRenderPassDescriptor,
+
+    let descriptor = outputPassDescriptor
+    descriptor.colorAttachments[0].texture = outputTexture
+    descriptor.colorAttachments[0].loadAction = .clear
+    descriptor.colorAttachments[0].storeAction = .store
+    descriptor.depthAttachment.texture = outputDepthTexture
+    descriptor.depthAttachment.storeAction = .dontCare
+
+    guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
       return
     }
 

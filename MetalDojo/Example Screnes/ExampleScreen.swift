@@ -8,12 +8,31 @@
 import MetalKit
 
 protocol ExampleScreen {
+  var outputTexture: MTLTexture! { get set }
+  var outputDepthTexture: MTLTexture! { get set }
+  var outputPassDescriptor: MTLRenderPassDescriptor { get set }
+//  var outputDepthDescriptor: MTLDepthStencilDescriptor { get set }
   mutating func resize(view: MTKView, size: CGSize)
   mutating func update(elapsedTime: Float, deltaTime: Float)
   mutating func draw(in view: MTKView, commandBuffer: MTLCommandBuffer)
 }
 
 extension ExampleScreen {
+  static func createOutputTexture(size: CGSize, label: String) -> MTLTexture {
+    return RenderPass.makeTexture(
+      size: size,
+      pixelFormat: Renderer.viewColorFormat,
+      label: label,
+      storageMode: .private
+    )!
+  }
+  static func createDepthOutputTexture(size: CGSize) -> MTLTexture {
+    return RenderPass.makeTexture(
+      size: size,
+      pixelFormat: .depth32Float,
+      label: "Output depth texture"
+    )!
+  }
   static func buildDefaultLight() -> Light {
     var light = Light()
     light.position = [0, 0, 0]

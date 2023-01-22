@@ -66,6 +66,7 @@
 		FFC323C52979603900770BA3 /* ShaderHelpers.metal in Sources */ = {isa = PBXBuildFile; fileRef = FFC323C42979603900770BA3 /* ShaderHelpers.metal */; };
 		FFC323C72979611600770BA3 /* Lighting.metal in Sources */ = {isa = PBXBuildFile; fileRef = FFC323C62979611600770BA3 /* Lighting.metal */; };
 		FFC8DC962979EB03003138F6 /* AppleMetal_Compute.metal in Sources */ = {isa = PBXBuildFile; fileRef = FFC8DC952979EB03003138F6 /* AppleMetal_Compute.metal */; };
+		FFFE7BBE297AD0D00089EC37 /* WelcomeScreen_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFE7BBD297AD0D00089EC37 /* WelcomeScreen_Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -138,6 +139,7 @@
 		FFC323C82979645E00770BA3 /* LightingHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LightingHelpers.h; sourceTree = "<group>"; };
 		FFC323C92979695B00770BA3 /* Entry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Entry.h; sourceTree = "<group>"; };
 		FFC8DC952979EB03003138F6 /* AppleMetal_Compute.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = AppleMetal_Compute.metal; sourceTree = "<group>"; };
+		FFFE7BBD297AD0D00089EC37 /* WelcomeScreen_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreen_Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,6 +191,7 @@
 				FF4BABA82976C01700FE734C /* Shaders */,
 				FFB840DF295B421C00B9338D /* Draw Meshes */,
 				FF25C922296351AD0056C317 /* WelcomeScreen.swift */,
+				FFFE7BBD297AD0D00089EC37 /* WelcomeScreen_Extensions.swift */,
 			);
 			path = "Welcome Screen";
 			sourceTree = "<group>";
@@ -546,6 +549,7 @@
 				FF25C91A296338BC0056C317 /* Drawable.swift in Sources */,
 				FFB840F1295B82B300B9338D /* VertexDescriptor.swift in Sources */,
 				FFB840D8295B39D000B9338D /* RenderPass.swift in Sources */,
+				FFFE7BBE297AD0D00089EC37 /* WelcomeScreen_Extensions.swift in Sources */,
 				FF25C923296351AD0056C317 /* WelcomeScreen.swift in Sources */,
 				FFB840CC295B28F000B9338D /* Renderer.swift in Sources */,
 				FF6E29ED2967550300D2E59A /* InfintieSpace_Extensions.swift in Sources */,

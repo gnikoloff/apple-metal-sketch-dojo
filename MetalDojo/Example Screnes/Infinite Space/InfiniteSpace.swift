@@ -16,6 +16,10 @@ final class InfiniteSpace: ExampleScreen {
   private static let BOX_SEGMENTS_COUNT = 10
   private static let WORLD_SIZE: float3 = [3.75, 3.75, 40]
 
+  var outputTexture: MTLTexture!
+  var outputDepthTexture: MTLTexture!
+  var outputPassDescriptor: MTLRenderPassDescriptor
+
   private var perspCamera = PerspectiveCamera()
   private var perspCameraUniforms = CameraUniforms()
 
@@ -39,7 +43,6 @@ final class InfiniteSpace: ExampleScreen {
 
   private var normalShininessBaseColorTexture: MTLTexture!
   private var positionSpecularColorTexture: MTLTexture!
-  private var depthTexture: MTLTexture!
 
   private var cube: Cube
   private var pointLightSphere: Sphere
@@ -146,6 +149,7 @@ final class InfiniteSpace: ExampleScreen {
   }
 
   init() {
+    outputPassDescriptor = MTLRenderPassDescriptor()
     do {
       try computeBoxesPipelineState = InfiniteSpacePipelineStates.createBoxesComputePSO()
       try computePointLightsPipelineState = InfiniteSpacePipelineStates.createPointLightsComputePSO()
@@ -199,11 +203,15 @@ final class InfiniteSpace: ExampleScreen {
       label: "G-Buffer Position + Specular Color Base Texture",
       storageMode: .memoryless
     )
-    depthTexture = RenderPass.makeTexture(
+    outputDepthTexture = RenderPass.makeTexture(
       size: size,
       pixelFormat: .depth32Float,
       label: "G-Buffer Depth Texture",
       storageMode: .memoryless
+    )
+    outputTexture = Self.createOutputTexture(
+      size: size,
+      label: "InfiniteSpace output texture"
     )
     self.perspCamera.update(size: size)
   }
@@ -373,25 +381,30 @@ final class InfiniteSpace: ExampleScreen {
     computePointLightsPositions(commandBuffer: commandBuffer)
     computeBoxesPositions(commandBuffer: commandBuffer)
 
-    guard let viewCurrentRenderPassDescriptor = view.currentRenderPassDescriptor else {
-      return
-    }
+//    guard let viewCurrentRenderPassDescriptor = view.currentRenderPassDescriptor else {
+//      return
+//    }
+    let descriptor = outputPassDescriptor
+    descriptor.colorAttachments[0].texture = outputTexture
+    descriptor.colorAttachments[0].storeAction = .store
+//    descriptor.depthAttachment.texture = outputDepthTexture
+//    descriptor.depthAttachment.storeAction = .store
 
     let textures = [
       normalShininessBaseColorTexture,
       positionSpecularColorTexture
     ]
     for (index, texture) in textures.enumerated() {
-      let attachment = viewCurrentRenderPassDescriptor.colorAttachments[RenderTargetNormal.index + index]
+      let attachment = descriptor.colorAttachments[RenderTargetNormal.index + index]
       attachment?.texture = texture
       attachment?.loadAction = .clear
       attachment?.storeAction = .dontCare
     }
 
-    viewCurrentRenderPassDescriptor.depthAttachment.texture = depthTexture
-    viewCurrentRenderPassDescriptor.depthAttachment.storeAction = .dontCare
+    descriptor.depthAttachment.texture = outputDepthTexture
+    descriptor.depthAttachment.storeAction = .dontCare
 
-    guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: viewCurrentRenderPassDescriptor) else {
+    guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
       return
     }
 

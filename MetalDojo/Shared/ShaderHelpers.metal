@@ -9,6 +9,16 @@
 #import <simd/simd.h>
 using namespace metal;
 
+float2 uvBackgroundSizeCover(float2 uv, float2 imageSize, float2 surfaceSize) {
+  float2 s = surfaceSize;
+  float2 i = imageSize;
+  float rs = s.x / s.y;
+  float ri = i.x / i.y;
+  float2 n = rs < ri ? float2(i.x * s.y / i.y, s.y) : float2(s.x, i.y * s.x / i.x);
+  float2 offset = (rs < ri ? float2((n.x - s.x) / 2.0, 0.0) : float2(0.0, (n.y - s.y) / 2.0)) / n;
+  return uv * s / n + offset;
+}
+
 float2 encodeNormals(float3 n) {
   float p = sqrt(n.z * 8.0 + 8.0);
   return float2(n.xy / p + 0.5);

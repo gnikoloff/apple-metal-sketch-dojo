@@ -63,10 +63,10 @@ float3 phongLighting(float3 normal,
     Light light = lights[i];
     switch (light.type) {
       case Sun: {
-//        accumulatedLighting += calculateSun(light,
-//                                            normal,
-//                                            cameraPosition,
-//                                            material);
+        accumulatedLighting += calculateSun(light,
+                                            normal,
+                                            cameraPosition,
+                                            material);
         break;
       }
       case Point: {

@@ -10,14 +10,18 @@ import MetalKit
 class Panel {
   var dots: [Dot]
   var project: ProjectModel
+  weak var texture: MTLTexture!
 
   let indices: [UInt16] = [
     0, 1, 2,
     2, 1, 3
   ]
+
   var vertexBuffer: MTLBuffer
   var indexBuffer: MTLBuffer
-  init(dots: [Dot], project: ProjectModel) {
+  var settingsBuffer: MTLBuffer
+
+  init(size: float2, dots: [Dot], project: ProjectModel) {
     self.dots = dots
     self.project = project
     self.vertexBuffer = Renderer.device.makeBuffer(
@@ -27,6 +31,10 @@ class Panel {
       bytes: &indices,
       length: MemoryLayout<UInt16>.stride * 6
     )!
+    self.settingsBuffer = Renderer.device.makeBuffer(
+      length: MemoryLayout<WelcomeScreen_FragmentSettings>.stride
+    )!
+
   }
 }
 
@@ -63,26 +71,31 @@ extension Panel {
     }
   }
   func updateInterleavedArray() {
+    var ptr = settingsBuffer.contents().bindMemory(to: WelcomeScreen_FragmentSettings.self, capacity: 1)
+    let width = dots[1].pos.x - dots[0].pos.x
+    let height = dots[2].pos.y - dots[0].pos.y
+    ptr.pointee.surfaceSize = float2(width, height)
+
     var interleavedArray = vertexBuffer.contents().bindMemory(to: Float.self, capacity: 16)
     interleavedArray[0] = dots[1].pos.x
     interleavedArray[1] = dots[1].pos.y
-    interleavedArray[2] = 0
-    interleavedArray[3] = 1
+    interleavedArray[2] = 1
+    interleavedArray[3] = 0
 
     interleavedArray[4] = dots[0].pos.x
     interleavedArray[5] = dots[0].pos.y
-    interleavedArray[6] = 1
-    interleavedArray[7] = 1
+    interleavedArray[6] = 0
+    interleavedArray[7] = 0
 
     interleavedArray[8] = dots[2].pos.x
     interleavedArray[9] = dots[2].pos.y
     interleavedArray[10] = 1
-    interleavedArray[11] = 0
+    interleavedArray[11] = 1
 
     interleavedArray[12] = dots[3].pos.x
     interleavedArray[13] = dots[3].pos.y
     interleavedArray[14] = 0
-    interleavedArray[15] = 0
+    interleavedArray[15] = 1
   }
   func draw(
     encoder: MTLRenderCommandEncoder,
@@ -98,7 +111,17 @@ extension Panel {
     encoder.setVertexBuffer(
       vertexBuffer,
       offset: 0,
-      index: 0)
+      index: 0
+    )
+    encoder.setFragmentBuffer(
+      settingsBuffer,
+      offset: 0,
+      index: FragmentSettingsBuffer.index
+    )
+    encoder.setFragmentTexture(
+      texture,
+      index: ProjectTexture.index
+    )
     encoder.drawIndexedPrimitives(
       type: .triangle,
       indexCount: indices.count,
