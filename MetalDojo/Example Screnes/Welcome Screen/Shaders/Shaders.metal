@@ -39,7 +39,7 @@ fragment float4 fragment_welcomeScreen(VertexOut in [[stage_in]],
   uint texWidth = projectTexture.get_width();
   uint texHeight = projectTexture.get_height();
   float2 imageSize = float2(texWidth, texHeight);
-  float2 uv = uvBackgroundSizeCover(in.uv, imageSize, settings.surfaceSize);
+  float2 uv = uvBackgroundSizeCover(in.uv, imageSize, abs(settings.surfaceSize));
   constexpr sampler s(mip_filter::linear,
                       mag_filter::linear,
                       min_filter::linear);

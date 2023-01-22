@@ -15,7 +15,7 @@ class Stick {
   init(startPoint: Dot, endPoint: Dot) {
     self.startPoint = startPoint
     self.endPoint = endPoint
-    self.stiffness = 0.01
+    self.stiffness = 0.04
     self.length = startPoint.pos.dist(to: endPoint.pos)
   }
 }

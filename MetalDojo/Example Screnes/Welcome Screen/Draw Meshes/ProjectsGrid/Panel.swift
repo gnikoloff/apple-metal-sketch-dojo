@@ -12,7 +12,7 @@ class Panel {
   var project: ProjectModel
   weak var texture: MTLTexture!
 
-  let indices: [UInt16] = [
+  private let indices: [UInt16] = [
     0, 1, 2,
     2, 1, 3
   ]
@@ -74,6 +74,8 @@ extension Panel {
     var ptr = settingsBuffer.contents().bindMemory(to: WelcomeScreen_FragmentSettings.self, capacity: 1)
     let width = dots[1].pos.x - dots[0].pos.x
     let height = dots[2].pos.y - dots[0].pos.y
+//    let angle = atan2(height, width)
+//    print(angle)
     ptr.pointee.surfaceSize = float2(width, height)
 
     var interleavedArray = vertexBuffer.contents().bindMemory(to: Float.self, capacity: 16)

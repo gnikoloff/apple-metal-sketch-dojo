@@ -59,8 +59,6 @@ class WelcomeScreen {
       return
     }
 
-//    descriptor.colorAttachments[0].loadAction = .clear
-
     updateUniforms()
 
     renderEncoder.label = label
