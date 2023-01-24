@@ -32,9 +32,9 @@ final class GameController: NSObject {
     metalView.framebufferOnly = false
     fps = Double(metalView.preferredFramesPerSecond)
 
-    screens.append(PointsShadowmap())
-    screens.append(InfiniteSpace())
-    screens.append(AppleMetalScreen())
+    screens.append(PointsShadowmap(options: options))
+    screens.append(InfiniteSpace(options: options))
+    screens.append(AppleMetalScreen(options: options))
 
     let timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { _ in
       self.drawAllScreens = false
@@ -49,7 +49,7 @@ extension GameController: MTKViewDelegate {
 
     for screen in screens {
       var screen = screen
-      screen.resize(view: metalView, size: size)
+      screen.resize(view: metalView)
     }
   }
   func draw(in view: MTKView) {

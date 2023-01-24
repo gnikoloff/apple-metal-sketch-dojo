@@ -5,6 +5,8 @@
 //  Created by Georgi Nikoloff on 27.12.22.
 //
 
+// swiftlint:disable identifier_name
+
 import Foundation
 
 class Stick {
@@ -15,7 +17,7 @@ class Stick {
   init(startPoint: Dot, endPoint: Dot) {
     self.startPoint = startPoint
     self.endPoint = endPoint
-    self.stiffness = 0.04
+    self.stiffness = 0.4
     self.length = startPoint.pos.dist(to: endPoint.pos)
   }
 }

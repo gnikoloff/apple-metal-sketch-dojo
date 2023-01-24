@@ -12,7 +12,7 @@ import simd
 import MetalKit
 
 class ProjectsGrid {
-  static let VERLET_ITERATIONS_COUNT = 100
+  static let VERLET_ITERATIONS_COUNT = 5
 
   var dots: [Dot] = []
   var sticks: [Stick] = []
@@ -28,19 +28,22 @@ class ProjectsGrid {
     options: Options
   ) {
     let rowsCount = projects.count + 1
-    self.totalHeight = Float(rowsCount) * rowHeight
+    self.totalHeight = Float(projects.count) * rowHeight
     self.options = options
 
+    let size = options.drawableSize
+    let floatWidth = Float(size.width)
+
     for y in 0 ..< rowsCount {
-      let realy = Float(y) * rowHeight
+      let realy = Float(y) * rowHeight - totalHeight / 2 + Float(options.drawableSize.height) / 2
       dots.append(
         Dot(
-          pos: float2(-colWidth / 2 + 1284 / 2, realy + 200)
+          pos: float2(-colWidth / 2 + floatWidth / 2, realy)
         )
       )
       dots.append(
         Dot(
-          pos: float2(colWidth / 2 + 1284 / 2, realy + 200)
+          pos: float2(colWidth / 2 + floatWidth / 2, realy)
         )
       )
       sticks.append(Stick(
@@ -98,14 +101,7 @@ class ProjectsGrid {
       }
     }
 
-    for _ in 0 ..< ProjectsGrid.VERLET_ITERATIONS_COUNT {
-      for d in dots {
-        d.constrain(size: options.drawableSize)
-      }
-      for s in sticks {
-        s.update()
-      }
-    }
+
     for d in dots {
       if allowInteractionWithVertices {
         d.interactMouse(mousePos: options.mouse)
@@ -115,8 +111,14 @@ class ProjectsGrid {
         dt: deltaTime
       )
     }
-    for s in sticks {
-      s.update()
+//
+    for _ in 0 ..< ProjectsGrid.VERLET_ITERATIONS_COUNT {
+      for s in sticks {
+        s.update()
+      }
+      for d in dots {
+        d.constrain(size: options.drawableSize)
+      }
     }
 
     for panel in panels {

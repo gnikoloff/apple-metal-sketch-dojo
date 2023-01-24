@@ -22,6 +22,7 @@ class AppleMetalScreen: ExampleScreen {
   private static let MESHES_COUNT = APPLE_WORD_POSITIONS.count / 2
   private static let LIGHTS_COUNT = 15
 
+  var options: Options
   var outputTexture: MTLTexture!
   var postFXTexture: MTLTexture!
   var outputDepthTexture: MTLTexture!
@@ -41,7 +42,6 @@ class AppleMetalScreen: ExampleScreen {
   private var finalTexture: MTLTexture!
 
   private var perspCamera = ArcballCamera()
-
   private var mesh = Cube(size: float3(repeating: 0.005), inwardNormals: false)
   private var lightSphere = Sphere(size: 0.0125)
 
@@ -57,8 +57,8 @@ class AppleMetalScreen: ExampleScreen {
       let x = APPLE_WORD_POSITIONS[i * 2 + 0] - 0.5
       let y = APPLE_WORD_POSITIONS[i * 2 + 1] - 0.5
       let idx = i * 2 + 1 > METAL_WORD_POSITIONS.count ? METAL_WORD_POSITIONS.count / 2 - 2 : i
-      var x2 = (METAL_WORD_POSITIONS[idx * 2 + 0] ?? 0) - 0.5
-      var y2 = (METAL_WORD_POSITIONS[idx * 2 + 1] ?? 0) - 0.5
+      let x2 = (METAL_WORD_POSITIONS[idx * 2 + 0] ?? 0) - 0.5
+      let y2 = (METAL_WORD_POSITIONS[idx * 2 + 1] ?? 0) - 0.5
       instanceBufferPointer[i].position = float3(x, y, 0)
       instanceBufferPointer[i].position1 = float3(x, y, 0)
       instanceBufferPointer[i].position2 = float3(x2, y2, 0)
@@ -70,7 +70,8 @@ class AppleMetalScreen: ExampleScreen {
     return instanceBuffer
   }
 
-  init() {
+  init(options: Options) {
+    self.options = options
     outputPassDescriptor = MTLRenderPassDescriptor()
     do {
       try meshPipelineState = AppleMetalPipelineStates.createForwardPSO(
@@ -117,7 +118,6 @@ class AppleMetalScreen: ExampleScreen {
     var lights: [Light] = []
 
     for i in 0 ..< Self.LIGHTS_COUNT {
-      let normi = Float(i) / Float(Self.LIGHTS_COUNT)
       var light = Self.buildDefaultLight()
       light.type = Point
       light.color = float3.random(in: 0.2 ..< 1)
@@ -136,7 +136,7 @@ class AppleMetalScreen: ExampleScreen {
 
 //    let frustumHeight: Float = 0.65
     let frustumWidth: Float = 0.71875 * 2.5
-    let frustumHeight = frustumWidth / perspCamera.aspect;
+    let frustumHeight = frustumWidth / perspCamera.aspect
     perspCamera.distance = frustumHeight * 0.5 / tan(perspCamera.fov * 0.5)
 
     mesh.instanceCount = Self.MESHES_COUNT
@@ -145,7 +145,7 @@ class AppleMetalScreen: ExampleScreen {
     let instanceBufferPointer = self.instanceBuffer
       .contents()
       .bindMemory(to: AppleMetal_MeshInstance.self, capacity: Self.MESHES_COUNT)
-    let timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { timer in
+    Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { _ in
       if self.mode == .physics {
         for i in 0 ..< Self.MESHES_COUNT {
           instanceBufferPointer[i].velocity = float3.random(in: -2 ..< 2)
@@ -179,7 +179,8 @@ class AppleMetalScreen: ExampleScreen {
     }
   }
 
-  func resize(view: MTKView, size: CGSize) {
+  func resize(view: MTKView) {
+    let size = options.drawableSize
     perspCamera.update(size: size)
     postFXTexture = RenderPass.makeTexture(
       size: size,

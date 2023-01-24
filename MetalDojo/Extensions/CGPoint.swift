@@ -12,8 +12,7 @@ import Foundation
 extension CGPoint {
   func isInsidePolygon(vertices: [CGPoint]) -> Bool {
     guard !vertices.isEmpty else {
-      return false
-      
+      return false      
     }
     var j = vertices.last!
     var c = false

@@ -15,8 +15,8 @@ class Dot {
   var mainScreenOldPos: float2
   var targetPos: float2
 
-  var gravity = float2(0, 6.2)
-  var friction = float2(0.2, 0.02)
+  var gravity = float2(0, 4)
+  var friction = float2(0.999)
   var groundFriction = Float(0.7)
   var mass = Float(1)
 
@@ -36,26 +36,27 @@ extension Dot {
   func update(size: CGSize, dt: Float) {
     let h = Float(size.height)
     var vel = (pos - oldPos) * friction
-    let magSq = pos.magSq()
-    if pos.y >= h && magSq > 0.000001 {
-      let m = sqrtf(pos.x * pos.x + pos.y * pos.y)
-      vel.x /= m
-      vel.y /= m
-      vel *= (m * friction)
-    }
     oldPos = pos
+    let magSq = pos.magSq()
+//    if pos.y >= h && magSq > 0.000001 {
+//      let m = sqrtf(pos.x * pos.x + pos.y * pos.y)
+//      vel.x /= m
+//      vel.y /= m
+//      vel *= (m * friction)
+//    }
     pos += vel
     pos += gravity
 //    pos += (targetPos - pos) * dt * 10
   }
 
   func interactMouse(mousePos: CGPoint) {
-    var delta = pos - float2(Float(mousePos.x), Float(mousePos.y))
+    let delta = pos - mousePos
     let dist = delta.magSq()
-    let magr: Float = 1000 * 1000
+    let magr: Float = 100 * 100
     if dist < magr {
-      let f = delta.normalizeTo(length: 1 - (dist / magr)) * 50
-      pos += f
+      pos = float2(Float(mousePos.x), Float(mousePos.y))
+//      let f = delta.normalizeTo(length: 1 - (dist / magr)) * 50
+//      pos += f
     }
   }
 
@@ -65,18 +66,28 @@ extension Dot {
     if w == 0 || h == 0 {
       return
     }
-    if pos.x > w - 20 {
-      pos.x = w - 20
+    let bounce: Float = 0.3
+
+    if pos.x > w {
+      let velX = (pos.x - oldPos.x) * bounce
+      pos.x = w
+      oldPos.x = pos.x + velX
     }
-    if pos.x < 20 {
-      pos.x = 20
+    if pos.x < 0 {
+      let velX = (pos.x - oldPos.x) * bounce
+      pos.x = 0
+      oldPos.x = pos.x + velX
     }
 
-    if pos.y > h - 20 {
-      pos.y = h - 20
+    if pos.y > h {
+      let velY = (pos.y - oldPos.y) * bounce
+      pos.y = h
+      oldPos.y = pos.y + velY
     }
-    if pos.y < 20 {
-      pos.y = 20
+    if pos.y < 0 {
+      let velY = (pos.y - oldPos.y) * bounce
+      pos.y = 0
+      oldPos.y = pos.y + velY
     }
   }
 }

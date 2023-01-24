@@ -190,8 +190,11 @@ extension float3x3 {
 
 // MARK: - float2
 extension float2 {
-  static func *(lhs: float2, rhs: Float) -> float2 {
+  static func * (lhs: float2, rhs: Float) -> float2 {
     float2(lhs.x * rhs, lhs.y * rhs)
+  }
+  static func - (lhs: float2, rhs: CGPoint) -> float2 {
+    float2(lhs.x - Float(rhs.x), lhs.y - Float(rhs.y))
   }
   func dist(to: float2) -> Float {
     let dx = to.x - self.x

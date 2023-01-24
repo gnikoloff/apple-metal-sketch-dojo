@@ -25,6 +25,7 @@ final class PointsShadowmap: ExampleScreen {
   private let centerSphereRenderPipeline: MTLRenderPipelineState
   private let depthStencilState: MTLDepthStencilState?
 
+  var options: Options
   private var cube: Cube
   private var sphere0: SphereLightCaster
   private var sphere1: SphereLightCaster
@@ -35,7 +36,8 @@ final class PointsShadowmap: ExampleScreen {
   private var shadowCastersUniformsBuffer: MTLBuffer
   private var shadowCasrersUniformsBufferContents: UnsafeMutablePointer<PointsShadowmap_Light>
 
-  init() {
+  init(options: Options) {
+    self.options = options
     outputPassDescriptor = MTLRenderPassDescriptor()
 
     do {
@@ -84,9 +86,10 @@ final class PointsShadowmap: ExampleScreen {
     shadowCasrersUniformsBufferContents[1].cutoffDistance = 1.3
   }
 
-  func resize(view: MTKView, size: CGSize) {
+  func resize(view: MTKView) {
+    let size = options.drawableSize
     outputTexture = Self.createOutputTexture(
-      size: size,
+      size: options.drawableSize,
       label: "PointsShadowmap output texture"
     )
     outputDepthTexture = Self.createDepthOutputTexture(size: size)

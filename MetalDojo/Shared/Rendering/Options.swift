@@ -14,10 +14,11 @@ class Options: ObservableObject {
     ProjectModel(name: "Nikolov"),
     ProjectModel(name: "Whatever")
   ]
+  var drawableSize: CGSize = .zero
 
   var isProjectTransition = false
   var mouse: CGPoint = CGPoint(x: -2000, y: -2000)
-  var drawableSize: CGSize = .zero
+
   var mouseDown: Bool = false
 
 }

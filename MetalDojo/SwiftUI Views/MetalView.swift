@@ -42,22 +42,25 @@ struct MetalView: View {
         previousTranslation = .zero
       }
     return ZStack {
-      MetalViewRepresentable(metalView: $metalView, gameController: gameController)
-        .ignoresSafeArea(.all)
-        .onAppear {
-          gameController = GameController(
-            metalView: metalView,
-            options: options
-          )
-        }
-        .gesture(dragGesture)
-        .onClickGesture { point in
-          options.mouse = point
-          options.mouse.x *= dpr
-          options.mouse.y *= dpr
-          
-          options.mouseDown = true
-        }
+      GeometryReader { geometry in
+        MetalViewRepresentable(metalView: $metalView, gameController: gameController)
+          .ignoresSafeArea(.all)
+          .onAppear {
+            options.drawableSize = geometry.size * dpr
+            gameController = GameController(
+              metalView: metalView,
+              options: options
+            )
+          }
+          .gesture(dragGesture)
+          .onClickGesture { point in
+            options.mouse = point
+            options.mouse.x *= dpr
+            options.mouse.y *= dpr
+
+            options.mouseDown = true
+          }
+      }
       if let activeProjectName = options.activeProjectName {
         VStack {
           HStack {

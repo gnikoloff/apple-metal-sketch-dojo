@@ -8,11 +8,11 @@
 import MetalKit
 
 protocol ExampleScreen {
+  var options: Options { get set }
   var outputTexture: MTLTexture! { get set }
   var outputDepthTexture: MTLTexture! { get set }
   var outputPassDescriptor: MTLRenderPassDescriptor { get set }
-//  var outputDepthDescriptor: MTLDepthStencilDescriptor { get set }
-  mutating func resize(view: MTKView, size: CGSize)
+  mutating func resize(view: MTKView)
   mutating func update(elapsedTime: Float, deltaTime: Float)
   mutating func draw(in view: MTKView, commandBuffer: MTLCommandBuffer)
 }

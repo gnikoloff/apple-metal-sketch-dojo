@@ -22,7 +22,6 @@ final class InfiniteSpace: ExampleScreen {
 
   private var perspCamera = PerspectiveCamera()
   private var perspCameraUniforms = CameraUniforms()
-
   private var boidsSettings = InfiniteSpace_BoidsSettings()
   private var deferredSettings = InfiniteSpace_DeferredSettings()
 
@@ -31,7 +30,6 @@ final class InfiniteSpace: ExampleScreen {
   private let pointLightPSO: MTLRenderPipelineState
   private let depthStencilState: MTLDepthStencilState
   private let lightingDepthStencilState: MTLDepthStencilState?
-
   private let computeBoxesPipelineState: MTLComputePipelineState
   private let computePointLightsPipelineState: MTLComputePipelineState
 
@@ -44,6 +42,7 @@ final class InfiniteSpace: ExampleScreen {
   private var normalShininessBaseColorTexture: MTLTexture!
   private var positionSpecularColorTexture: MTLTexture!
 
+  var options: Options
   private var cube: Cube
   private var pointLightSphere: Sphere
 
@@ -148,7 +147,8 @@ final class InfiniteSpace: ExampleScreen {
     return controlPointsBuffer
   }
 
-  init() {
+  init(options: Options) {
+    self.options = options
     outputPassDescriptor = MTLRenderPassDescriptor()
     do {
       try computeBoxesPipelineState = InfiniteSpacePipelineStates.createBoxesComputePSO()
@@ -189,7 +189,8 @@ final class InfiniteSpace: ExampleScreen {
     deferredSettings.cameraViewInverse = perspCamera.viewMatrix.inverse
   }
 
-  func resize(view: MTKView, size: CGSize) {
+  func resize(view: MTKView) {
+    let size = options.drawableSize
     deferredSettings.viewportSize = SIMD2<UInt32>(UInt32(size.width), UInt32(size.height))
     normalShininessBaseColorTexture = RenderPass.makeTexture(
       size: size,
@@ -417,5 +418,4 @@ final class InfiniteSpace: ExampleScreen {
 
   func destroy() {
   }
-
 }

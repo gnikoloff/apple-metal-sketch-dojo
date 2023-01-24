@@ -11,6 +11,7 @@ extension MDLVertexDescriptor {
   static var defaultLayout: MTLVertexDescriptor? {
     let vertexDescriptor = MTLVertexDescriptor()
     var offset = 0
+
     // position
     vertexDescriptor.attributes[Position.index].format = .float3
     vertexDescriptor.attributes[Position.index].bufferIndex = 0
