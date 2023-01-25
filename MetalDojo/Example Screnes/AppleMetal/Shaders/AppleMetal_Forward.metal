@@ -57,7 +57,7 @@ vertex VertexOut appleMetal_vertex(const VertexIn in [[stage_in]],
     .position = perspCameraUniforms.projectionMatrix *
                 perspCameraUniforms.viewMatrix *
                 worldPos,
-    .normal = (rotMatrix * float4(in.normal, 0)).xyz,
+    .normal = (rotMatrix * float4(uniforms.normalMatrix * in.normal, 0)).xyz,
     .worldPos = worldPos.xyz
   };
   if (IS_LIGHT) {

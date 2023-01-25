@@ -37,6 +37,7 @@ extension Drawable {
   }
   mutating func updateUniforms() {
     uniforms.modelMatrix = transform.modelMatrix
+    uniforms.normalMatrix = float3x3(normalFrom4x4: transform.modelMatrix)
   }
   mutating func draw(renderEncoder: MTLRenderCommandEncoder) {
     updateUniforms()

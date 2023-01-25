@@ -43,7 +43,8 @@ vertex GBufferVertexOut infiniteSpace_vertexCube(const VertexIn in [[stage_in]],
                                              uint iid [[instance_id]],
                                              const device InfiniteSpace_ControlPoint *controlPoints [[buffer(ControlPointsBuffer)]],
                                              const device Material *cubeMaterials [[buffer(MaterialsBuffer)]],
-                                             constant CameraUniforms &cameraUniforms [[buffer(CameraUniformsBuffer)]]) {
+                                             constant CameraUniforms &cameraUniforms [[buffer(CameraUniformsBuffer)]],
+                                             constant Uniforms &uniforms [[buffer(UniformsBuffer)]]) {
   uint idx = round((in.position.z + 0.5) * 9);
   float3 controlPoint = controlPoints[iid * 10 + idx].position;
 
@@ -55,7 +56,7 @@ vertex GBufferVertexOut infiniteSpace_vertexCube(const VertexIn in [[stage_in]],
   Material material = cubeMaterials[iid];
   GBufferVertexOut out {
     .position = cameraUniforms.projectionMatrix * cameraUniforms.viewMatrix * worldPos,
-    .normal = (rotMatrix * float4(in.normal, 1.0)).xyz,
+    .normal = (rotMatrix * float4(uniforms.normalMatrix * in.normal, 1.0)).xyz,
     .worldPos = worldPos.xyz,
     .shininess = material.shininess,
     .baseColor = material.baseColor,
