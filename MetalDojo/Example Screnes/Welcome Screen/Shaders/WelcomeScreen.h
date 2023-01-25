@@ -8,7 +8,7 @@
 #ifndef WelcomeScreen_h
 #define WelcomeScreen_h
 #import <simd/simd.h>
-#import "../../../Shared/Common.h"
+#import "../../../Shared/Shader/Common.h"
 
 typedef enum {
   ProjectTexture = 1

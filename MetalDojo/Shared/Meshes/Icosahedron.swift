@@ -17,7 +17,7 @@ struct Icosahedron: Drawable {
 
   var vertexBuffers: [MTLBuffer] = []
   var submeshes: [Submesh] = []
-  var cullMode: MTLCullMode = .none
+  var cullMode: MTLCullMode = .back
 
   init() {
     // ...

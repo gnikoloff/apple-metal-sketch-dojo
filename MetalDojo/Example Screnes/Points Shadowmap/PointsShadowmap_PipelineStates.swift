@@ -31,7 +31,7 @@ enum PointsShadowmapPipelineStates {
     pipelineDescriptor.inputPrimitiveTopology = .triangle
     pipelineDescriptor.colorAttachments[0].pixelFormat = .invalid
     pipelineDescriptor.depthAttachmentPixelFormat = .depth16Unorm
-    pipelineDescriptor.vertexDescriptor = MDLVertexDescriptor.defaultLayout
+    pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultLayout
     return PipelineState.createPSO(descriptor: pipelineDescriptor)
   }
 
@@ -82,7 +82,7 @@ enum PointsShadowmapPipelineStates {
     pipelineDescriptor.fragmentFunction = fragmentFunction
     pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
 
-    pipelineDescriptor.vertexDescriptor = MDLVertexDescriptor.defaultLayout
+    pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultLayout
     pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
 
     return PipelineState.createPSO(descriptor: pipelineDescriptor)

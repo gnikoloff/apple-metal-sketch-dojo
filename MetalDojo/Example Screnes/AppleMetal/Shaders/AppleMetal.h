@@ -9,7 +9,7 @@
 #define AppleMetal_h
 
 #import <simd/simd.h>
-#import "../../../Shared/Common.h"
+#import "../../../Shared/Shader/Common.h"
 
 typedef struct {
   vector_float3 position;

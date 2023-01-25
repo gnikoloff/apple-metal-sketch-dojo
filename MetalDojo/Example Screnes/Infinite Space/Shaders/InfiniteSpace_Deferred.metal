@@ -7,9 +7,9 @@
 
 #include <metal_stdlib>
 #import "./InfiniteSpace.h"
-#import "../../../Shared/Vertex.h"
-#import "../../../Shared/ShaderHelpers.h"
-#import "../../../Shared/LightingHelpers.h"
+#import "../../../Shared/Shader/Vertex.h"
+#import "../../../Shared/Shader/ShaderHelpers.h"
+#import "../../../Shared/Shader/LightingHelpers.h"
 
 using namespace metal;
 

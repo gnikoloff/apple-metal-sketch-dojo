@@ -9,7 +9,7 @@
 #define PointsShadowmap_h
 
 #import <simd/simd.h>
-#import "../../../Shared/Common.h"
+#import "../../../Shared/Shader/Common.h"
 
 typedef enum {
   PointsShadowmap_CubeShadowTextures = 0

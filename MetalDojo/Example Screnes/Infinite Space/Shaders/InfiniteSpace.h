@@ -9,7 +9,7 @@
 #define InfiniteSpace_h
 
 #import <simd/simd.h>
-#import "../../../Shared/Common.h"
+#import "../../../Shared/Shader/Common.h"
 
 typedef struct {
   vector_float3 position;
@@ -31,7 +31,6 @@ typedef enum {
 } InfiniteSpace_RenderTargets;
 
 typedef enum {
-  NormalTexture = 1,
   DepthTexture = 2
 } InfiniteSpace_Textures;
 

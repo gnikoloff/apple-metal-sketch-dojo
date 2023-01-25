@@ -7,8 +7,8 @@
 
 #include <metal_stdlib>
 #import "./AppleMetal.h"
-#import "../../../Shared/ShaderHelpers.h"
-#import "../../../Shared/LightingHelpers.h"
+#import "../../../Shared/Shader/ShaderHelpers.h"
+#import "../../../Shared/Shader/LightingHelpers.h"
 using namespace metal;
 
 constant bool IS_LIGHT [[function_constant(0)]];

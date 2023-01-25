@@ -6,8 +6,8 @@
 //
 
 #include <metal_stdlib>
-#import "../../../Shared/Common.h"
-#import "../../../Shared/ShaderHelpers.h"
+#import "../../../Shared/Shader/Common.h"
+#import "../../../Shared/Shader/ShaderHelpers.h"
 #import "./WelcomeScreen.h"
 using namespace metal;
 
