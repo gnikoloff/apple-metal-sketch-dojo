@@ -9,6 +9,10 @@
 #import "./Common.h"
 using namespace metal;
 
+float calculateAttenuation(float3 attenuation, float d) {
+  return 1.0 / (attenuation.x + attenuation.y * d + attenuation.z * d * d);
+}
+
 float3 calculateSun(Light light,
                     float3 normal,
                     float3 cameraPosition,
@@ -30,18 +34,32 @@ float3 calculateSun(Light light,
   return diffuseColor + specularColor;
 }
 
-float3 calculatePoint(Light light,
-                      float3 position,
-                      float3 normal,
-                      Material material) {
+float3 calculatePoint(Light light, float3 position, float3 normal, Material material) {
   float d = distance(light.position, position);
   float3 lightDirection = normalize(light.position - position);
-  float attenuation = d / (1 - d) * d;
-  attenuation = attenuation + 1;
-  attenuation = 1 / (attenuation * attenuation);
-  float diffuseIntensity = saturate(dot(lightDirection, normal));
+  float attenuation = calculateAttenuation(light.attenuation, d);
 
-  float3 color = light.color * diffuseIntensity * attenuation * light.attenuation;
+  float diffuseIntensity =
+      saturate(dot(lightDirection, normal));
+  float3 color = light.color * material.baseColor * diffuseIntensity;
+  color *= attenuation;
+  return color;
+}
+
+float3 calculateSpot(Light light, float3 position, float3 normal, Material material) {
+  float d = distance(light.position, position);
+  float3 lightDirection = normalize(light.position - position);
+  float3 coneDirection = normalize(light.coneDirection);
+  float spotResult = dot(lightDirection, -coneDirection);
+  float3 color =  0;
+  if (spotResult > cos(light.coneAngle)) {
+    float attenuation = calculateAttenuation(light.position, d);
+    attenuation *= pow(spotResult, light.coneAttenuation);
+    float diffuseIntensity =
+             saturate(dot(lightDirection, normal));
+    color = light.color * material.baseColor * diffuseIntensity;
+    color *= attenuation;
+  }
   return color;
 }
 
@@ -70,11 +88,11 @@ float3 phongLighting(float3 normal,
         break;
       }
       case Spot: {
-        accumulatedLighting += 0;
+        accumulatedLighting += calculateSpot(light, position, normal, material);
         break;
       }
       case Ambient: {
-        accumulatedLighting += 0;
+        ambientColor += light.color;
         break;
       }
       case unused: {

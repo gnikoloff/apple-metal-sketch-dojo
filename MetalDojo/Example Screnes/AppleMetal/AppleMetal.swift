@@ -121,7 +121,7 @@ class AppleMetalScreen: ExampleScreen {
       var light = Self.buildDefaultLight()
       light.type = Point
       light.color = float3.random(in: 0.2 ..< 1)
-      light.attenuation = 0.5
+//      light.attenuation = 0.5
       light.position = float3(
         Float.random(in: -0.5 ..< 0.5),
         Float.random(in: -0.3 ..< 0.3),

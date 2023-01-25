@@ -14,7 +14,6 @@
 using namespace metal;
 
 struct GBufferOut {
-//  float4 albedo [[color(RenderTargetAlbedo)]];
   float4 normal [[color(RenderTargetNormal)]];
   float4 position [[color(RenderTargetPosition)]];
 };
@@ -59,8 +58,8 @@ vertex GBufferVertexOut infiniteSpace_vertexCube(const VertexIn in [[stage_in]],
     .normal = (rotMatrix * float4(uniforms.normalMatrix * in.normal, 1.0)).xyz,
     .worldPos = worldPos.xyz,
     .shininess = material.shininess,
-    .baseColor = material.baseColor,
-    .specularColor = material.specularColor
+    .baseColor = material.baseColor.r,
+    .specularColor = material.specularColor.r
   };
   return out;
 }

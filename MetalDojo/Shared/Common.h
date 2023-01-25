@@ -55,7 +55,10 @@ typedef struct {
   vector_float3 position;
   vector_float3 color;
   vector_float3 specularColor;
-  float attenuation;
+  vector_float3 attenuation;
+  vector_float3 coneDirection;
+  float coneAngle;
+  float coneAttenuation;
   LightType type;
   float speed;
   vector_float3 prevPosition;
@@ -64,8 +67,8 @@ typedef struct {
 
 typedef struct {
   float shininess;
-  float baseColor;
-  float specularColor;
+  vector_float3 baseColor;
+  vector_float3 specularColor;
 } Material;
 
 #endif /* Common_h */

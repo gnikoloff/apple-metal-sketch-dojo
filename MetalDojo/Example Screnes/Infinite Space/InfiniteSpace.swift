@@ -63,8 +63,8 @@ final class InfiniteSpace: ExampleScreen {
       .bindMemory(to: Material.self, capacity: Self.BOXES_COUNT)
     for i in 0 ..< Self.BOXES_COUNT {
       bufferPointer[i].shininess = Float.random(in: 0..<1)
-      bufferPointer[i].baseColor = Float.random(in: 0..<0.3)
-      bufferPointer[i].specularColor = Float.random(in: 0..<0.4)
+      bufferPointer[i].baseColor = float3(Float.random(in: 0..<0.3), 0, 0)
+      bufferPointer[i].specularColor = float3(Float.random(in: 0..<0.4), 0, 0)
     }
     return materialsBuffer
   }
@@ -97,8 +97,8 @@ final class InfiniteSpace: ExampleScreen {
         sin(Float(i)) * Float.random(in: 0 ..< WORLD_SIZE[1]) + 1,
         Float.random(in: 0 ..< WORLD_SIZE[2])
       )
-      light.attenuation = 0.3
-      light.speed = Float.random(in: 0..<0.15)
+      light.attenuation = [0.1, 1, 8]
+      light.speed = Float.random(in: 0.02 ..< 0.1)
       pointLights.append(light)
     }
     return Self.createLightBuffer(lights: pointLights)
@@ -121,10 +121,12 @@ final class InfiniteSpace: ExampleScreen {
       let moveRadiusY = Float.random(in: 0 ..< WORLD_SIZE[1] * 1.2) + 1
       for n in 0 ..< Self.BOX_SEGMENTS_COUNT {
         let controlPointIdx = i * Self.BOX_SEGMENTS_COUNT + n
+        let randMoveRadX = Float.random(in: 0.5 ..< 1) * moveRadiusX
+        let randMoveRadY = Float.random(in: 0.5 ..< 1) * moveRadiusY
         if n == 0 {
           let position = float3(
-            cos(randZ * 0.1 + Float(controlPointIdx)) * moveRadiusX,
-            sin(randZ * 0.1 + Float(controlPointIdx)) * moveRadiusY,
+            cos(randZ * 0.1 + Float(controlPointIdx)) * randMoveRadX,
+            sin(randZ * 0.1 + Float(controlPointIdx)) * randMoveRadY,
             randZ - 0.5
           )
           bufferPointer[controlPointIdx].position = position
@@ -132,14 +134,14 @@ final class InfiniteSpace: ExampleScreen {
           let localSpaceZ = Float(n) / Float(Self.BOX_SEGMENTS_COUNT)
           let prevPoint = bufferPointer[controlPointIdx - 1]
           let position = float3(
-            prevPoint.position.x,
-            prevPoint.position.y,
+            prevPoint.position.x + cos(randZ * 0.1 + Float(controlPointIdx)) * 0.1,
+            prevPoint.position.y + sin(randZ * 0.1 + Float(controlPointIdx)) * 0.1,
             prevPoint.position.z + localSpaceZ
           )
           bufferPointer[controlPointIdx].position = position
         }
-        bufferPointer[controlPointIdx].moveRadius[0] = Float.random(in: 0.5..<1) * moveRadiusX
-        bufferPointer[controlPointIdx].moveRadius[1] = Float.random(in: 0.5..<1) * moveRadiusY
+        bufferPointer[controlPointIdx].moveRadius[0] = randMoveRadX
+        bufferPointer[controlPointIdx].moveRadius[1] = randMoveRadY
         bufferPointer[controlPointIdx].zVelocityHead = Float.random(in: 0 ..< 0.01) + 0.01
         bufferPointer[controlPointIdx].zVelocityTail = Float.random(in: 0 ..< 0.06) + 0.06
       }
@@ -382,14 +384,12 @@ final class InfiniteSpace: ExampleScreen {
     computePointLightsPositions(commandBuffer: commandBuffer)
     computeBoxesPositions(commandBuffer: commandBuffer)
 
-//    guard let viewCurrentRenderPassDescriptor = view.currentRenderPassDescriptor else {
-//      return
-//    }
+//    let descriptor = view.currentRenderPassDescriptor!
     let descriptor = outputPassDescriptor
     descriptor.colorAttachments[0].texture = outputTexture
     descriptor.colorAttachments[0].storeAction = .store
-//    descriptor.depthAttachment.texture = outputDepthTexture
-//    descriptor.depthAttachment.storeAction = .store
+    descriptor.depthAttachment.texture = outputDepthTexture
+    descriptor.depthAttachment.storeAction = .store
 
     let textures = [
       normalShininessBaseColorTexture,

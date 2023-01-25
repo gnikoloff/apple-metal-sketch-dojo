@@ -153,6 +153,7 @@ final class PointsShadowmap: ExampleScreen {
 
     let descriptor = outputPassDescriptor
     descriptor.colorAttachments[0].texture = outputTexture
+    descriptor.colorAttachments[0].loadAction = .clear
     descriptor.colorAttachments[0].storeAction = .store
     descriptor.depthAttachment.texture = outputDepthTexture
     descriptor.depthAttachment.storeAction = .dontCare

@@ -38,7 +38,7 @@ extension ExampleScreen {
     light.position = [0, 0, 0]
     light.color = float3(repeating: 1.0)
     light.specularColor = float3(repeating: 0.6)
-    light.attenuation = 1
+    light.attenuation = [1, 0, 0]
     light.type = Sun
     return light
   }

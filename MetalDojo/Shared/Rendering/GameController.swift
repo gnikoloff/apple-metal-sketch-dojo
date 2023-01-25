@@ -36,8 +36,8 @@ final class GameController: NSObject {
     screens.append(InfiniteSpace(options: options))
     screens.append(AppleMetalScreen(options: options))
 
-    let timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { _ in
-      self.drawAllScreens = false
+    Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { _ in
+//      self.drawAllScreens = false
     }
   }
 }
@@ -81,9 +81,6 @@ extension GameController: MTKViewDelegate {
         panel.texture = screen.outputTexture
       }
     }
-
-
-    welcomeScreen.projectsGrid.panels[1].texture = screens[1].outputTexture
 
     welcomeScreen.draw(in: view, commandBuffer: commandBuffer)
 
