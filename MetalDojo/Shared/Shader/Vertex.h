@@ -22,6 +22,8 @@ struct VertexOut {
   vector_float3 normal;
   vector_float2 uv;
   vector_float3 worldPos;
+  vector_float3 worldTangent;
+  vector_float3 worldBitangent;
 };
 
 #endif /* Header_h */

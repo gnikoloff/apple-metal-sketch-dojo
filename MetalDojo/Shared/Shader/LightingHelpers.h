@@ -30,7 +30,7 @@ vector_float3 calculateFog(vector_float3 position,
 
 vector_float4 PBRLighting(constant Light *lights,
                           uint lightsCount,
-                          constant Material &material,
+                          Material material,
                           vector_float3 cameraPosition,
                           vector_float3 worldPos,
                           vector_float3 normal,

@@ -10,7 +10,7 @@ import MetalKit
 // swiftlint:disable type_name
 
 enum CascadedShadowsMap_PipelineStates {
-  static func createForwardPSO() -> MTLRenderPipelineState {
+  static func createFloorPSO() -> MTLRenderPipelineState {
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     let vertexFunction = Renderer.library?.makeFunction(name: "cascadedShadows_vertex")
     let fragmentFunction = Renderer.library?.makeFunction(name: "cascadedShadows_fragment")
@@ -19,6 +19,17 @@ enum CascadedShadowsMap_PipelineStates {
     pipelineDescriptor.colorAttachments[0].pixelFormat = Renderer.viewColorFormat
     pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
     pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultLayout
+    return PipelineState.createPSO(descriptor: pipelineDescriptor)
+  }
+  static func createPBRPSO() -> MTLRenderPipelineState {
+    let pipelineDescriptor = MTLRenderPipelineDescriptor()
+    let vertexFunction = Renderer.library?.makeFunction(name: "cascadedShadows_vertex")
+    let fragmentFunction = Renderer.library?.makeFunction(name: "fragment_pbr")
+    pipelineDescriptor.vertexFunction = vertexFunction
+    pipelineDescriptor.fragmentFunction = fragmentFunction
+    pipelineDescriptor.colorAttachments[0].pixelFormat = Renderer.viewColorFormat
+    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+    pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultMTKLayout
     return PipelineState.createPSO(descriptor: pipelineDescriptor)
   }
 }

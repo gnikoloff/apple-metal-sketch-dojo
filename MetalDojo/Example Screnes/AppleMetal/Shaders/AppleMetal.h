@@ -27,8 +27,8 @@ typedef struct {
 } AppleMetal_AnimSettings;
 
 typedef enum {
-  InstancesBuffer = 13,
-  AnimationSettingsBuffer = 14
+  InstancesBuffer = 14,
+  AnimationSettingsBuffer = 15
 } AppleMetal_BufferIndices;
 
 #endif /* AppleMetal_h */

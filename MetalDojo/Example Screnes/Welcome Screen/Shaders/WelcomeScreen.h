@@ -15,7 +15,7 @@ typedef enum {
 } WelcomeScreen_Textures;
 
 typedef enum {
-  FragmentSettingsBuffer = 13
+  FragmentSettingsBuffer = 14
 } WelcomeScreen_BufferIndices;
 
 typedef struct {

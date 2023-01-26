@@ -33,12 +33,12 @@ struct FragmentOut {
 };
 
 vertex VertexOut appleMetal_vertex(const VertexIn in [[stage_in]],
-                                        const uint iid [[instance_id]],
-                                        constant Light *lights [[buffer(LightBuffer)]],
-                                        constant Uniforms &uniforms [[buffer(UniformsBuffer)]],
-                                        constant CameraUniforms &perspCameraUniforms [[buffer(CameraUniformsBuffer)]],
-                                        constant AppleMetal_MeshInstance *instances [[buffer(InstancesBuffer)]],
-                                        constant AppleMetal_AnimSettings &animSettings [[buffer(AnimationSettingsBuffer)]]) {
+                              const uint iid [[instance_id]],
+                              constant Light *lights [[buffer(LightBuffer)]],
+                              constant Uniforms &uniforms [[buffer(UniformsBuffer)]],
+                              constant CameraUniforms &perspCameraUniforms [[buffer(CameraUniformsBuffer)]],
+                              constant AppleMetal_MeshInstance *instances [[buffer(InstancesBuffer)]],
+                              constant AppleMetal_AnimSettings &animSettings [[buffer(AnimationSettingsBuffer)]]) {
 
   constant AppleMetal_MeshInstance &instance = instances[iid];
   matrix_float4x4 rotMatrix = rotation3d(instance.position, perspCameraUniforms.time);

@@ -19,40 +19,46 @@ final class CascadedShadowsMap: ExampleScreen {
   var outputPassDescriptor: MTLRenderPassDescriptor
 
   private let depthStencilState: MTLDepthStencilState?
-  private let meshPipelineState: MTLRenderPipelineState
+  private let floorPipelineState: MTLRenderPipelineState
+  private let modelPipelineState: MTLRenderPipelineState
   private let cameraBuffer: MTLBuffer
 
   private var perspCamera = ArcballCamera()
   private var plane: Plane
   private var cube: Cube
 
-  lazy var skeleton: Model = {
+  lazy private var model0: Model = {
     Model(name: "T-Rex.usdz")
   }()
 
+  lazy private var model1: Model = {
+    Model(name: "T-Rex2.usdz")
+  }()
+
+  lazy private var paramsBuffer: MTLBuffer = {
+    Self.createParamsBuffer(lightsCount: 2)
+  }()
+
   lazy private var floorMaterialBuffer: MTLBuffer = {
-    let buffer = Renderer.device.makeBuffer(
-      length: MemoryLayout<Material>.stride,
-      options: []
-    )!
-    var buffPtr = buffer.contents().bindMemory(to: Material.self, capacity: 1)
-    buffPtr.pointee.shininess = 2
-    buffPtr.pointee.baseColor = float3(repeating: 1)
-    buffPtr.pointee.specularColor = float3(1, 0, 0)
-    buffPtr.pointee.roughness = 0.7
-    buffPtr.pointee.metallic = 0.1
-    buffPtr.pointee.ambientOcclusion = 0
-    buffPtr.pointee.opacity = 1
-    return buffer
+    var material = Material(
+      shininess: 2,
+      baseColor: float3(repeating: 1),
+      specularColor: float3(1, 0, 0),
+      roughness: 0.7,
+      metallic: 0.1,
+      ambientOcclusion: 0,
+      opacity: 1
+    )
+    return Renderer.device.makeBuffer(bytes: &material, length: MemoryLayout<Material>.stride)!
   }()
 
   lazy private var lightsBuffer: MTLBuffer = {
     var dirLight = Self.buildDefaultLight()
-    dirLight.position = [1, 1, 1]
+    dirLight.position = [-1, 1, -1]
     dirLight.color = float3(repeating: 1)
     var ambientLight = Self.buildDefaultLight()
     ambientLight.type = Ambient
-    ambientLight.color = float3(repeating: 0.4)
+    ambientLight.color = float3(repeating: 0.2)
     return Self.createLightBuffer(lights: [dirLight, ambientLight])
   }()
 
@@ -60,7 +66,8 @@ final class CascadedShadowsMap: ExampleScreen {
     self.options = options
 
     outputPassDescriptor = MTLRenderPassDescriptor()
-    meshPipelineState = CascadedShadowsMap_PipelineStates.createForwardPSO()
+    floorPipelineState = CascadedShadowsMap_PipelineStates.createFloorPSO()
+    modelPipelineState = CascadedShadowsMap_PipelineStates.createPBRPSO()
     depthStencilState = PipelineState.buildDepthStencilState()
 
     cameraBuffer = Renderer.device.makeBuffer(
@@ -75,8 +82,9 @@ final class CascadedShadowsMap: ExampleScreen {
 
     cube = Cube(size: float3(1, 1, 0.2))
 
-    skeleton.scale = 0.002
-
+    model0.scale = 0.002
+    model1.scale = 0.2
+    model1.position.x = 2
   }
 
   func resize(view: MTKView) {
@@ -119,7 +127,7 @@ final class CascadedShadowsMap: ExampleScreen {
 
     renderEncoder.label = "Cascaded Shadows Map Render Pass"
     renderEncoder.setDepthStencilState(depthStencilState)
-    renderEncoder.setRenderPipelineState(meshPipelineState)
+    renderEncoder.setRenderPipelineState(floorPipelineState)
 
     renderEncoder.setVertexBuffer(
       cameraBuffer,
@@ -141,9 +149,16 @@ final class CascadedShadowsMap: ExampleScreen {
       offset: 0,
       index: LightBuffer.index
     )
-
+    renderEncoder.setFragmentBuffer(
+      paramsBuffer,
+      offset: 0,
+      index: ParamsBuffer.index
+    )
     plane.draw(renderEncoder: renderEncoder)
-    skeleton.draw(encoder: renderEncoder, uniforms: Uniforms())
+
+    renderEncoder.setRenderPipelineState(modelPipelineState)
+    model0.draw(encoder: renderEncoder, uniforms: Uniforms())
+    model1.draw(encoder: renderEncoder, uniforms: Uniforms())
 
     renderEncoder.endEncoding()
   }

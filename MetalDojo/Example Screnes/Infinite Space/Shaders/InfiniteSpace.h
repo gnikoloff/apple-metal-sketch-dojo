@@ -19,9 +19,9 @@ typedef struct {
 } InfiniteSpace_ControlPoint;
 
 typedef enum {
-  ControlPointsBuffer = 13,
-  BoidsSettingsBuffer = 14,
-  DeferredSettingsBuffer = 15,
+  ControlPointsBuffer = 14,
+  BoidsSettingsBuffer = 15,
+  DeferredSettingsBuffer = 16,
   MaterialsBuffer = 17
 } InfiniteSpace_BufferIndices;
 

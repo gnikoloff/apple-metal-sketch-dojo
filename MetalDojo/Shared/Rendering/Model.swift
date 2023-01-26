@@ -13,7 +13,6 @@ import MetalKit
 class Model: Transformable {
   var transform = Transform()
   var meshes: [Mesh]
-  var tiling: UInt32 = 1
   var name: String
   let hasTransparency: Bool
   var boundingBox = MDLAxisAlignedBoundingBox()
@@ -142,7 +141,7 @@ class Model: Transformable {
           &material,
           length: MemoryLayout<Material>.stride,
           index: MaterialBuffer.index)
-        encoder.drawIndexedPrimitives(
+      encoder.drawIndexedPrimitives(
           type: .triangle,
           indexCount: submesh.indexCount,
           indexType: submesh.indexType,

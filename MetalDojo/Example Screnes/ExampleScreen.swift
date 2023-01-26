@@ -18,6 +18,11 @@ protocol ExampleScreen {
 }
 
 extension ExampleScreen {
+  static func createParamsBuffer(lightsCount: UInt32 = 1, worldSize: float3 = [1, 1, 1]) -> MTLBuffer {
+    var params = Params(lightsCount: lightsCount, worldSize: worldSize)
+    return Renderer.device.makeBuffer(bytes: &params, length: MemoryLayout<Params>.stride)!
+  }
+
   static func createOutputTexture(size: CGSize, label: String) -> MTLTexture {
     return RenderPass.makeTexture(
       size: size,
@@ -33,6 +38,7 @@ extension ExampleScreen {
       label: "Output depth texture"
     )!
   }
+
   static func buildDefaultLight() -> Light {
     var light = Light()
     light.position = [0, 0, 0]

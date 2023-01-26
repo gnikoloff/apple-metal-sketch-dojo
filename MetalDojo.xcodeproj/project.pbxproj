@@ -74,6 +74,7 @@
 		FFB840F5295C90FA00B9338D /* CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840F4295C90FA00B9338D /* CGPoint.swift */; };
 		FFB840F7295CA97900B9338D /* ClickGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840F6295CA97900B9338D /* ClickGesture.swift */; };
 		FFB840F9295CA99800B9338D /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840F8295CA99800B9338D /* ViewExtension.swift */; };
+		FFB99D9A2981C55A00F97DDB /* T-Rex2.usdz in Resources */ = {isa = PBXBuildFile; fileRef = FFB99D992981C55A00F97DDB /* T-Rex2.usdz */; };
 		FFC323C2297953EC00770BA3 /* AppleMetal_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC323C1297953EC00770BA3 /* AppleMetal_Extensions.swift */; };
 		FFC323C52979603900770BA3 /* ShaderHelpers.metal in Sources */ = {isa = PBXBuildFile; fileRef = FFC323C42979603900770BA3 /* ShaderHelpers.metal */; };
 		FFC323C72979611600770BA3 /* Lighting.metal in Sources */ = {isa = PBXBuildFile; fileRef = FFC323C62979611600770BA3 /* Lighting.metal */; };
@@ -158,6 +159,7 @@
 		FFB840F4295C90FA00B9338D /* CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPoint.swift; sourceTree = "<group>"; };
 		FFB840F6295CA97900B9338D /* ClickGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickGesture.swift; sourceTree = "<group>"; };
 		FFB840F8295CA99800B9338D /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
+		FFB99D992981C55A00F97DDB /* T-Rex2.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = "T-Rex2.usdz"; sourceTree = "<group>"; };
 		FFC323C1297953EC00770BA3 /* AppleMetal_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMetal_Extensions.swift; sourceTree = "<group>"; };
 		FFC323C329795FB000770BA3 /* ShaderHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderHelpers.h; sourceTree = "<group>"; };
 		FFC323C42979603900770BA3 /* ShaderHelpers.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ShaderHelpers.metal; sourceTree = "<group>"; };
@@ -366,6 +368,7 @@
 			isa = PBXGroup;
 			children = (
 				FF76AC7329819D50005A93D1 /* T-Rex.usdz */,
+				FFB99D992981C55A00F97DDB /* T-Rex2.usdz */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -571,6 +574,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF76AC7429819D50005A93D1 /* T-Rex.usdz in Resources */,
+				FFB99D9A2981C55A00F97DDB /* T-Rex2.usdz in Resources */,
 				FFB840B6295B243B00B9338D /* Preview Assets.xcassets in Resources */,
 				FFB840B3295B243B00B9338D /* Assets.xcassets in Resources */,
 			);

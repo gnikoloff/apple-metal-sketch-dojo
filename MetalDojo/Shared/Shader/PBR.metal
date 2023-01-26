@@ -7,6 +7,7 @@
 
 #include <metal_stdlib>
 #import "./Common.h"
+#import "./Vertex.h"
 using namespace metal;
 
 constant float pi = 3.1415926535897932384626433832795;
@@ -26,7 +27,78 @@ float3 computeDiffuse(
 
 float4 PBRLighting(constant Light *lights,
                    uint lightsCount,
-                   constant Material &material,
+                   Material material,
+                   float3 cameraPosition,
+                   float3 worldPos,
+                   float3 normal,
+                   float opacity);
+
+fragment float4 fragment_pbr(VertexOut in [[stage_in]],
+                             constant Light *lights [[buffer(LightBuffer)]],
+                             constant Material &_material [[buffer(MaterialBuffer)]],
+                             constant CameraUniforms &cameraUniforms [[buffer(CameraUniformsBuffer)]],
+                             constant Params &params [[buffer(ParamsBuffer)]],
+                             texture2d<float> baseColorTexture [[texture(BaseColor)]],
+                             texture2d<float> normalTexture [[texture(NormalTexture)]],
+                             texture2d<float> roughnessTexture [[texture(RoughnessTexture)]],
+                             texture2d<float> metallicTexture [[texture(MetallicTexture)]],
+                             texture2d<float> aoTexture [[texture(AOTexture)]],
+                             texture2d<float> opacityTexture [[texture(OpacityTexture)]]) {
+  constexpr sampler textureSampler(
+    filter::linear,
+    address::repeat,
+    mip_filter::linear);
+
+  Material material = _material;
+  if (!is_null_texture(baseColorTexture)) {
+    float4 color = baseColorTexture.sample(textureSampler,in.uv);
+    material.baseColor = color.rgb;
+  }
+
+  float opacity = 1;
+//  float opacity = material.opacity;
+//  if (params.alphaBlending) {
+//    if (!is_null_texture(opacityTexture)) {
+//      opacity = opacityTexture.sample(textureSampler, in.uv).r;
+//    }
+//  }
+  // extract metallic
+  if (!is_null_texture(metallicTexture)) {
+    material.metallic = metallicTexture.sample(textureSampler, in.uv).r;
+  }
+  // extract roughness
+  if (!is_null_texture(roughnessTexture)) {
+    material.roughness = roughnessTexture.sample(textureSampler, in.uv).r;
+  }
+  // extract ambient occlusion
+  if (!is_null_texture(aoTexture)) {
+    material.ambientOcclusion = aoTexture.sample(textureSampler, in.uv).r;
+  }
+  // normal map
+  float3 normal;
+  if (is_null_texture(normalTexture)) {
+    normal = in.normal;
+  } else {
+    float3 normalValue = normalTexture.sample(textureSampler, in.uv).xyz * 2.0 - 1.0;
+    normal = float3x3(
+      in.worldTangent,
+      in.worldBitangent,
+      in.normal) * normalValue;
+  }
+  normal = normalize(normal);
+//  float opacity = 1;
+  return PBRLighting(lights,
+                     params.lightsCount,
+                     material,
+                     cameraUniforms.position,
+                     in.worldPos,
+                     normal,
+                     opacity);
+}
+
+float4 PBRLighting(constant Light *lights,
+                   uint lightsCount,
+                   Material material,
                    float3 cameraPosition,
                    float3 worldPos,
                    float3 normal,

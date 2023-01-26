@@ -28,7 +28,9 @@ typedef enum {
   Normal = 2,
   Color = 3,
   Tangent = 4,
-  Bitangent = 5
+  Bitangent = 5,
+  Joints = 6,
+  Weights = 7
 } Attributes;
 
 typedef enum {
@@ -41,7 +43,8 @@ typedef enum {
   MaterialBuffer = 9,
   LightBuffer = 10,
   UniformsBuffer = 11,
-  CameraUniformsBuffer = 12,
+  ParamsBuffer = 12,
+  CameraUniformsBuffer = 13,
 } BufferIndices;
 
 typedef enum {
@@ -89,5 +92,10 @@ typedef struct {
   float ambientOcclusion;
   float opacity;
 } Material;
+
+typedef struct {
+  uint lightsCount;
+  vector_float3 worldSize;
+} Params;
 
 #endif /* Common_h */

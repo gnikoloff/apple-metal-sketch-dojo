@@ -28,22 +28,22 @@ extension MDLVertexDescriptor {
         bufferIndex: VertexBuffer.index)
     offset += MemoryLayout<float3>.stride
 
-//    // joints and weights attributes
-//    vertexDescriptor.attributes[Joints.index] =
-//      MDLVertexAttribute(
-//        name: MDLVertexAttributeJointIndices,
-//        format: .uShort4,
-//        offset: offset,
-//        bufferIndex: VertexBuffer.index)
-//    offset += MemoryLayout<ushort>.stride * 4
+    // joints and weights attributes
+    vertexDescriptor.attributes[Joints.index] =
+      MDLVertexAttribute(
+        name: MDLVertexAttributeJointIndices,
+        format: .uShort4,
+        offset: offset,
+        bufferIndex: VertexBuffer.index)
+    offset += MemoryLayout<ushort>.stride * 4
 
-//    vertexDescriptor.attributes[Weights.index] =
-//      MDLVertexAttribute(
-//        name: MDLVertexAttributeJointWeights,
-//        format: .float4,
-//        offset: offset,
-//        bufferIndex: VertexBuffer.index)
-//    offset += MemoryLayout<float4>.stride
+    vertexDescriptor.attributes[Weights.index] =
+      MDLVertexAttribute(
+        name: MDLVertexAttributeJointWeights,
+        format: .float4,
+        offset: offset,
+        bufferIndex: VertexBuffer.index)
+    offset += MemoryLayout<float4>.stride
 
     vertexDescriptor.layouts[VertexBuffer.index]
       = MDLVertexBufferLayout(stride: offset)

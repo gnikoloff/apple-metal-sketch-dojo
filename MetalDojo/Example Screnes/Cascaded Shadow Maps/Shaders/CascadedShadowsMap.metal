@@ -29,12 +29,13 @@ vertex VertexOut cascadedShadows_vertex(const VertexIn in [[stage_in]],
 fragment float4 cascadedShadows_fragment(VertexOut in [[stage_in]],
                                          constant Light *lights [[buffer(LightBuffer)]],
                                          constant Material &material [[buffer(MaterialBuffer)]],
-                                         constant CameraUniforms &cameraUniforms [[buffer(CameraUniformsBuffer)]]) {
+                                         constant CameraUniforms &cameraUniforms [[buffer(CameraUniformsBuffer)]],
+                                         constant Params &params [[buffer(ParamsBuffer)]]) {
   float3 normal = normalize(in.normal);
   float3 worldPos = in.worldPos;
   float opacity = 1;
   return PBRLighting(lights,
-                     2,
+                     params.lightsCount,
                      material,
                      cameraUniforms.position,
                      worldPos,
