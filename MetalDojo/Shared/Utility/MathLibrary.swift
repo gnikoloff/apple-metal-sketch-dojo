@@ -218,6 +218,14 @@ extension float2 {
   }
 }
 
+// MARK: - float3
+extension float3 {
+  static func /=(lhs: inout float3, rhs: Int) {
+    let frhs = Float(rhs)
+    lhs = lhs / frhs
+  }
+}
+
 // MARK: - float4
 extension float4 {
   var xyz: float3 {

@@ -98,7 +98,7 @@ class AppleMetalScreen: ExampleScreen {
     } catch {
       fatalError(error.localizedDescription)
     }
-    depthStencilState = PipelineState.buildDepthStencilState()
+    depthStencilState = Self.buildDepthStencilState()
 
     cameraBuffer = Renderer.device.makeBuffer(
       length: MemoryLayout<CameraUniforms>.stride,

@@ -32,7 +32,7 @@ enum TextureController {
       scaleFactor: 1.0,
       bundle: Bundle.main,
       options: nil) {
-      print("loaded texture: \(filename)")
+//      print("loaded texture: \(filename)")
       return texture
     }
 
@@ -54,7 +54,7 @@ enum TextureController {
     let texture = try textureLoader.newTexture(
       URL: url,
       options: textureLoaderOptions)
-    print("loaded texture: \(url.lastPathComponent)")
+//    print("loaded texture: \(url.lastPathComponent)")
     return texture
   }
 
@@ -69,7 +69,7 @@ enum TextureController {
     let texture = try? textureLoader.newTexture(
       texture: texture,
       options: textureLoaderOptions)
-    print("loaded texture from MDLTexture")
+//    print("loaded texture from MDLTexture")
     if texture != nil {
       let filename = UUID().uuidString
       textures[filename] = texture
@@ -97,4 +97,3 @@ enum TextureController {
     return texture
   }
 }
-

@@ -40,6 +40,7 @@ typedef enum {
   TangentBuffer = 3,
   BitangentBuffer = 4,
 
+  JointBuffer = 8,
   MaterialBuffer = 9,
   LightBuffer = 10,
   UniformsBuffer = 11,
@@ -97,5 +98,11 @@ typedef struct {
   uint lightsCount;
   vector_float3 worldSize;
 } Params;
+
+typedef enum {
+  RendersToTargetArray = 0,
+  IsSkeletonAnimation = 1,
+  RendersDepth = 2
+} FunctionConstants;
 
 #endif /* Common_h */

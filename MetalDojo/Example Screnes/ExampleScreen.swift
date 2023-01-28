@@ -7,7 +7,7 @@
 
 import MetalKit
 
-protocol ExampleScreen {
+protocol ExampleScreen: PipelineStates {
   var options: Options { get set }
   var outputTexture: MTLTexture! { get set }
   var outputDepthTexture: MTLTexture! { get set }

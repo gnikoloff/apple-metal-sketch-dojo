@@ -162,7 +162,7 @@ final class InfiniteSpace: ExampleScreen {
     sunLightPSO = InfiniteSpacePipelineStates.createSunLightPSO(colorPixelFormat: Renderer.viewColorFormat)
     pointLightPSO = InfiniteSpacePipelineStates.createPointLightPSO(colorPixelFormat: Renderer.viewColorFormat)
 
-    depthStencilState = PipelineState.buildDepthStencilState()!
+    depthStencilState = Self.buildDepthStencilState()!
     lightingDepthStencilState = InfiniteSpacePipelineStates.buildLightingDepthStencilState()
 
     perspCamera.target.y = 0.1

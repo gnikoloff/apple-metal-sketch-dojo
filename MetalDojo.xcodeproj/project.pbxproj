@@ -75,11 +75,18 @@
 		FFB840F7295CA97900B9338D /* ClickGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840F6295CA97900B9338D /* ClickGesture.swift */; };
 		FFB840F9295CA99800B9338D /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840F8295CA99800B9338D /* ViewExtension.swift */; };
 		FFB99D9A2981C55A00F97DDB /* T-Rex2.usdz in Resources */ = {isa = PBXBuildFile; fileRef = FFB99D992981C55A00F97DDB /* T-Rex2.usdz */; };
+		FFB99DAC2982ED3300F97DDB /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB99DAB2982ED3300F97DDB /* Animation.swift */; };
+		FFB99DAE2982ED5C00F97DDB /* TransformComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB99DAD2982ED5C00F97DDB /* TransformComponent.swift */; };
+		FFB99DB12982ED8800F97DDB /* AnimationClip.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB99DB02982ED8800F97DDB /* AnimationClip.swift */; };
+		FFB99DB32982ED9900F97DDB /* AnimationComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB99DB22982ED9900F97DDB /* AnimationComponent.swift */; };
+		FFB99DB52982EDA600F97DDB /* Skeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB99DB42982EDA600F97DDB /* Skeleton.swift */; };
+		FFB99DB72982FD1200F97DDB /* city.usdz in Resources */ = {isa = PBXBuildFile; fileRef = FFB99DB62982FD1200F97DDB /* city.usdz */; };
 		FFC323C2297953EC00770BA3 /* AppleMetal_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC323C1297953EC00770BA3 /* AppleMetal_Extensions.swift */; };
 		FFC323C52979603900770BA3 /* ShaderHelpers.metal in Sources */ = {isa = PBXBuildFile; fileRef = FFC323C42979603900770BA3 /* ShaderHelpers.metal */; };
 		FFC323C72979611600770BA3 /* Lighting.metal in Sources */ = {isa = PBXBuildFile; fileRef = FFC323C62979611600770BA3 /* Lighting.metal */; };
 		FFC8DC962979EB03003138F6 /* AppleMetal_Compute.metal in Sources */ = {isa = PBXBuildFile; fileRef = FFC8DC952979EB03003138F6 /* AppleMetal_Compute.metal */; };
-		FFD37AB42981A38C0099AA3B /* TransformComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD37AB32981A38C0099AA3B /* TransformComponent.swift */; };
+		FFE5330A2985A87F00A55407 /* FunctionConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE533092985A87F00A55407 /* FunctionConstants.swift */; };
+		FFE5330C2985AAB400A55407 /* WelcomeScreen_PipelineStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE5330B2985AAB400A55407 /* WelcomeScreen_PipelineStates.swift */; };
 		FFFE7BBE297AD0D00089EC37 /* WelcomeScreen_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFE7BBD297AD0D00089EC37 /* WelcomeScreen_Extensions.swift */; };
 /* End PBXBuildFile section */
 
@@ -160,6 +167,12 @@
 		FFB840F6295CA97900B9338D /* ClickGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickGesture.swift; sourceTree = "<group>"; };
 		FFB840F8295CA99800B9338D /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		FFB99D992981C55A00F97DDB /* T-Rex2.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = "T-Rex2.usdz"; sourceTree = "<group>"; };
+		FFB99DAB2982ED3300F97DDB /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
+		FFB99DAD2982ED5C00F97DDB /* TransformComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformComponent.swift; sourceTree = "<group>"; };
+		FFB99DB02982ED8800F97DDB /* AnimationClip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationClip.swift; sourceTree = "<group>"; };
+		FFB99DB22982ED9900F97DDB /* AnimationComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationComponent.swift; sourceTree = "<group>"; };
+		FFB99DB42982EDA600F97DDB /* Skeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skeleton.swift; sourceTree = "<group>"; };
+		FFB99DB62982FD1200F97DDB /* city.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = city.usdz; sourceTree = "<group>"; };
 		FFC323C1297953EC00770BA3 /* AppleMetal_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMetal_Extensions.swift; sourceTree = "<group>"; };
 		FFC323C329795FB000770BA3 /* ShaderHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderHelpers.h; sourceTree = "<group>"; };
 		FFC323C42979603900770BA3 /* ShaderHelpers.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ShaderHelpers.metal; sourceTree = "<group>"; };
@@ -167,7 +180,8 @@
 		FFC323C82979645E00770BA3 /* LightingHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LightingHelpers.h; sourceTree = "<group>"; };
 		FFC323C92979695B00770BA3 /* Entry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Entry.h; sourceTree = "<group>"; };
 		FFC8DC952979EB03003138F6 /* AppleMetal_Compute.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = AppleMetal_Compute.metal; sourceTree = "<group>"; };
-		FFD37AB32981A38C0099AA3B /* TransformComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformComponent.swift; sourceTree = "<group>"; };
+		FFE533092985A87F00A55407 /* FunctionConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionConstants.swift; sourceTree = "<group>"; };
+		FFE5330B2985AAB400A55407 /* WelcomeScreen_PipelineStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreen_PipelineStates.swift; sourceTree = "<group>"; };
 		FFFE7BBD297AD0D00089EC37 /* WelcomeScreen_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreen_Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -258,6 +272,7 @@
 				FFB840DF295B421C00B9338D /* Draw Meshes */,
 				FF25C922296351AD0056C317 /* WelcomeScreen.swift */,
 				FFFE7BBD297AD0D00089EC37 /* WelcomeScreen_Extensions.swift */,
+				FFE5330B2985AAB400A55407 /* WelcomeScreen_PipelineStates.swift */,
 			);
 			path = "Welcome Screen";
 			sourceTree = "<group>";
@@ -367,6 +382,7 @@
 		FF76AC7229819D48005A93D1 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				FFB99DB62982FD1200F97DDB /* city.usdz */,
 				FF76AC7329819D50005A93D1 /* T-Rex.usdz */,
 				FFB99D992981C55A00F97DDB /* T-Rex2.usdz */,
 			);
@@ -449,7 +465,7 @@
 		FFB840C8295B28BC00B9338D /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				FFD37AB22981A3800099AA3B /* Animations */,
+				FFB99DAF2982ED7100F97DDB /* Animation */,
 				FF76AC7529819EAB005A93D1 /* Textures */,
 				FF08FAF829817FCC00689272 /* Shader */,
 				FF6BD4F42965A71500EB957B /* Cameras */,
@@ -501,16 +517,21 @@
 				FF44A1CB29645BB700C7A4F3 /* Attributes.swift */,
 				FF44A1CD29645BCC00C7A4F3 /* BufferIndices.swift */,
 				FF8BDA4B297F14A000C0787C /* CGSize.swift */,
+				FFE533092985A87F00A55407 /* FunctionConstants.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		FFD37AB22981A3800099AA3B /* Animations */ = {
+		FFB99DAF2982ED7100F97DDB /* Animation */ = {
 			isa = PBXGroup;
 			children = (
-				FFD37AB32981A38C0099AA3B /* TransformComponent.swift */,
+				FFB99DAB2982ED3300F97DDB /* Animation.swift */,
+				FFB99DAD2982ED5C00F97DDB /* TransformComponent.swift */,
+				FFB99DB02982ED8800F97DDB /* AnimationClip.swift */,
+				FFB99DB22982ED9900F97DDB /* AnimationComponent.swift */,
+				FFB99DB42982EDA600F97DDB /* Skeleton.swift */,
 			);
-			path = Animations;
+			path = Animation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -576,6 +597,7 @@
 				FF76AC7429819D50005A93D1 /* T-Rex.usdz in Resources */,
 				FFB99D9A2981C55A00F97DDB /* T-Rex2.usdz in Resources */,
 				FFB840B6295B243B00B9338D /* Preview Assets.xcassets in Resources */,
+				FFB99DB72982FD1200F97DDB /* city.usdz in Resources */,
 				FFB840B3295B243B00B9338D /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -619,8 +641,10 @@
 				FFC323C52979603900770BA3 /* ShaderHelpers.metal in Sources */,
 				FF63BD4D29642F1000A08F8F /* Sphere.swift in Sources */,
 				FF08FB072981852400689272 /* CascadedShadowsMap_PipelineStates.swift in Sources */,
-				FFD37AB42981A38C0099AA3B /* TransformComponent.swift in Sources */,
+				FFB99DB32982ED9900F97DDB /* AnimationComponent.swift in Sources */,
+				FFE5330A2985A87F00A55407 /* FunctionConstants.swift in Sources */,
 				FFB840CA295B28CB00B9338D /* GameController.swift in Sources */,
+				FFB99DB52982EDA600F97DDB /* Skeleton.swift in Sources */,
 				FF979BBF295DA1DE00021E5D /* Tween.swift in Sources */,
 				FF76AC7B29819F86005A93D1 /* Mesh.swift in Sources */,
 				FF979BC6295DC36000021E5D /* Project.swift in Sources */,
@@ -648,6 +672,7 @@
 				FF25C91A296338BC0056C317 /* Drawable.swift in Sources */,
 				FF08FAFA2981809600689272 /* PBR.metal in Sources */,
 				FFB840F1295B82B300B9338D /* MTLVertexDescriptor.swift in Sources */,
+				FFB99DAE2982ED5C00F97DDB /* TransformComponent.swift in Sources */,
 				FFB840D8295B39D000B9338D /* RenderPass.swift in Sources */,
 				FF76AC7D2981A0B0005A93D1 /* MDLVertexDescriptor.swift in Sources */,
 				FFFE7BBE297AD0D00089EC37 /* WelcomeScreen_Extensions.swift in Sources */,
@@ -674,8 +699,11 @@
 				FF6BD4FE2965A7B200EB957B /* Camera.swift in Sources */,
 				FFB840EA295B639E00B9338D /* ProjectsGrid.swift in Sources */,
 				FF8BDA4C297F14A000C0787C /* CGSize.swift in Sources */,
+				FFE5330C2985AAB400A55407 /* WelcomeScreen_PipelineStates.swift in Sources */,
 				FF44A1CC29645BB700C7A4F3 /* Attributes.swift in Sources */,
 				FF15619D29608765007D14E4 /* ExampleScreen.swift in Sources */,
+				FFB99DAC2982ED3300F97DDB /* Animation.swift in Sources */,
+				FFB99DB12982ED8800F97DDB /* AnimationClip.swift in Sources */,
 				FF6E29E8296739A900D2E59A /* InfiniteSpace_Compute.metal in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

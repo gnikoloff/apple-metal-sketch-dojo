@@ -11,43 +11,44 @@
 import MetalKit
 
 class Model: Transformable {
+  var name: String
   var transform = Transform()
   var meshes: [Mesh]
-  var name: String
   let hasTransparency: Bool
   var boundingBox = MDLAxisAlignedBoundingBox()
   var size: float3 {
     return boundingBox.maxBounds - boundingBox.minBounds
   }
   var currentTime: Float = 0
-//  let animations: [String: AnimationClip]
+  let animations: [String: AnimationClip]
 
   init(name: String) {
     guard let assetURL = Bundle.main.url(
       forResource: name,
-      withExtension: nil) else {
+      withExtension: nil
+    ) else {
       fatalError("Model: \(name) not found")
     }
-    let allocator = MTKMeshBufferAllocator(device: Renderer.device)
-    let meshDescriptor = MDLVertexDescriptor.defaultLayout
     let asset = MDLAsset(
       url: assetURL,
-      vertexDescriptor: meshDescriptor,
-      bufferAllocator: allocator)
+      vertexDescriptor: MDLVertexDescriptor.defaultLayout,
+      bufferAllocator: Renderer.meshAllocator
+    )
     asset.loadTextures()
     var mtkMeshes: [MTKMesh] = []
-    let mdlMeshes =
-      asset.childObjects(of: MDLMesh.self) as? [MDLMesh] ?? []
+    let mdlMeshes = asset.childObjects(of: MDLMesh.self) as? [MDLMesh] ?? []
     _ = mdlMeshes.map { mdlMesh in
       mdlMesh.addTangentBasis(
-        forTextureCoordinateAttributeNamed:
-          MDLVertexAttributeTextureCoordinate,
+        forTextureCoordinateAttributeNamed: MDLVertexAttributeTextureCoordinate,
         tangentAttributeNamed: MDLVertexAttributeTangent,
-        bitangentAttributeNamed: MDLVertexAttributeBitangent)
+        bitangentAttributeNamed: MDLVertexAttributeBitangent
+      )
       mtkMeshes.append(
         try! MTKMesh(
           mesh: mdlMesh,
-          device: Renderer.device))
+          device: Renderer.device
+        )
+      )
     }
     meshes = zip(mdlMeshes, mtkMeshes).map {
       Mesh(
@@ -60,28 +61,29 @@ class Model: Transformable {
     hasTransparency = false
     boundingBox = asset.boundingBox
     // animations
-//    let assetAnimations = asset.animations.objects.compactMap {
-//      $0 as? MDLPackedJointAnimation
-//    }
-//    let animations
-//      = Dictionary(uniqueKeysWithValues: assetAnimations.map {
-//      ($0.name, AnimationComponent.load(animation: $0))
-//      })
-//    print(animations)
-//    self.animations = animations
+    let assetAnimations = asset.animations.objects.compactMap {
+      $0 as? MDLPackedJointAnimation
+    }
+    let animations
+      = Dictionary(uniqueKeysWithValues: assetAnimations.map {
+      ($0.name, AnimationComponent.load(animation: $0))
+      })
+    print(animations)
+    self.animations = animations
   }
 
   func update(deltaTime: Float) {
     currentTime += deltaTime
     for i in 0..<meshes.count {
-//      var mesh = meshes[i]
-//      if let animationClip = animations.first?.value {
-//        mesh.skeleton?.updatePose(
-//          animationClip: animationClip,
-//          at: currentTime)
-//      }
-//      mesh.transform?.getCurrentTransform(at: currentTime)
-//      meshes[i] = mesh
+      var mesh = meshes[i]
+      if let animationClip = animations.first?.value {
+        mesh.skeleton?.updatePose(
+          animationClip: animationClip,
+          at: currentTime
+        )
+      }
+      mesh.transform?.getCurrentTransform(at: currentTime)
+      meshes[i] = mesh
     }
   }
 
@@ -94,12 +96,12 @@ class Model: Transformable {
 
 
     for mesh in meshes {
-//      if let paletteBuffer = mesh.skeleton?.jointMatrixPaletteBuffer {
-//        encoder.setVertexBuffer(
-//          paletteBuffer,
-//          offset: 0,
-//          index: JointBuffer.index)
-//      }
+      if let paletteBuffer = mesh.skeleton?.jointMatrixPaletteBuffer {
+        encoder.setVertexBuffer(
+          paletteBuffer,
+          offset: 0,
+          index: JointBuffer.index)
+      }
       let currentLocalTransform =
         mesh.transform?.currentTransform ?? .identity
       uniforms.modelMatrix =
@@ -141,7 +143,7 @@ class Model: Transformable {
           &material,
           length: MemoryLayout<Material>.stride,
           index: MaterialBuffer.index)
-      encoder.drawIndexedPrimitives(
+        encoder.drawIndexedPrimitives(
           type: .triangle,
           indexCount: submesh.indexCount,
           indexType: submesh.indexType,

@@ -8,7 +8,7 @@
 import Foundation
 import MetalKit
 
-enum PointsShadowmapPipelineStates {
+enum PointsShadowmapPipelineStates: PipelineStates {
   static func createShadowPSO() throws -> MTLRenderPipelineState {
     let fnConstantValues = MTLFunctionConstantValues()
     var isCubemapRender = true
@@ -32,7 +32,7 @@ enum PointsShadowmapPipelineStates {
     pipelineDescriptor.colorAttachments[0].pixelFormat = .invalid
     pipelineDescriptor.depthAttachmentPixelFormat = .depth16Unorm
     pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultLayout
-    return PipelineState.createPSO(descriptor: pipelineDescriptor)
+    return Self.createPSO(descriptor: pipelineDescriptor)
   }
 
   static func createForwardPSO(
@@ -85,6 +85,6 @@ enum PointsShadowmapPipelineStates {
     pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultLayout
     pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
 
-    return PipelineState.createPSO(descriptor: pipelineDescriptor)
+    return Self.createPSO(descriptor: pipelineDescriptor)
   }
 }

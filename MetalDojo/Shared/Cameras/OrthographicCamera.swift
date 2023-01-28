@@ -11,30 +11,33 @@ import simd
 struct OrthographicCamera: Camera {
   var transform = Transform()
   var aspect: CGFloat = 1
-  var viewSize: CGSize = CGSize(width: 10, height: 10)
+  var left: Float = -1
+  var right: Float = 1
+  var top: Float = 1
+  var bottom: Float = -1
   var near: Float = 0.1
   var far: Float = 100
   var center = float3.zero
+  var target: float3 = [0, 0, 0]
+  var up: float3 = [0, 1, 0]
 
   var viewMatrix: float4x4 {
-    (float4x4(translation: position) *
-    float4x4(rotation: rotation)).inverse
+    return float4x4(eye: position, center: target, up: up)
   }
 
   var projectionMatrix: float4x4 {
     return float4x4(
-      left: 0,
-      right: Float(viewSize.width),
-      bottom: Float(viewSize.height),
-      top: 0,
+      left: left,
+      right: right,
+      bottom: bottom,
+      top: top,
       near: near,
       far: far
     )
   }
 
   mutating func update(size: CGSize) {
-    aspect = size.width / size.height
-    viewSize = size
+    // ...
   }
 
   mutating func update(deltaTime: Float) {

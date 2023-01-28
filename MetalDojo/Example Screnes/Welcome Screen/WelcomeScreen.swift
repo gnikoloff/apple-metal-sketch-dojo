@@ -17,7 +17,7 @@ class WelcomeScreen {
   var projectsGrid: ProjectsGrid
 
   init(options: Options) {
-    pipelineState = PipelineState.createWelcomeScreenPSO(
+    pipelineState = WelcomeScreen_PipelineStates.createWelcomeScreenPSO(
       colorPixelFormat: Renderer.viewColorFormat
     )
     let projWidth = Float(options.drawableSize.width) * 0.4

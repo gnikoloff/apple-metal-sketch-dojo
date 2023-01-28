@@ -12,7 +12,7 @@ import MetalKit
 var shadowDescriptor = MTLRenderPassDescriptor()
 var depthStencilState: MTLDepthStencilState?
 
-struct SphereLightCaster: Transformable {
+struct SphereLightCaster: Transformable, PipelineStates {
   static let SHADOWMAP_SIZE: CGFloat = 512
   static let SHADOW_CUBE_SIDES = 6
   private static let SHADOW_PASS_LABEL = "Point Shadow Pass"
@@ -75,7 +75,7 @@ struct SphereLightCaster: Transformable {
     }
 
     if depthStencilState == nil {
-      depthStencilState = PipelineState.buildDepthStencilState()
+      depthStencilState = Self.buildDepthStencilState()
     }
   }
 

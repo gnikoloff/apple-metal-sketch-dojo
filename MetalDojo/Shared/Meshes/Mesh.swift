@@ -14,17 +14,18 @@ struct Mesh {
   let vertexBuffers: [MTLBuffer]
   let submeshes: [Submesh]
   var transform: TransformComponent?
-//  let skeleton: Skeleton?
+  let skeleton: Skeleton?
 //  var pipelineState: MTLRenderPipelineState
 }
 
 extension Mesh {
   init(mdlMesh: MDLMesh, mtkMesh: MTKMesh) {
-//    let skeleton =
-//      Skeleton(animationBindComponent:
-//        (mdlMesh.componentConforming(to: MDLComponent.self)
-//        as? MDLAnimationBindComponent))
-//    self.skeleton = skeleton
+    let skeleton =
+      Skeleton(animationBindComponent:
+        (mdlMesh.componentConforming(to: MDLComponent.self)
+        as? MDLAnimationBindComponent)
+      )
+    self.skeleton = skeleton
 
     var vertexBuffers: [MTLBuffer] = []
     for mtkMeshBuffer in mtkMesh.vertexBuffers {
@@ -46,14 +47,14 @@ extension Mesh {
     endTime: TimeInterval
   ) {
     self.init(mdlMesh: mdlMesh, mtkMesh: mtkMesh)
-//    if let mdlMeshTransform = mdlMesh.transform {
-//      transform = TransformComponent(
-//        transform: mdlMeshTransform,
-//        object: mdlMesh,
-//        startTime: startTime,
-//        endTime: endTime)
-//    } else {
-//      transform = nil
-//    }
+    if let mdlMeshTransform = mdlMesh.transform {
+      transform = TransformComponent(
+        transform: mdlMeshTransform,
+        object: mdlMesh,
+        startTime: startTime,
+        endTime: endTime)
+    } else {
+      transform = nil
+    }
   }
 }

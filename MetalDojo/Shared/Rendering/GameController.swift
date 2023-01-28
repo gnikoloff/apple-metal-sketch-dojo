@@ -10,9 +10,10 @@
 import MetalKit
 
 final class GameController: NSObject {
+  static var fps: Double = 0
+
   var renderer: Renderer
   var options: Options
-  var fps: Double = 0
   var deltaTime: Double = 0
   var lastTime: Double = CFAbsoluteTimeGetCurrent()
   var elapsedTime: Double = 0
@@ -26,11 +27,11 @@ final class GameController: NSObject {
   init(metalView: MTKView, options: Options) {
     renderer = Renderer(metalView: metalView)
     self.options = options
+    Self.fps = Double(metalView.preferredFramesPerSecond)
     welcomeScreen = WelcomeScreen(options: options)
     super.init()
     metalView.delegate = self
     metalView.framebufferOnly = false
-    fps = Double(metalView.preferredFramesPerSecond)
 
 //    screens.append(PointsShadowmap(options: options))
 //    screens.append(InfiniteSpace(options: options))

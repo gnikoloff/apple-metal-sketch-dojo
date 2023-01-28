@@ -65,7 +65,7 @@ final class PointsShadowmap: ExampleScreen {
 
     perspCamera.distance = 3
 
-    depthStencilState = PipelineState.buildDepthStencilState()
+    depthStencilState = Self.buildDepthStencilState()
 
     cube = Cube(size: [2, 2, 2])
     cube.cullMode = .front

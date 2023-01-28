@@ -7,9 +7,7 @@
 
 import MetalKit
 
-enum RenderPass {
-
-}
+enum RenderPass {}
 
 extension RenderPass {
   static func buildDepthStencilState() -> MTLDepthStencilState? {
@@ -51,21 +49,22 @@ extension RenderPass {
     pixelFormat: MTLPixelFormat,
     label: String,
     storageMode: MTLStorageMode = .private,
+    type: MTLTextureType = .type2D,
     usage: MTLTextureUsage = [.shaderRead, .renderTarget]
   ) -> MTLTexture? {
     let width = Int(size.width)
     let height = Int(size.height)
     guard width > 0 && height > 0 else { return nil }
-    let textureDesc =
-      MTLTextureDescriptor.texture2DDescriptor(
-        pixelFormat: pixelFormat,
-        width: width,
-        height: height,
-        mipmapped: false)
+    let textureDesc = MTLTextureDescriptor.texture2DDescriptor(
+      pixelFormat: pixelFormat,
+      width: width,
+      height: height,
+      mipmapped: false
+    )
     textureDesc.storageMode = storageMode
     textureDesc.usage = usage
-    guard let texture =
-      Renderer.device.makeTexture(descriptor: textureDesc) else {
+    textureDesc.textureType = type
+    guard let texture = Renderer.device.makeTexture(descriptor: textureDesc) else {
         fatalError("Failed to create texture")
       }
     texture.label = label

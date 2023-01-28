@@ -10,8 +10,9 @@
 import MetalKit
 
 final class CascadedShadowsMap: ExampleScreen {
-  private static let BOXES_COUNT = 24
-  private static let ROWS_COUNT = 2
+//  private static let BOXES_COUNT = 24
+//  private static let ROWS_COUNT = 2
+  private static let SHADOW_RESOLUTION = 1024
 
   var options: Options
   var outputTexture: MTLTexture!
@@ -22,17 +23,25 @@ final class CascadedShadowsMap: ExampleScreen {
   private let floorPipelineState: MTLRenderPipelineState
   private let modelPipelineState: MTLRenderPipelineState
   private let cameraBuffer: MTLBuffer
+  private var shadowDepthTexture: MTLTexture!
+  private let shadowDescriptor: MTLRenderPassDescriptor
+  private let shadowPipelineState: MTLRenderPipelineState
 
+  private var shadowCamera = OrthographicCamera()
   private var perspCamera = ArcballCamera()
-  private var plane: Plane
-  private var cube: Cube
+//  private var plane: Plane
+//  private var cube: Cube
 
-  lazy private var model0: Model = {
-    Model(name: "T-Rex.usdz")
+//  lazy private var model0: Model = {
+//    Model(name: "T-Rex.usdz")
+//  }()
+
+  lazy private var supportsLayerSelection: Bool = {
+    Renderer.device.supportsFamily(MTLGPUFamily.mac2) || Renderer.device.supportsFamily(MTLGPUFamily.apple5)
   }()
 
-  lazy private var model1: Model = {
-    Model(name: "T-Rex2.usdz")
+  lazy private var model: Model = {
+    Model(name: "city.usdz")
   }()
 
   lazy private var paramsBuffer: MTLBuffer = {
@@ -65,26 +74,34 @@ final class CascadedShadowsMap: ExampleScreen {
   init(options: Options) {
     self.options = options
 
+    do {
+      try floorPipelineState = CascadedShadowsMap_PipelineStates.createFloorPSO()
+      try modelPipelineState = CascadedShadowsMap_PipelineStates.createPBRPSO()
+      try shadowPipelineState = CascadedShadowsMap_PipelineStates.createShadowPSO()
+
+    } catch {
+      fatalError(error.localizedDescription)
+    }
+
     outputPassDescriptor = MTLRenderPassDescriptor()
-    floorPipelineState = CascadedShadowsMap_PipelineStates.createFloorPSO()
-    modelPipelineState = CascadedShadowsMap_PipelineStates.createPBRPSO()
-    depthStencilState = PipelineState.buildDepthStencilState()
+    depthStencilState = Self.buildDepthStencilState()
+    shadowDescriptor = MTLRenderPassDescriptor()
 
     cameraBuffer = Renderer.device.makeBuffer(
       length: MemoryLayout<CameraUniforms>.stride,
       options: []
     )!
 
-    perspCamera.distance = 3
+    perspCamera.distance = 10
 
-    plane = Plane(size: float3(10, 10, 1))
-    plane.rotation.x = .pi * 0.5
+//    plane = Plane(size: float3(10, 10, 1))
+//    plane.rotation.x = .pi * 0.5
 
-    cube = Cube(size: float3(1, 1, 0.2))
+//    cube = Cube(size: float3(1, 1, 0.2))
 
-    model0.scale = 0.002
-    model1.scale = 0.2
-    model1.position.x = 2
+//    model0.scale = 0.002
+    model.scale = 0.002
+    model.position.x = 2
   }
 
   func resize(view: MTKView) {
@@ -94,11 +111,65 @@ final class CascadedShadowsMap: ExampleScreen {
       size: size,
       label: "Cascaded Shadow Maps Output texture"
     )
+    shadowDepthTexture = RenderPass.makeTexture(
+      size: CGSize(width: Self.SHADOW_RESOLUTION, height: Self.SHADOW_RESOLUTION),
+      pixelFormat: .depth32Float,
+      label: "Shadow Depth Texture",
+      type: .type2DArray
+    )
+    shadowDepthTexture.sl
     perspCamera.update(size: size)
   }
 
   func update(elapsedTime: Float, deltaTime: Float) {
     perspCamera.update(deltaTime: deltaTime)
+//    model0.update(deltaTime: deltaTime)
+
+
+    model.update(deltaTime: deltaTime)
+
+    let frustumWorldSpaceCorners = perspCamera.getFrustumCornersWorldSpace()
+    var center = float3(repeating: 0)
+    for corner in frustumWorldSpaceCorners {
+      center += corner.xyz
+    }
+    center /= (frustumWorldSpaceCorners.count)
+    shadowCamera.target = center
+    var minX = Float.greatestFiniteMagnitude
+    var maxX = -minX
+    var minY = Float.greatestFiniteMagnitude
+    var maxY = -minY
+    var minZ = Float.greatestFiniteMagnitude
+    var maxZ = -minZ
+    for corner in frustumWorldSpaceCorners {
+      let trf = shadowCamera.viewMatrix * corner
+      minX = min(minX, trf.x)
+      maxX = max(maxX, trf.x)
+      minY = min(minY, trf.y)
+      maxY = max(maxY, trf.y)
+      minZ = min(minZ, trf.z)
+      maxZ = max(maxZ, trf.z)
+    }
+    // Tune this parameter according to the scene
+    let zMult: Float = 2
+    if minZ < 0 {
+      minZ *= zMult
+    } else {
+      minZ /= zMult
+    }
+    if maxZ < 0 {
+      maxZ /= zMult
+    } else {
+      maxZ *= zMult
+    }
+    //    shadowCamera.
+    shadowCamera.left = minX
+    shadowCamera.right = maxX
+    shadowCamera.top = minY
+    shadowCamera.bottom = maxY
+    shadowCamera.near = minZ
+    shadowCamera.far = maxZ
+    shadowCamera.aspect = 1
   }
 
   func updateUniforms() {
@@ -121,13 +192,20 @@ final class CascadedShadowsMap: ExampleScreen {
 //    descriptor.depthAttachment.texture = outputDepthTexture
 //    descriptor.depthAttachment.storeAction = .dontCare
 
-    guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
+    shadowDescriptor.depthAttachment.texture = shadowDepthTexture
+    shadowDescriptor.renderTargetArrayLength = 3
+
+    guard let shadowRenderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: shadowDescriptor) else {
       return
     }
 
-    renderEncoder.label = "Cascaded Shadows Map Render Pass"
-    renderEncoder.setDepthStencilState(depthStencilState)
-    renderEncoder.setRenderPipelineState(floorPipelineState)
+    shadowRenderEncoder.setRenderPipelineState(shadowPipelineState)
+    shadowRenderEncoder.setDepthStencilState(depthStencilState)
+    model.draw(encoder: shadowRenderEncoder, uniforms: Uniforms())
+
+    guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
+      return
+    }
 
     renderEncoder.setVertexBuffer(
       cameraBuffer,
@@ -154,11 +232,10 @@ final class CascadedShadowsMap: ExampleScreen {
       offset: 0,
       index: ParamsBuffer.index
     )
-    plane.draw(renderEncoder: renderEncoder)
 
     renderEncoder.setRenderPipelineState(modelPipelineState)
-    model0.draw(encoder: renderEncoder, uniforms: Uniforms())
-    model1.draw(encoder: renderEncoder, uniforms: Uniforms())
+    renderEncoder.setDepthStencilState(depthStencilState)
+    model.draw(encoder: renderEncoder, uniforms: Uniforms())
 
     renderEncoder.endEncoding()
   }

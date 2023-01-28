@@ -19,7 +19,7 @@ extension MTLRenderPipelineDescriptor {
   }
 }
 
-enum InfiniteSpacePipelineStates {
+enum InfiniteSpacePipelineStates: PipelineStates {
 
   static func buildLightingDepthStencilState() -> MTLDepthStencilState? {
     let descriptor = MTLDepthStencilDescriptor()
@@ -36,7 +36,7 @@ enum InfiniteSpacePipelineStates {
     pipelineDescriptor.setColorAttachmentPixelFormatsForInfiniteSpace(colorPixelFormat)
     pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
     pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultLayout
-    return PipelineState.createPSO(descriptor: pipelineDescriptor)
+    return Self.createPSO(descriptor: pipelineDescriptor)
   }
 
   static func createPointLightPSO(
@@ -60,7 +60,7 @@ enum InfiniteSpacePipelineStates {
     attachment?.destinationAlphaBlendFactor = .zero
     attachment?.sourceRGBBlendFactor = .one
     attachment?.sourceAlphaBlendFactor = .one
-    return PipelineState.createPSO(descriptor: pipelineDescriptor)
+    return Self.createPSO(descriptor: pipelineDescriptor)
   }
 
   static func createSunLightPSO(
@@ -73,7 +73,7 @@ enum InfiniteSpacePipelineStates {
     pipelineDescriptor.fragmentFunction = fragmentFunction
     pipelineDescriptor.setColorAttachmentPixelFormatsForInfiniteSpace(colorPixelFormat)
     pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
-    return PipelineState.createPSO(descriptor: pipelineDescriptor)
+    return Self.createPSO(descriptor: pipelineDescriptor)
   }
 
   static func createBoxesComputePSO() throws -> MTLComputePipelineState {
