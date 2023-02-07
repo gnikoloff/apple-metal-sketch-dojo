@@ -14,6 +14,7 @@ struct Icosahedron: Drawable {
   var baseInstace: Int = 0
   var uniforms = Uniforms()
   var transform = Transform()
+  var primitiveType: MTLPrimitiveType = .triangle
 
   var vertexBuffers: [MTLBuffer] = []
   var submeshes: [Submesh] = []

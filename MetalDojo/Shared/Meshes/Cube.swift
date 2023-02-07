@@ -14,6 +14,7 @@ struct Cube: Drawable {
   var baseInstace: Int = 0
   var uniforms = Uniforms()
   var transform = Transform()
+  var primitiveType: MTLPrimitiveType = .triangle
 
   var vertexBuffers: [MTLBuffer] = []
   var submeshes: [Submesh] = []
@@ -26,13 +27,14 @@ struct Cube: Drawable {
   init(
     size: float3 = [1, 1, 1],
     segments: vector_uint3 = [1, 1, 1],
-    inwardNormals: Bool = false
+    inwardNormals: Bool = false,
+    geometryType: MDLGeometryType = .triangles
   ) {
     let cubeMDLMesh = MDLMesh(
       boxWithExtent: size,
       segments: segments,
       inwardNormals: inwardNormals,
-      geometryType: .triangles,
+      geometryType: geometryType,
       allocator: Renderer.meshAllocator
     )
     

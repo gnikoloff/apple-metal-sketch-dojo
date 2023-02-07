@@ -202,7 +202,6 @@ final class PointsShadowmap: ExampleScreen {
     sphere0.draw(renderEncoder: renderEncoder)
     sphere1.draw(renderEncoder: renderEncoder)
 
-
     renderEncoder.endEncoding()
   }
 

@@ -31,7 +31,8 @@ float4 PBRLighting(constant Light *lights,
                    float3 cameraPosition,
                    float3 worldPos,
                    float3 normal,
-                   float opacity);
+                   float opacity,
+                   float shadow);
 
 fragment float4 fragment_pbr(VertexOut in [[stage_in]],
                              constant Light *lights [[buffer(LightBuffer)]],
@@ -87,13 +88,15 @@ fragment float4 fragment_pbr(VertexOut in [[stage_in]],
   }
   normal = normalize(normal);
 //  float opacity = 1;
+  float shadow = 0;
   return PBRLighting(lights,
                      params.lightsCount,
                      material,
                      cameraUniforms.position,
                      in.worldPos,
                      normal,
-                     opacity);
+                     opacity,
+                     shadow);
 }
 
 float4 PBRLighting(constant Light *lights,
@@ -102,7 +105,8 @@ float4 PBRLighting(constant Light *lights,
                    float3 cameraPosition,
                    float3 worldPos,
                    float3 normal,
-                   float opacity) {
+                   float opacity,
+                   float shadow) {
   float3 viewDirection = normalize(cameraPosition - worldPos);
   float3 specularColor = 0;
   float3 diffuseColor = 0;
@@ -130,7 +134,7 @@ float4 PBRLighting(constant Light *lights,
         lightDirection) * light.color);
   }
 // shadow calculation
-//  diffuseColor *= calculateShadow(in.shadowPosition, shadowTexture);
+  diffuseColor *= shadow;
   float4 color = float4(diffuseColor * opacity + specularColor, opacity);
   return color;
 }

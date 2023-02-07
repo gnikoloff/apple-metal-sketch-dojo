@@ -10,13 +10,6 @@ import MetalKit
 enum RenderPass {}
 
 extension RenderPass {
-  static func buildDepthStencilState() -> MTLDepthStencilState? {
-    let descriptor = MTLDepthStencilDescriptor()
-    descriptor.depthCompareFunction = .less
-    descriptor.isDepthWriteEnabled = true
-    return Renderer.device.makeDepthStencilState(
-      descriptor: descriptor)
-  }
 
   static func makeCubeTexture(
     size: CGFloat,
@@ -50,7 +43,8 @@ extension RenderPass {
     label: String,
     storageMode: MTLStorageMode = .private,
     type: MTLTextureType = .type2D,
-    usage: MTLTextureUsage = [.shaderRead, .renderTarget]
+    usage: MTLTextureUsage = [.shaderRead, .renderTarget],
+    arrayLength: Int = 1
   ) -> MTLTexture? {
     let width = Int(size.width)
     let height = Int(size.height)
@@ -64,6 +58,8 @@ extension RenderPass {
     textureDesc.storageMode = storageMode
     textureDesc.usage = usage
     textureDesc.textureType = type
+    textureDesc.arrayLength = arrayLength
+    
     guard let texture = Renderer.device.makeTexture(descriptor: textureDesc) else {
         fatalError("Failed to create texture")
       }

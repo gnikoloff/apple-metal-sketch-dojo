@@ -22,6 +22,8 @@ class Model: Transformable {
   var currentTime: Float = 0
   let animations: [String: AnimationClip]
 
+  private var uniformsBuffer: MTLBuffer
+
   init(name: String) {
     guard let assetURL = Bundle.main.url(
       forResource: name,
@@ -68,8 +70,12 @@ class Model: Transformable {
       = Dictionary(uniqueKeysWithValues: assetAnimations.map {
       ($0.name, AnimationComponent.load(animation: $0))
       })
-    print(animations)
     self.animations = animations
+
+    uniformsBuffer = Renderer.device.makeBuffer(
+      length: MemoryLayout<Uniforms>.stride,
+      options: []
+    )!
   }
 
   func update(deltaTime: Float) {
@@ -87,12 +93,9 @@ class Model: Transformable {
     }
   }
 
-  func draw(
-    encoder: MTLRenderCommandEncoder,
-    uniforms vertex: Uniforms
-  ) {
-    encoder.pushDebugGroup(name)
-    var uniforms = vertex
+  func draw(encoder: MTLRenderCommandEncoder, useTextures: Bool = true) {
+
+    encoder.setCullMode(.back)
 
 
     for mesh in meshes {
@@ -104,13 +107,15 @@ class Model: Transformable {
       }
       let currentLocalTransform =
         mesh.transform?.currentTransform ?? .identity
-      uniforms.modelMatrix =
-        transform.modelMatrix * currentLocalTransform
-      uniforms.normalMatrix = uniforms.modelMatrix.upperLeft
-      encoder.setVertexBytes(
-        &uniforms,
-        length: MemoryLayout<Uniforms>.stride,
-        index: UniformsBuffer.index)
+      let uniformPtr = uniformsBuffer.contents().bindMemory(to: Uniforms.self, capacity: 1)
+      let modelMatrix = transform.modelMatrix * currentLocalTransform
+      uniformPtr.pointee.modelMatrix = modelMatrix
+      uniformPtr.pointee.normalMatrix = modelMatrix.upperLeft
+      encoder.setVertexBuffer(
+        uniformsBuffer,
+        offset: 0,
+        index: UniformsBuffer.index
+      )
       for (index, vertexBuffer) in mesh.vertexBuffers.enumerated() {
         encoder.setVertexBuffer(
           vertexBuffer,
@@ -119,30 +124,39 @@ class Model: Transformable {
       }
 
       for submesh in mesh.submeshes {
-        // set the fragment texture here
-        encoder.setFragmentTexture(
-          submesh.textures.baseColor,
-          index: BaseColor.index)
-        encoder.setFragmentTexture(
-          submesh.textures.normal,
-          index: NormalTexture.index)
-        encoder.setFragmentTexture(
-          submesh.textures.roughness,
-          index: RoughnessTexture.index)
-        encoder.setFragmentTexture(
-          submesh.textures.metallic,
-          index: MetallicTexture.index)
-        encoder.setFragmentTexture(
-          submesh.textures.ambientOcclusion,
-          index: AOTexture.index)
-        encoder.setFragmentTexture(
-          submesh.textures.opacity,
-          index: OpacityTexture.index)
-        var material = submesh.material
-        encoder.setFragmentBytes(
-          &material,
-          length: MemoryLayout<Material>.stride,
-          index: MaterialBuffer.index)
+        if useTextures {
+          encoder.setFragmentTexture(
+            submesh.textures.baseColor,
+            index: BaseColor.index
+          )
+          encoder.setFragmentTexture(
+            submesh.textures.normal,
+            index: NormalTexture.index
+          )
+          encoder.setFragmentTexture(
+            submesh.textures.roughness,
+            index: RoughnessTexture.index
+          )
+          encoder.setFragmentTexture(
+            submesh.textures.metallic,
+            index: MetallicTexture.index
+          )
+          encoder.setFragmentTexture(
+            submesh.textures.ambientOcclusion,
+            index: AOTexture.index
+          )
+          encoder.setFragmentTexture(
+            submesh.textures.opacity,
+            index: OpacityTexture.index
+          )
+          var material = submesh.material
+          encoder.setFragmentBytes(
+            &material,
+            length: MemoryLayout<Material>.stride,
+            index: MaterialBuffer.index
+          )
+        }
+
         encoder.drawIndexedPrimitives(
           type: .triangle,
           indexCount: submesh.indexCount,
@@ -150,6 +164,7 @@ class Model: Transformable {
           indexBuffer: submesh.indexBuffer,
           indexBufferOffset: submesh.indexBufferOffset
         )
+
       }
     }
     encoder.popDebugGroup()

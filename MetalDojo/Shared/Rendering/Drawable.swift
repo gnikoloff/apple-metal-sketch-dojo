@@ -17,6 +17,7 @@ protocol Drawable: Transformable {
   var uniforms: Uniforms { get set }
   var instanceCount: Int { get set }
   var baseInstace: Int { get set }
+  var primitiveType: MTLPrimitiveType { get set }
   init()
   init(mdlMesh: MDLMesh, mtkMesh: MTKMesh)
   mutating func updateUniforms()
@@ -60,7 +61,7 @@ extension Drawable {
 
     for submesh in submeshes {
       renderEncoder.drawIndexedPrimitives(
-        type: .triangle,
+        type: primitiveType,
         indexCount: submesh.indexCount,
         indexType: submesh.indexType,
         indexBuffer: submesh.indexBuffer,

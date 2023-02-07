@@ -6,3 +6,15 @@
 //
 
 import Foundation
+
+extension CascadedShadowsMap_BufferIndices {
+  var index: Int {
+    return Int(rawValue)
+  }
+}
+
+extension CascadedShadowsMap_TextureIndices {
+  var index: Int {
+    return Int(rawValue)
+  }
+}

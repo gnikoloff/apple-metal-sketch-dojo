@@ -224,6 +224,9 @@ extension float3 {
     let frhs = Float(rhs)
     lhs = lhs / frhs
   }
+  func isParallelTo(_ vecB: float3) -> Bool {
+    cross(self, vecB) == float3.zero
+  }
 }
 
 // MARK: - float4

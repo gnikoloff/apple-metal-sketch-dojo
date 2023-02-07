@@ -34,6 +34,7 @@ vector_float4 PBRLighting(constant Light *lights,
                           vector_float3 cameraPosition,
                           vector_float3 worldPos,
                           vector_float3 normal,
-                          float opacity);
+                          float opacity,
+                          float shadow);
 
 #endif /* LightingHelpers_h */

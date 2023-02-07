@@ -48,6 +48,7 @@
 		FF76AC7929819F2E005A93D1 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF76AC7829819F2E005A93D1 /* Model.swift */; };
 		FF76AC7B29819F86005A93D1 /* Mesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF76AC7A29819F86005A93D1 /* Mesh.swift */; };
 		FF76AC7D2981A0B0005A93D1 /* MDLVertexDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF76AC7C2981A0B0005A93D1 /* MDLVertexDescriptor.swift */; };
+		FF88380E2990034600F62A9D /* CascadedShadowsMap_Debug.metal in Sources */ = {isa = PBXBuildFile; fileRef = FF88380D2990034600F62A9D /* CascadedShadowsMap_Debug.metal */; };
 		FF8BDA4C297F14A000C0787C /* CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8BDA4B297F14A000C0787C /* CGSize.swift */; };
 		FF979BBF295DA1DE00021E5D /* Tween.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF979BBE295DA1DE00021E5D /* Tween.swift */; };
 		FF979BC1295DAA9D00021E5D /* EaseFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF979BC0295DAA9D00021E5D /* EaseFunc.swift */; };
@@ -138,6 +139,7 @@
 		FF76AC7829819F2E005A93D1 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		FF76AC7A29819F86005A93D1 /* Mesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mesh.swift; sourceTree = "<group>"; };
 		FF76AC7C2981A0B0005A93D1 /* MDLVertexDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDLVertexDescriptor.swift; sourceTree = "<group>"; };
+		FF88380D2990034600F62A9D /* CascadedShadowsMap_Debug.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = CascadedShadowsMap_Debug.metal; sourceTree = "<group>"; };
 		FF8BDA4B297F14A000C0787C /* CGSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGSize.swift; sourceTree = "<group>"; };
 		FF979BBE295DA1DE00021E5D /* Tween.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tween.swift; sourceTree = "<group>"; };
 		FF979BC0295DAA9D00021E5D /* EaseFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EaseFunc.swift; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 			children = (
 				FF08FAFD298184D500689272 /* CascadedShadowsMap.h */,
 				FF08FAFE298184EF00689272 /* CascadedShadowsMap.metal */,
+				FF88380D2990034600F62A9D /* CascadedShadowsMap_Debug.metal */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";
@@ -705,6 +708,7 @@
 				FFB99DAC2982ED3300F97DDB /* Animation.swift in Sources */,
 				FFB99DB12982ED8800F97DDB /* AnimationClip.swift in Sources */,
 				FF6E29E8296739A900D2E59A /* InfiniteSpace_Compute.metal in Sources */,
+				FF88380E2990034600F62A9D /* CascadedShadowsMap_Debug.metal in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
