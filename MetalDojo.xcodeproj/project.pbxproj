@@ -13,6 +13,7 @@
 		FF08FB052981851A00689272 /* CascadedShadowsMap_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF08FB042981851A00689272 /* CascadedShadowsMap_Extensions.swift */; };
 		FF08FB072981852400689272 /* CascadedShadowsMap_PipelineStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF08FB062981852400689272 /* CascadedShadowsMap_PipelineStates.swift */; };
 		FF08FB092981893E00689272 /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF08FB082981893E00689272 /* Plane.swift */; };
+		FF09791429958720003E3EA0 /* CascadedShadowsMap_TexturesDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF09791329958720003E3EA0 /* CascadedShadowsMap_TexturesDebugger.swift */; };
 		FF15619D29608765007D14E4 /* ExampleScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF15619C29608765007D14E4 /* ExampleScreen.swift */; };
 		FF15619F29608791007D14E4 /* PointsShadowmap.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF15619E29608791007D14E4 /* PointsShadowmap.swift */; };
 		FF1561A129608D49007D14E4 /* PointsShadowmap_PipelineStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1561A029608D49007D14E4 /* PointsShadowmap_PipelineStates.swift */; };
@@ -99,6 +100,7 @@
 		FF08FB042981851A00689272 /* CascadedShadowsMap_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CascadedShadowsMap_Extensions.swift; sourceTree = "<group>"; };
 		FF08FB062981852400689272 /* CascadedShadowsMap_PipelineStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CascadedShadowsMap_PipelineStates.swift; sourceTree = "<group>"; };
 		FF08FB082981893E00689272 /* Plane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
+		FF09791329958720003E3EA0 /* CascadedShadowsMap_TexturesDebugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CascadedShadowsMap_TexturesDebugger.swift; sourceTree = "<group>"; };
 		FF15619C29608765007D14E4 /* ExampleScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleScreen.swift; sourceTree = "<group>"; };
 		FF15619E29608791007D14E4 /* PointsShadowmap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsShadowmap.swift; sourceTree = "<group>"; };
 		FF1561A029608D49007D14E4 /* PointsShadowmap_PipelineStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsShadowmap_PipelineStates.swift; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 		FF08FAFB298184A600689272 /* Cascaded Shadow Maps */ = {
 			isa = PBXGroup;
 			children = (
+				FF097912299586D5003E3EA0 /* Debug */,
 				FF76AC7229819D48005A93D1 /* Assets */,
 				FF08FAFC298184C300689272 /* Shaders */,
 				FF08FB022981850F00689272 /* CascadedShadowsMap.swift */,
@@ -233,6 +236,14 @@
 				FF88380D2990034600F62A9D /* CascadedShadowsMap_Debug.metal */,
 			);
 			path = Shaders;
+			sourceTree = "<group>";
+		};
+		FF097912299586D5003E3EA0 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				FF09791329958720003E3EA0 /* CascadedShadowsMap_TexturesDebugger.swift */,
+			);
+			path = Debug;
 			sourceTree = "<group>";
 		};
 		FF15619A296086B9007D14E4 /* Example Screnes */ = {
@@ -677,6 +688,7 @@
 				FFB840F1295B82B300B9338D /* MTLVertexDescriptor.swift in Sources */,
 				FFB99DAE2982ED5C00F97DDB /* TransformComponent.swift in Sources */,
 				FFB840D8295B39D000B9338D /* RenderPass.swift in Sources */,
+				FF09791429958720003E3EA0 /* CascadedShadowsMap_TexturesDebugger.swift in Sources */,
 				FF76AC7D2981A0B0005A93D1 /* MDLVertexDescriptor.swift in Sources */,
 				FFFE7BBE297AD0D00089EC37 /* WelcomeScreen_Extensions.swift in Sources */,
 				FF25C923296351AD0056C317 /* WelcomeScreen.swift in Sources */,

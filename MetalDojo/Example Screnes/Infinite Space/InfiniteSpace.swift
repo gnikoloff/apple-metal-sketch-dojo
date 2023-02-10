@@ -194,19 +194,19 @@ final class InfiniteSpace: ExampleScreen {
   func resize(view: MTKView) {
     let size = options.drawableSize
     deferredSettings.viewportSize = SIMD2<UInt32>(UInt32(size.width), UInt32(size.height))
-    normalShininessBaseColorTexture = RenderPass.makeTexture(
+    normalShininessBaseColorTexture = TextureController.makeTexture(
       size: size,
       pixelFormat: .rgba16Float,
       label: "G-Buffer Normal + Shininess + Color Base Texture",
       storageMode: .memoryless
     )
-    positionSpecularColorTexture = RenderPass.makeTexture(
+    positionSpecularColorTexture = TextureController.makeTexture(
       size: size,
       pixelFormat: .rgba16Float,
       label: "G-Buffer Position + Specular Color Base Texture",
       storageMode: .memoryless
     )
-    outputDepthTexture = RenderPass.makeTexture(
+    outputDepthTexture = TextureController.makeTexture(
       size: size,
       pixelFormat: .depth32Float,
       label: "G-Buffer Depth Texture",

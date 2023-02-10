@@ -47,31 +47,29 @@ final class CascadedShadowsMap: ExampleScreen {
   private let cubesPipelineState: MTLRenderPipelineState
   private let floorPipelineDebugState: MTLRenderPipelineState
   private let cubesPipelineDebugState: MTLRenderPipelineState
-//  private let modelPipelineState: MTLRenderPipelineState
 
   private var camDebugTexture: MTLTexture!
   private var camDebugDepthTexture: MTLTexture!
   private var shadowDepthTexture: MTLTexture
-//  private var shadowTexture: MTLTexture
 
   private let depthStencilState: MTLDepthStencilState?
-  private let shadowDepthStencilState: MTLDepthStencilState?
 
   private let floorShadowPipelineState: MTLRenderPipelineState
   private let cubesShadowPipelineState: MTLRenderPipelineState
 
   private let debugCSMFrustumPipelineState: MTLRenderPipelineState
-  private let debugCSMTexturesPipelineState: MTLRenderPipelineState
+
   private let debugCSMCameraFrustumPipelineState: MTLRenderPipelineState
   private let debugCSMLightSpaceFrustumPipelineState: MTLRenderPipelineState
-  private let debugArcballCameraViewPipelineState: MTLRenderPipelineState
 
   private var lightMatrices: [float4x4] = []
   private var debugCamera = PerspectiveCamera()
   private var arcballCamera = ArcballCamera()
-  private var cube: Cube
+  private var cube: Sphere
   private var floor: Plane
   private var csmFrustumDebugger: Cube
+
+  private var texturesDebugger: CascadedShadowsMap_TexturesDebugger
 
   lazy private var supportsLayerSelection: Bool = {
     Renderer.device.supportsFamily(MTLGPUFamily.mac2) || Renderer.device.supportsFamily(MTLGPUFamily.apple5)
@@ -171,7 +169,6 @@ final class CascadedShadowsMap: ExampleScreen {
         instancesHaveUniquePositions: true,
         usesDebugCamera: true
       )
-//      try modelPipelineState = CascadedShadowsMap_PipelineStates.createPBRPSO()
       try floorShadowPipelineState = CascadedShadowsMap_PipelineStates.createShadowPSO()
       try cubesShadowPipelineState = CascadedShadowsMap_PipelineStates.createShadowPSO(
         instancesHaveUniquePositions: true
@@ -180,14 +177,6 @@ final class CascadedShadowsMap: ExampleScreen {
       try debugCSMCameraFrustumPipelineState = CascadedShadowsMap_PipelineStates.makeCSMVertexlessPipelineState()
       try debugCSMLightSpaceFrustumPipelineState = CascadedShadowsMap_PipelineStates.makeCSMVertexlessPipelineState(
         isLightSpaceFrustumVerticesDebug: true
-      )
-      try debugCSMTexturesPipelineState = CascadedShadowsMap_PipelineStates.makeCSMVertexlessPipelineState(
-        isTextureDebug: true,
-        isCsmTextureDebug: true
-      )
-      try debugArcballCameraViewPipelineState = CascadedShadowsMap_PipelineStates.makeCSMVertexlessPipelineState(
-        isTextureDebug: true,
-        isCamTextureDebug: true
       )
     } catch {
       fatalError(error.localizedDescription)
@@ -198,25 +187,14 @@ final class CascadedShadowsMap: ExampleScreen {
     debugCamPassDescriptor = MTLRenderPassDescriptor()
 
     depthStencilState = Self.buildDepthStencilState()
-    shadowDepthStencilState = Self.buildDepthStencilState()
 
-    shadowDepthTexture = RenderPass.makeTexture(
+    shadowDepthTexture = TextureController.makeTexture(
       size: CGSize(width: Self.SHADOW_RESOLUTION, height: Self.SHADOW_RESOLUTION),
       pixelFormat: .depth32Float,
       label: "Shadow Depth Texture",
       type: .type2DArray,
-//      usage: [.renderTarget],
       arrayLength: Self.SHADOW_CASCADE_LEVELS_COUNT
     )!
-
-//    shadowTexture = RenderPass.makeTexture(
-//      size: CGSize(width: Self.SHADOW_RESOLUTION, height: Self.SHADOW_RESOLUTION),
-//      pixelFormat: .rgba8Unorm,
-//      label: "Shadow Color Texture",
-//      type: .type2DArray,
-////      usage: [.renderTarget],
-//      arrayLength: Self.SHADOW_CASCADE_LEVELS_COUNT
-//    )!
 
     cameraBuffer = Renderer.device.makeBuffer(
       length: MemoryLayout<CameraUniforms>.stride,
@@ -240,13 +218,17 @@ final class CascadedShadowsMap: ExampleScreen {
     arcballCamera.distance = 6
     debugCamera.position = float3(10, 10, 10)
 
-    cube = Cube(size: float3(0.2, 1, 0.2))
+    cube = Sphere(size: 1)
     floor = Plane(size: float3(20, 20, 1))
     csmFrustumDebugger = Cube(size: float3(repeating: 1), geometryType: .lines)
     csmFrustumDebugger.primitiveType = .line
 
     floor.position.y = -0.5
     floor.rotation.x = .pi * 0.5
+
+    texturesDebugger = CascadedShadowsMap_TexturesDebugger(
+      cascadesCount: Self.SHADOW_CASCADE_LEVELS_COUNT
+    )
   }
 
   func getLightSpaceMatrix(idx: Int, nearPlane: Float, farPlane: Float) -> (float4x4, float3) {
@@ -261,13 +243,6 @@ final class CascadedShadowsMap: ExampleScreen {
         to: float3.self,
         capacity: pointsInFrustum * Self.SHADOW_CASCADE_LEVELS_COUNT
       )
-
-    let frustumColors = [
-      float3(1, 0, 0),
-      float3(0, 1, 0),
-      float3(0, 0, 1),
-      float3(0, 1, 1)
-    ]
 
     if idx != Self.SHADOW_CASCADE_LEVELS_COUNT + 1 {
       for i in 0 ..< pointsInFrustum {
@@ -357,12 +332,12 @@ final class CascadedShadowsMap: ExampleScreen {
       size: size,
       label: "Cascaded Shadow Maps Output texture"
     )
-    camDebugTexture = RenderPass.makeTexture(
+    camDebugTexture = TextureController.makeTexture(
       size: size,
       pixelFormat: Renderer.viewColorFormat,
       label: "Debug Arcball Camera texture"
     )
-    camDebugDepthTexture = RenderPass.makeTexture(
+    camDebugDepthTexture = TextureController.makeTexture(
       size: size,
       pixelFormat: .depth32Float,
       label: "Debug Arcball Camera Depth texture"
@@ -451,9 +426,6 @@ final class CascadedShadowsMap: ExampleScreen {
     shadowPassDescriptor.depthAttachment.loadAction = .clear
     shadowPassDescriptor.depthAttachment.storeAction = .store
     shadowPassDescriptor.renderTargetArrayLength = Self.SHADOW_CASCADE_LEVELS_COUNT
-//    shadowPassDescriptor.colorAttachments[0].texture = shadowTexture
-//    shadowPassDescriptor.colorAttachments[0].loadAction = .clear
-//    shadowPassDescriptor.colorAttachments[0].storeAction = .store
 
     guard let shadowRenderEncoder = commandBuffer.makeRenderCommandEncoder(
       descriptor: shadowPassDescriptor
@@ -477,7 +449,7 @@ final class CascadedShadowsMap: ExampleScreen {
       index: SettingsBuffer.index
     )
 
-    shadowRenderEncoder.setDepthStencilState(shadowDepthStencilState)
+    shadowRenderEncoder.setDepthStencilState(depthStencilState)
 
     shadowRenderEncoder.setRenderPipelineState(cubesShadowPipelineState)
     cube.instanceCount = Self.CUBES_COUNT * Self.SHADOW_CASCADE_LEVELS_COUNT
@@ -581,21 +553,9 @@ final class CascadedShadowsMap: ExampleScreen {
     cube.instanceCount = Self.CUBES_COUNT
     cube.draw(renderEncoder: debugRenderEncoder)
 
-//    debugRenderEncoder.setRenderPipelineState(debugCSMTexturesPipelineState)
-//    debugRenderEncoder.drawPrimitives(
-//      type: .triangle,
-//      vertexStart: 0,
-//      vertexCount: 6,
-//      instanceCount: Self.SHADOW_CASCADE_LEVELS_COUNT
-//    )
-//
-//    // Draw camera texture debug
-//    debugRenderEncoder.setRenderPipelineState(debugArcballCameraViewPipelineState)
-//    debugRenderEncoder.drawPrimitives(
-//      type: .triangle,
-//      vertexStart: 0,
-//      vertexCount: 6
-//    )
+    texturesDebugger.shadowsDepthTexture = shadowDepthTexture
+    texturesDebugger.debugCamTexture = camDebugTexture
+    texturesDebugger.draw(encoder: debugRenderEncoder)
 
     debugRenderEncoder.endEncoding()
 

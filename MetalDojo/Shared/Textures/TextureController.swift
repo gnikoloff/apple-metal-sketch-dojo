@@ -12,6 +12,62 @@ import MetalKit
 enum TextureController {
   static var textures: [String: MTLTexture] = [:]
 
+  static func makeCubeTexture(
+    size: CGFloat,
+    pixelFormat: MTLPixelFormat,
+    label: String,
+    mipmapped: Bool = false,
+    storageMode: MTLStorageMode = .private,
+    usage: MTLTextureUsage = [.shaderRead, .renderTarget]
+  ) -> MTLTexture? {
+    let size = Int(size)
+    guard size > 0 else {
+      return nil
+    }
+    let textureDesc = MTLTextureDescriptor.textureCubeDescriptor(
+      pixelFormat: pixelFormat,
+      size: size,
+      mipmapped: mipmapped
+    )
+    textureDesc.storageMode = storageMode
+    textureDesc.usage = usage
+    guard let texture = Renderer.device.makeTexture(descriptor: textureDesc) else {
+      fatalError("Failed to create a cube texture")
+    }
+    texture.label = label
+    return texture
+  }
+
+  static func makeTexture(
+    size: CGSize,
+    pixelFormat: MTLPixelFormat,
+    label: String,
+    storageMode: MTLStorageMode = .private,
+    type: MTLTextureType = .type2D,
+    usage: MTLTextureUsage = [.shaderRead, .renderTarget],
+    arrayLength: Int = 1
+  ) -> MTLTexture? {
+    let width = Int(size.width)
+    let height = Int(size.height)
+    guard width > 0 && height > 0 else { return nil }
+    let textureDesc = MTLTextureDescriptor.texture2DDescriptor(
+      pixelFormat: pixelFormat,
+      width: width,
+      height: height,
+      mipmapped: false
+    )
+    textureDesc.storageMode = storageMode
+    textureDesc.usage = usage
+    textureDesc.textureType = type
+    textureDesc.arrayLength = arrayLength
+
+    guard let texture = Renderer.device.makeTexture(descriptor: textureDesc) else {
+        fatalError("Failed to create texture")
+      }
+    texture.label = label
+    return texture
+  }
+
   static func texture(filename: String) -> MTLTexture? {
     if let texture = textures[filename] {
       return texture

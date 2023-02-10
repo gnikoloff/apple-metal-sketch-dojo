@@ -62,7 +62,7 @@ struct SphereLightCaster: Transformable, PipelineStates {
     cubeSidesContents = shadowCamUniformBuffer
       .contents()
       .bindMemory(to: PointsShadowmap_View.self, capacity: SphereLightCaster.SHADOW_CUBE_SIDES)
-    cubeShadowTexture = RenderPass.makeCubeTexture(
+    cubeShadowTexture = TextureController.makeCubeTexture(
       size: SphereLightCaster.SHADOWMAP_SIZE,
       pixelFormat: .depth16Unorm,
       label: "Shadow Cube Map Texture"

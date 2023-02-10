@@ -179,8 +179,6 @@ fragment float4 cascadedShadows_fragment(VertexOut in [[stage_in]],
                                  instanceLightMatrices,
                                  shadowTextures);
 
-
-
   float4 color = PBRLighting(lights,
                              params.lightsCount,
                              material,

@@ -24,7 +24,7 @@ extension ExampleScreen {
   }
 
   static func createOutputTexture(size: CGSize, label: String) -> MTLTexture {
-    return RenderPass.makeTexture(
+    return TextureController.makeTexture(
       size: size,
       pixelFormat: Renderer.viewColorFormat,
       label: label,
@@ -32,7 +32,7 @@ extension ExampleScreen {
     )!
   }
   static func createDepthOutputTexture(size: CGSize) -> MTLTexture {
-    return RenderPass.makeTexture(
+    return TextureController.makeTexture(
       size: size,
       pixelFormat: .depth32Float,
       label: "Output depth texture"

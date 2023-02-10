@@ -182,7 +182,7 @@ class AppleMetalScreen: ExampleScreen {
   func resize(view: MTKView) {
     let size = options.drawableSize
     perspCamera.update(size: size)
-    postFXTexture = RenderPass.makeTexture(
+    postFXTexture = TextureController.makeTexture(
       size: size,
       pixelFormat: Renderer.viewColorFormat,
       label: "Output Texture",
@@ -193,7 +193,7 @@ class AppleMetalScreen: ExampleScreen {
       label: "PointsShadowmap output texture"
     )
     outputDepthTexture = Self.createDepthOutputTexture(size: size)
-    finalTexture = RenderPass.makeTexture(
+    finalTexture = TextureController.makeTexture(
       size: size,
       pixelFormat: Renderer.viewColorFormat,
       label: "Final Texture",
