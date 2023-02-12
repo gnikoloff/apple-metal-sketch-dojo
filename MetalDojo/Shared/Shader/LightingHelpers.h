@@ -37,4 +37,14 @@ vector_float4 PBRLighting(constant Light *lights,
                           float opacity,
                           float shadow);
 
+vector_float3 computeSpecular(vector_float3 normal,
+                              vector_float3 viewDirection,
+                              vector_float3 lightDirection,
+                              float roughness,
+                              vector_float3 F0);
+
+vector_float3 computeDiffuse(Material material,
+                             vector_float3 normal,
+                             vector_float3 lightDirection);
+
 #endif /* LightingHelpers_h */

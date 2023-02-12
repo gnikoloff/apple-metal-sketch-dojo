@@ -19,8 +19,8 @@ typedef enum {
 } CascadedShadowsMap_BufferIndices;
 
 typedef enum {
-  ShadowTextures = 0,
-  CamDebugTexture = 1
+  ShadowTextures = 10,
+  CamDebugTexture = 11
 } CascadedShadowsMap_TextureIndices;
 
 typedef struct {
@@ -28,6 +28,8 @@ typedef struct {
   uint cascadesCount;
   float cascadePlaneDistances[4];
   vector_float2 shadowTexSize;
+  uint lightsCount;
+  vector_float3 worldSize;
 } CascadedShadowsMap_Settings;
 
 #endif /* CascadedShadowsMap_h */

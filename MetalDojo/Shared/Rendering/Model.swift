@@ -15,6 +15,7 @@ class Model: Transformable {
   var transform = Transform()
   var meshes: [Mesh]
   let hasTransparency: Bool
+  var instanceCount: Int = 1
   var boundingBox = MDLAxisAlignedBoundingBox()
   var size: float3 {
     return boundingBox.maxBounds - boundingBox.minBounds
@@ -27,19 +28,24 @@ class Model: Transformable {
   init(name: String) {
     guard let assetURL = Bundle.main.url(
       forResource: name,
-      withExtension: nil
+      withExtension: "usdz"
     ) else {
       fatalError("Model: \(name) not found")
     }
     let asset = MDLAsset(
       url: assetURL,
       vertexDescriptor: MDLVertexDescriptor.defaultLayout,
-      bufferAllocator: Renderer.meshAllocator
+      bufferAllocator: MTKMeshBufferAllocator(device: Renderer.device)
     )
     asset.loadTextures()
+
     var mtkMeshes: [MTKMesh] = []
     let mdlMeshes = asset.childObjects(of: MDLMesh.self) as? [MDLMesh] ?? []
+
     _ = mdlMeshes.map { mdlMesh in
+//      let scaleMatrix = float4x4(scaling: 0.02)
+//      let transform = MDLTransform(matrix: scaleMatrix)
+//      mdlMesh.transform = transform
       mdlMesh.addTangentBasis(
         forTextureCoordinateAttributeNamed: MDLVertexAttributeTextureCoordinate,
         tangentAttributeNamed: MDLVertexAttributeTangent,
@@ -59,6 +65,7 @@ class Model: Transformable {
         startTime: asset.startTime,
         endTime: asset.endTime)
     }
+
     self.name = name
     hasTransparency = false
     boundingBox = asset.boundingBox
@@ -97,7 +104,6 @@ class Model: Transformable {
 
     encoder.setCullMode(.back)
 
-
     for mesh in meshes {
       if let paletteBuffer = mesh.skeleton?.jointMatrixPaletteBuffer {
         encoder.setVertexBuffer(
@@ -110,7 +116,7 @@ class Model: Transformable {
       let uniformPtr = uniformsBuffer.contents().bindMemory(to: Uniforms.self, capacity: 1)
       let modelMatrix = transform.modelMatrix * currentLocalTransform
       uniformPtr.pointee.modelMatrix = modelMatrix
-      uniformPtr.pointee.normalMatrix = modelMatrix.upperLeft
+      uniformPtr.pointee.normalMatrix = float3x3(normalFrom4x4: modelMatrix)
       encoder.setVertexBuffer(
         uniformsBuffer,
         offset: 0,
@@ -162,12 +168,13 @@ class Model: Transformable {
           indexCount: submesh.indexCount,
           indexType: submesh.indexType,
           indexBuffer: submesh.indexBuffer,
-          indexBufferOffset: submesh.indexBufferOffset
+          indexBufferOffset: submesh.indexBufferOffset,
+          instanceCount: instanceCount
         )
 
       }
     }
-    encoder.popDebugGroup()
+//    encoder.popDebugGroup()
   }
 }
 

@@ -18,6 +18,10 @@ final class CascadedShadowsMap_TexturesDebugger {
   weak var shadowsDepthTexture: MTLTexture?
   weak var debugCamTexture: MTLTexture?
 
+  var floorPipelineDebugState: MTLRenderPipelineState
+  var cubesPipelineDebugState: MTLRenderPipelineState
+  var modelPipelineDebugState: MTLRenderPipelineState
+
   init(cascadesCount: Int) {
     self.cascadesCount = cascadesCount
     do {
@@ -29,29 +33,40 @@ final class CascadedShadowsMap_TexturesDebugger {
         isTextureDebug: true,
         isCamTextureDebug: true
       )
+      try floorPipelineDebugState = CascadedShadowsMap_PipelineStates.createMeshPSO(
+        usesDebugCamera: true
+      )
+      try cubesPipelineDebugState = CascadedShadowsMap_PipelineStates.createMeshPSO(
+        instancesHaveUniquePositions: true,
+        usesDebugCamera: true
+      )
+      try modelPipelineDebugState = CascadedShadowsMap_PipelineStates.createPBRPSO(
+        usesDebugCamera: true,
+        isSkeletonAnimation: true
+      )
     } catch {
       fatalError(error.localizedDescription)
     }
   }
 
-  func draw(encoder: MTLRenderCommandEncoder) {
-    if (shadowsDepthTexture != nil) {
-      encoder.setFragmentTexture(shadowsDepthTexture, index: ShadowTexture.index)
+  func draw(renderEncoder: MTLRenderCommandEncoder) {
+    if shadowsDepthTexture != nil {
+      renderEncoder.setFragmentTexture(shadowsDepthTexture, index: ShadowTexture.index)
     }
-    if (debugCamTexture != nil) {
-      encoder.setFragmentTexture(debugCamTexture, index: CamDebugTexture.index)
+    if debugCamTexture != nil {
+      renderEncoder.setFragmentTexture(debugCamTexture, index: CamDebugTexture.index)
     }
 
-    encoder.setRenderPipelineState(debugCSMTexturesPipelineState)
-    encoder.drawPrimitives(
+    renderEncoder.setRenderPipelineState(debugCSMTexturesPipelineState)
+    renderEncoder.drawPrimitives(
       type: .triangle,
       vertexStart: 0,
       vertexCount: 6,
       instanceCount: cascadesCount
     )
 
-    encoder.setRenderPipelineState(debugArcballCameraViewPipelineState)
-    encoder.drawPrimitives(
+    renderEncoder.setRenderPipelineState(debugArcballCameraViewPipelineState)
+    renderEncoder.drawPrimitives(
       type: .triangle,
       vertexStart: 0,
       vertexCount: 6

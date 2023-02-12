@@ -24,7 +24,7 @@ struct PerspectiveCamera: Camera {
   }
 
   let minDistance: Float = 0.0
-  let maxDistance: Float = 40
+  let maxDistance: Float = 1000
   var target: float3 = [0, 0, 0]
   var distance: Float = 2.5
   var up: float3 = [0, 1, 0]

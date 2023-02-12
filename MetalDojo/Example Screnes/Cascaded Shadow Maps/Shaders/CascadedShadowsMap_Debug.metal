@@ -15,24 +15,9 @@ constant bool is_csm_texture_visualize_debug [[function_constant(11)]];
 constant bool is_cam_texture_visualize_debug [[function_constant(12)]];
 constant bool is_light_space_frustum_vertices_debug [[function_constant(13)]];
 
-constant float DEBUG_TEX_SCALE = 0.3;
+constant float DEBUG_CSM_TEX_SCALE = 0.2;
+constant float DEBUG_CAM_TEX_SCALE = 0.3;
 constant float DEBUG_TEX_SCALE_BORDER_PADDING = 0.01;
-constant float3 DEBUG_TEX_TRIANGLE_VERTICES[6] = {
-  float3(-1,  1,  0),    // triangle 1
-  float3( 1, -1,  0),
-  float3(-1, -1,  0),
-  float3(-1,  1,  0),    // triangle 2
-  float3( 1,  1,  0),
-  float3( 1, -1,  0)
-};
-constant float2 DEBUG_TEX_TRIANGLE_UVS[6] = {
-  float2(0, 0),    // triangle 1
-  float2(1, 1),
-  float2(0, 1),
-  float2(0, 0),    // triangle 2
-  float2(1, 0),
-  float2(1, 1)
-};
 
 vertex VertexOut CSMFrustumDebugger_vertex(VertexIn in [[stage_in]],
                                               const uint vertexId [[vertex_id]],
@@ -52,19 +37,20 @@ vertex VertexOut CascadedShadowsMap_vertexDebug(const uint vertexId [[vertex_id]
 
   VertexOut out;
   if (is_texture_visualize_debug) {
-    float4 pos = float4(DEBUG_TEX_TRIANGLE_VERTICES[vertexId], 1);
-    pos.xy *= DEBUG_TEX_SCALE;
+    float4 pos = float4(TRIANGLE_VERTICES_NDC[vertexId], 1);
 
     if (is_csm_texture_visualize_debug) {
-      pos.x -= 1 - DEBUG_TEX_SCALE - DEBUG_TEX_SCALE_BORDER_PADDING;
-      pos.y -= 1 - DEBUG_TEX_SCALE - DEBUG_TEX_SCALE_BORDER_PADDING - DEBUG_TEX_SCALE * 2 * instanceId - DEBUG_TEX_SCALE_BORDER_PADDING * instanceId;
+      pos.xy *= DEBUG_CSM_TEX_SCALE;
+      pos.x -= 1 - DEBUG_CSM_TEX_SCALE - DEBUG_TEX_SCALE_BORDER_PADDING;
+      pos.y -= 1 - DEBUG_CSM_TEX_SCALE - DEBUG_TEX_SCALE_BORDER_PADDING - DEBUG_CSM_TEX_SCALE * 2 * instanceId - DEBUG_TEX_SCALE_BORDER_PADDING * instanceId;
     } else if (is_cam_texture_visualize_debug) {
-      pos.x += 1 - DEBUG_TEX_SCALE - DEBUG_TEX_SCALE_BORDER_PADDING;
-      pos.y -= 1 - DEBUG_TEX_SCALE - DEBUG_TEX_SCALE_BORDER_PADDING;
+      pos.xy *= DEBUG_CAM_TEX_SCALE;
+      pos.x += 1 - DEBUG_CAM_TEX_SCALE - DEBUG_TEX_SCALE_BORDER_PADDING;
+      pos.y -= 1 - DEBUG_CAM_TEX_SCALE - DEBUG_TEX_SCALE_BORDER_PADDING;
     }
 
     out.position = pos;
-    out.uv = DEBUG_TEX_TRIANGLE_UVS[vertexId];
+    out.uv = TRIANGLE_UVS[vertexId];
     out.worldPos = float3(instanceId, 0, 0);
   } else {
     if (is_light_space_frustum_vertices_debug) {
@@ -94,22 +80,18 @@ fragment float4 CascadedShadowsMap_fragmentDebug(VertexOut in [[stage_in]],
     if (is_csm_texture_visualize_debug) {
       uint arrayIdx = uint(in.worldPos.x);
       float4 texColor = shadowTextures.sample(s, in.uv, arrayIdx);
-      constexpr array<float3, 3> colors = {
-        float3(1, 0, 0),
-        float3(0, 1, 0),
-        float3(0, 0, 1)
-      };
-      float4 layerColor = float4(colors[arrayIdx], 1);
+//      constexpr array<float3, 3> colors = {
+//        float3(1, 0, 0),
+//        float3(0, 1, 0),
+//        float3(0, 0, 1)
+//      };
+//      float4 layerColor = float4(colors[arrayIdx], 1);
 //      texColor = mix(texColor, layerColor, 0.1);
       return texColor;
     } else if (is_cam_texture_visualize_debug) {
       return camDebugTexture.sample(s, in.uv);
     }
   } else {
-    return float4(in.worldPos, 1);
+    return float4(1, 1, 1, 1);
   }
 }
-
-//fragment float4 cascadedShadows_fragmentShadow(VertexOut in [[stage_in]]) {
-//  return float4(in.worldPos, 1);
-//}

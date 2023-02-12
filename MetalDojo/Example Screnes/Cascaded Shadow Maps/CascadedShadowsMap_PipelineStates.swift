@@ -10,7 +10,11 @@ import MetalKit
 // swiftlint:disable type_name
 
 enum CascadedShadowsMap_PipelineStates: PipelineStates {
-  static func createShadowPSO(instancesHaveUniquePositions: Bool = false) throws -> MTLRenderPipelineState {
+  static func createShadowPSO(
+    instancesHaveUniquePositions: Bool = false,
+    useDefaultMTKVertexLayout: Bool = false,
+    isSkeletonAnimation: Bool = false
+  ) throws -> MTLRenderPipelineState {
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     let fnConstantValues = Self.getFnConstants(
       rendersToTargetArray: true,
@@ -18,6 +22,12 @@ enum CascadedShadowsMap_PipelineStates: PipelineStates {
     )
     var instancesHaveUniquePositions = instancesHaveUniquePositions
     var usesDebugCamera = false
+    var isSkeletonAnimation = isSkeletonAnimation
+    fnConstantValues.setConstantValue(
+      &isSkeletonAnimation,
+      type: .bool,
+      index: IsSkeletonAnimation.index
+    )
     fnConstantValues.setConstantValue(
       &instancesHaveUniquePositions,
       type: .bool,
@@ -40,7 +50,9 @@ enum CascadedShadowsMap_PipelineStates: PipelineStates {
 //    pipelineDescriptor.fragmentFunction = fragmentFunction
     pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
 //    pipelineDescriptor.colorAttachments[0].pixelFormat = .rgba8Unorm
-    pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultLayout
+    pipelineDescriptor.vertexDescriptor = useDefaultMTKVertexLayout
+      ? MTLVertexDescriptor.defaultMTKLayout
+      : MTLVertexDescriptor.defaultLayout
     pipelineDescriptor.inputPrimitiveTopology = .triangle
 
     return Self.createPSO(descriptor: pipelineDescriptor)
@@ -48,12 +60,14 @@ enum CascadedShadowsMap_PipelineStates: PipelineStates {
 
   static func createMeshPSO(
     instancesHaveUniquePositions: Bool = false,
-    usesDebugCamera: Bool = false
+    usesDebugCamera: Bool = false,
+    isSkeletonAnimation: Bool = false
   ) throws -> MTLRenderPipelineState {
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     let fnConstantValues = Self.getFnConstants()
     var instancesHaveUniquePositions = instancesHaveUniquePositions
     var usesDebugCamera = usesDebugCamera
+    var isSkeletonAnimation = isSkeletonAnimation
     fnConstantValues.setConstantValue(
       &instancesHaveUniquePositions,
       type: .bool,
@@ -63,6 +77,11 @@ enum CascadedShadowsMap_PipelineStates: PipelineStates {
       &usesDebugCamera,
       type: .bool,
       index: 11
+    )
+    fnConstantValues.setConstantValue(
+      &isSkeletonAnimation,
+      type: .bool,
+      index: IsSkeletonAnimation.index
     )
 
     print("createMeshPSO")
@@ -83,11 +102,14 @@ enum CascadedShadowsMap_PipelineStates: PipelineStates {
     return Self.createPSO(descriptor: pipelineDescriptor)
   }
 
-  static func createPBRPSO() throws -> MTLRenderPipelineState {
+  static func createPBRPSO(instancesHaveUniquePositions: Bool = false,
+                           usesDebugCamera: Bool = false,
+                           isSkeletonAnimation: Bool = false) throws -> MTLRenderPipelineState {
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     let fnConstantValues = Self.getFnConstants()
-    var instancesHaveUniquePositions = false
-    var usesDebugCamera = false
+    var instancesHaveUniquePositions = instancesHaveUniquePositions
+    var usesDebugCamera = usesDebugCamera
+    var isSkeletonAnimation = isSkeletonAnimation
     fnConstantValues.setConstantValue(
       &instancesHaveUniquePositions,
       type: .bool,
@@ -97,6 +119,11 @@ enum CascadedShadowsMap_PipelineStates: PipelineStates {
       &usesDebugCamera,
       type: .bool,
       index: 11
+    )
+    fnConstantValues.setConstantValue(
+      &isSkeletonAnimation,
+      type: .bool,
+      index: IsSkeletonAnimation.index
     )
     let vertexFunction = try Renderer.library?.makeFunction(
       name: "cascadedShadows_vertex",

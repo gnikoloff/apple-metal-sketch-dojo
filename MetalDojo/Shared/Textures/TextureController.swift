@@ -10,7 +10,9 @@
 import MetalKit
 
 enum TextureController {
+  static var textureIndex: [String: Int] = [:]
   static var textures: [String: MTLTexture] = [:]
+//  static var heap: MTLHeap
 
   static func makeCubeTexture(
     size: CGFloat,
