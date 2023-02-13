@@ -10,20 +10,14 @@ import MetalKit
 
 enum PointsShadowmapPipelineStates: PipelineStates {
   static func createShadowPSO() throws -> MTLRenderPipelineState {
-    let fnConstantValues = MTLFunctionConstantValues()
-    var isCubemapRender = true
-    fnConstantValues.setConstantValue(
-      &isCubemapRender,
-      type: .bool,
-      index: 0
-    )
+    let fnConstants = Self.getFnConstants(rendersToTargetArray: true)
     let vertexFunction = try Renderer.library?.makeFunction(
       name: "pointsShadowmap_vertex",
-      constantValues: fnConstantValues
+      constantValues: fnConstants
     )
     let fragmentFunction = try Renderer.library?.makeFunction(
       name: "pointsShadowmap_depthFragmentSphere",
-      constantValues: fnConstantValues
+      constantValues: fnConstants
     )
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     pipelineDescriptor.vertexFunction = vertexFunction
@@ -41,41 +35,35 @@ enum PointsShadowmapPipelineStates: PipelineStates {
     isShadedAndShadowed: Bool = false,
     isCutOffAlpha: Bool = false
   ) throws -> MTLRenderPipelineState {
-    let fnConstantValues = MTLFunctionConstantValues()
+    let fnConstants = Self.getFnConstants()
 
-    var isCubemapRender = false
     var isSolidColor = isSolidColor
     var isShadedAndShadowed = isShadedAndShadowed
     var isCutOffAlpha = isCutOffAlpha
 
-    fnConstantValues.setConstantValue(
-      &isCubemapRender,
-      type: .bool,
-      index: 0
-    )
-    fnConstantValues.setConstantValue(
+    fnConstants.setConstantValue(
       &isSolidColor,
       type: .bool,
-      index: 1
+      index: CustomFnConstant.index
     )
-    fnConstantValues.setConstantValue(
+    fnConstants.setConstantValue(
       &isShadedAndShadowed,
       type: .bool,
-      index: 2
+      index: CustomFnConstant.index + 1
     )
-    fnConstantValues.setConstantValue(
+    fnConstants.setConstantValue(
       &isCutOffAlpha,
       type: .bool,
-      index: 3
+      index: CustomFnConstant.index + 2
     )
 
     let vertexFunction = try Renderer.library?.makeFunction(
       name: "pointsShadowmap_vertex",
-      constantValues: fnConstantValues
+      constantValues: fnConstants
     )
     let fragmentFunction = try Renderer.library?.makeFunction(
       name: "pointsShadowmap_fragmentMain",
-      constantValues: fnConstantValues
+      constantValues: fnConstants
     )
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     pipelineDescriptor.vertexFunction = vertexFunction

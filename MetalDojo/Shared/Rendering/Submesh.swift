@@ -13,13 +13,66 @@ struct Submesh {
   let indexBuffer: MTLBuffer
   let indexBufferOffset: Int
 
-  struct Textures {
-    let baseColor: MTLTexture?
-    let normal: MTLTexture?
-    let roughness: MTLTexture?
-    let metallic: MTLTexture?
-    let ambientOcclusion: MTLTexture?
-    let opacity: MTLTexture?
+  class Textures {
+    var baseColor: MTLTexture?
+    var normal: MTLTexture?
+    var roughness: MTLTexture?
+    var metallic: MTLTexture?
+    var ambientOcclusion: MTLTexture?
+    var opacity: MTLTexture?
+    init(material: MDLMaterial?) {
+      func property(with semantic: MDLMaterialSemantic,
+                    callback: @escaping (_ texture: MTLTexture) -> Void) -> Void {
+        let property = material?.property(with: semantic)
+//
+//        if ((property?.stringValue?.contains("material_0_diffuse")) != nil) {
+//          TextureController.texture(filename: "dino-diffuse", callback: callback)
+//        }
+//        if ((property?.stringValue?.contains("material_0_normal")) != nil) {
+//          TextureController.texture(filename: "dino-normal", callback: callback)
+//        }
+//        if ((property?.stringValue?.contains("material_0_occlusion")) != nil) {
+//          TextureController.texture(filename: "dino-occlusion", callback: callback)
+//        }
+
+        if property?.type == .string {
+          guard let filename = property?.stringValue else {
+            fatalError("Not a valid texture property")
+          }
+
+        } else if property?.type == .texture {
+          guard let mdlTexture = property?.textureSamplerValue?.texture else {
+            fatalError("Can't load texture")
+          }
+          TextureController.loadTexture(
+            texture: mdlTexture,
+            callback: { texture, error in
+              if error != nil || texture == nil {
+                fatalError("Loaded texture is not valid")
+              }
+              callback(texture!)
+            })
+        }
+      }
+      property(with: MDLMaterialSemantic.baseColor, callback: { texture in
+        self.baseColor = texture
+      })
+      property(with: .tangentSpaceNormal, callback: { texture in
+        self.normal = texture
+      })
+      property(with: .roughness, callback: { texture in
+        self.roughness = texture
+      })
+      property(with: .metallic, callback: { texture in
+        self.metallic = texture
+      })
+      property(with: .ambientOcclusion, callback: { texture in
+        self.ambientOcclusion = texture
+      })
+      property(with: .opacity, callback: { texture in
+        self.opacity = texture
+      })
+    }
   }
 
   let textures: Textures
@@ -38,30 +91,7 @@ extension Submesh {
 }
 
 private extension Submesh.Textures {
-  init(material: MDLMaterial?) {
-    func property(with semantic: MDLMaterialSemantic)
-      -> MTLTexture? {
-      guard let property = material?.property(with: semantic),
-        property.type == .string,
-        let filename = property.stringValue,
-        let texture = TextureController.texture(filename: filename)
-        else {
-          if let property = material?.property(with: semantic),
-            property.type == .texture,
-            let mdlTexture = property.textureSamplerValue?.texture {
-            return try? TextureController.loadTexture(texture: mdlTexture)
-          }
-          return nil
-        }
-      return texture
-    }
-    baseColor = property(with: MDLMaterialSemantic.baseColor)
-    normal = property(with: .tangentSpaceNormal)
-    roughness = property(with: .roughness)
-    metallic = property(with: .metallic)
-    ambientOcclusion = property(with: .ambientOcclusion)
-    opacity = property(with: .opacity)
-  }
+
 }
 
 private extension Material {

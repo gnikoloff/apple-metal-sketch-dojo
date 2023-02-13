@@ -17,44 +17,32 @@ enum CascadedShadowsMap_PipelineStates: PipelineStates {
   ) throws -> MTLRenderPipelineState {
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     let fnConstantValues = Self.getFnConstants(
+      hasSkeleton: isSkeletonAnimation,
       rendersToTargetArray: true,
       rendersDepth: true
     )
     var instancesHaveUniquePositions = instancesHaveUniquePositions
     var usesDebugCamera = false
-    var isSkeletonAnimation = isSkeletonAnimation
-    fnConstantValues.setConstantValue(
-      &isSkeletonAnimation,
-      type: .bool,
-      index: IsSkeletonAnimation.index
-    )
     fnConstantValues.setConstantValue(
       &instancesHaveUniquePositions,
       type: .bool,
-      index: 10
+      index: CustomFnConstant.index
     )
     fnConstantValues.setConstantValue(
       &usesDebugCamera,
       type: .bool,
-      index: 11
+      index: CustomFnConstant.index + 1
     )
     let vertexFunction = try Renderer.library.makeFunction(
       name: "cascadedShadows_vertex",
       constantValues: fnConstantValues
     )
-//    let fragmentFunction = try Renderer.library.makeFunction(
-//      name: "cascadedShadows_fragmentShadow",
-//      constantValues: fnConstantValues
-//    )
     pipelineDescriptor.vertexFunction = vertexFunction
-//    pipelineDescriptor.fragmentFunction = fragmentFunction
     pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
-//    pipelineDescriptor.colorAttachments[0].pixelFormat = .rgba8Unorm
     pipelineDescriptor.vertexDescriptor = useDefaultMTKVertexLayout
       ? MTLVertexDescriptor.defaultMTKLayout
       : MTLVertexDescriptor.defaultLayout
     pipelineDescriptor.inputPrimitiveTopology = .triangle
-
     return Self.createPSO(descriptor: pipelineDescriptor)
   }
 
@@ -64,28 +52,19 @@ enum CascadedShadowsMap_PipelineStates: PipelineStates {
     isSkeletonAnimation: Bool = false
   ) throws -> MTLRenderPipelineState {
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
-    let fnConstantValues = Self.getFnConstants()
+    let fnConstantValues = Self.getFnConstants(hasSkeleton: isSkeletonAnimation)
     var instancesHaveUniquePositions = instancesHaveUniquePositions
     var usesDebugCamera = usesDebugCamera
-    var isSkeletonAnimation = isSkeletonAnimation
     fnConstantValues.setConstantValue(
       &instancesHaveUniquePositions,
       type: .bool,
-      index: 10
+      index: CustomFnConstant.index
     )
     fnConstantValues.setConstantValue(
       &usesDebugCamera,
       type: .bool,
-      index: 11
+      index: CustomFnConstant.index + 1
     )
-    fnConstantValues.setConstantValue(
-      &isSkeletonAnimation,
-      type: .bool,
-      index: IsSkeletonAnimation.index
-    )
-
-    print("createMeshPSO")
-    print(fnConstantValues)
     let vertexFunction = try Renderer.library?.makeFunction(
       name: "cascadedShadows_vertex",
       constantValues: fnConstantValues
@@ -102,28 +81,24 @@ enum CascadedShadowsMap_PipelineStates: PipelineStates {
     return Self.createPSO(descriptor: pipelineDescriptor)
   }
 
-  static func createPBRPSO(instancesHaveUniquePositions: Bool = false,
-                           usesDebugCamera: Bool = false,
-                           isSkeletonAnimation: Bool = false) throws -> MTLRenderPipelineState {
+  static func createPBRPSO(
+    instancesHaveUniquePositions: Bool = false,
+    usesDebugCamera: Bool = false,
+    isSkeletonAnimation: Bool = false
+  ) throws -> MTLRenderPipelineState {
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
-    let fnConstantValues = Self.getFnConstants()
+    let fnConstantValues = Self.getFnConstants(hasSkeleton: isSkeletonAnimation)
     var instancesHaveUniquePositions = instancesHaveUniquePositions
     var usesDebugCamera = usesDebugCamera
-    var isSkeletonAnimation = isSkeletonAnimation
     fnConstantValues.setConstantValue(
       &instancesHaveUniquePositions,
       type: .bool,
-      index: 10
+      index: CustomFnConstant.index
     )
     fnConstantValues.setConstantValue(
       &usesDebugCamera,
       type: .bool,
-      index: 11
-    )
-    fnConstantValues.setConstantValue(
-      &isSkeletonAnimation,
-      type: .bool,
-      index: IsSkeletonAnimation.index
+      index: CustomFnConstant.index + 1
     )
     let vertexFunction = try Renderer.library?.makeFunction(
       name: "cascadedShadows_vertex",
@@ -150,17 +125,17 @@ enum CascadedShadowsMap_PipelineStates: PipelineStates {
     fnConstantValues.setConstantValue(
       &isTextureDebug,
       type: .bool,
-      index: 10
+      index: CustomFnConstant.index
     )
     fnConstantValues.setConstantValue(
       &isCsmTextureDebug,
       type: .bool,
-      index: 11
+      index: CustomFnConstant.index + 1
     )
     fnConstantValues.setConstantValue(
       &isCamTextureDebug,
       type: .bool,
-      index: 12
+      index: CustomFnConstant.index + 2
     )
     let vertexFunction = try Renderer.library.makeFunction(
       name: "CSMFrustumDebugger_vertex",
@@ -193,22 +168,22 @@ enum CascadedShadowsMap_PipelineStates: PipelineStates {
     fnConstantValues.setConstantValue(
       &isTextureDebug,
       type: .bool,
-      index: 10
+      index: CustomFnConstant.index
     )
     fnConstantValues.setConstantValue(
       &isCsmTextureDebug,
       type: .bool,
-      index: 11
+      index: CustomFnConstant.index + 1
     )
     fnConstantValues.setConstantValue(
       &isCamTextureDebug,
       type: .bool,
-      index: 12
+      index: CustomFnConstant.index + 2
     )
     fnConstantValues.setConstantValue(
       &isLightSpaceFrustumVerticesDebug,
       type: .bool,
-      index: 13
+      index: CustomFnConstant.index + 3
     )
     let vertexFunction = try Renderer.library.makeFunction(
       name: "CascadedShadowsMap_vertexDebug",

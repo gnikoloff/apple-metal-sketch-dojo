@@ -33,9 +33,9 @@ final class GameController: NSObject {
     metalView.delegate = self
     metalView.framebufferOnly = false
 
-//    screens.append(PointsShadowmap(options: options))
-//    screens.append(InfiniteSpace(options: options))
-//    screens.append(AppleMetalScreen(options: options))
+    screens.append(PointsShadowmap(options: options))
+    screens.append(InfiniteSpace(options: options))
+    screens.append(AppleMetalScreen(options: options))
     screens.append(CascadedShadowsMap(options: options))
 
     Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { _ in
@@ -75,16 +75,15 @@ extension GameController: MTKViewDelegate {
     }
 
     if drawAllScreens {
-
       for i in 0 ..< screens.count {
         var screen = screens[i]
         let panel = welcomeScreen.projectsGrid.panels[i]
         screen.draw(in: view, commandBuffer: commandBuffer)
-//        panel.texture = screen.outputTexture
+        panel.texture = screen.outputTexture
       }
     }
 
-//    welcomeScreen.draw(in: view, commandBuffer: commandBuffer)
+    welcomeScreen.draw(in: view, commandBuffer: commandBuffer)
 
     guard let drawable = view.currentDrawable else {
       return

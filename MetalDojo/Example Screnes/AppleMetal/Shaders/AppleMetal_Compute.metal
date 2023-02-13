@@ -9,11 +9,11 @@
 #import "./AppleMetal.h"
 using namespace metal;
 
-constant uint COMPUTE_UPDATE_ENTITIES_COUNT [[function_constant(0)]];
-constant float ENTITY_RADIUS [[function_constant(1)]];
-constant float3 GRAVITY [[function_constant(2)]];
-constant float3 BOUNCE_FACTOR [[function_constant(3)]];
-constant bool CHECK_ENTITIES_COLLISIONS [[function_constant(4)]];
+constant uint COMPUTE_UPDATE_ENTITIES_COUNT [[function_constant(CustomFnConstant)]];
+constant float ENTITY_RADIUS [[function_constant(CustomFnConstant + 1)]];
+constant float3 GRAVITY [[function_constant(CustomFnConstant + 2)]];
+constant float3 BOUNCE_FACTOR [[function_constant(CustomFnConstant + 3)]];
+constant bool CHECK_ENTITIES_COLLISIONS [[function_constant(CustomFnConstant + 4)]];
 
 constant float DAMPING = 1;
 

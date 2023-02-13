@@ -18,15 +18,6 @@ struct GBufferOut {
   float4 position [[color(RenderTargetPosition)]];
 };
 
-struct PointLightIn {
-  float4 position [[attribute(Position)]];
-};
-
-struct PointLightOut {
-  float4 position [[position]];
-  uint instanceId [[flat]];
-};
-
 struct GBufferVertexOut {
   float4 position [[position]];
   float3 normal;
@@ -75,23 +66,23 @@ fragment GBufferOut infiniteSpace_fragmentCube(GBufferVertexOut in [[stage_in]])
 
 // Mark: Point Light pass
 
-vertex PointLightOut InfiniteSpace_vertexPointLight(PointLightIn in [[stage_in]],
-                                                   constant CameraUniforms &cameraUniforms [[buffer(CameraUniformsBuffer)]],
-                                                   constant Light *lights [[buffer(LightBuffer)]],
-                                                   uint instanceId [[instance_id]]) {
+vertex VertexOut InfiniteSpace_vertexPointLight(VertexIn in [[stage_in]],
+                                                constant CameraUniforms &cameraUniforms [[buffer(CameraUniformsBuffer)]],
+                                                constant Light *lights [[buffer(LightBuffer)]],
+                                                uint instanceId [[instance_id]]) {
   float4 lightPosition = float4(lights[instanceId].position, 0);
   float4 instancePosition = in.position + lightPosition;
   float4 position = cameraUniforms.projectionMatrix *
                     cameraUniforms.viewMatrix *
                     instancePosition;
-  PointLightOut out {
+  VertexOut out {
     .position = position,
     .instanceId = instanceId
   };
   return out;
 }
 
-fragment float4 InfiniteSpace_fragmentPointLight(PointLightOut in [[stage_in]],
+fragment float4 InfiniteSpace_fragmentPointLight(VertexOut in [[stage_in]],
                                                  constant Light *lights [[buffer(LightBuffer)]],
                                                  GBufferOut gBuffer) {
   Light light = lights[in.instanceId];

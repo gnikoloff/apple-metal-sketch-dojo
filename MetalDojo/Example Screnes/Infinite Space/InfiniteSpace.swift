@@ -155,12 +155,12 @@ final class InfiniteSpace: ExampleScreen {
     do {
       try computeBoxesPipelineState = InfiniteSpacePipelineStates.createBoxesComputePSO()
       try computePointLightsPipelineState = InfiniteSpacePipelineStates.createPointLightsComputePSO()
+      try sunLightPSO = InfiniteSpacePipelineStates.createSunLightPSO(colorPixelFormat: Renderer.viewColorFormat)
+      try pointLightPSO = InfiniteSpacePipelineStates.createPointLightPSO(colorPixelFormat: Renderer.viewColorFormat)
+      try gBufferPSO = InfiniteSpacePipelineStates.createGBufferPSO(colorPixelFormat: Renderer.viewColorFormat)
     } catch {
       fatalError(error.localizedDescription)
     }
-    gBufferPSO = InfiniteSpacePipelineStates.createGBufferPSO(colorPixelFormat: Renderer.viewColorFormat)
-    sunLightPSO = InfiniteSpacePipelineStates.createSunLightPSO(colorPixelFormat: Renderer.viewColorFormat)
-    pointLightPSO = InfiniteSpacePipelineStates.createPointLightPSO(colorPixelFormat: Renderer.viewColorFormat)
 
     depthStencilState = Self.buildDepthStencilState()!
     lightingDepthStencilState = InfiniteSpacePipelineStates.buildLightingDepthStencilState()

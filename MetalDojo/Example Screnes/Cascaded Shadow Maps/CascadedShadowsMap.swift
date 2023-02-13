@@ -20,8 +20,8 @@ final class CascadedShadowsMap: ExampleScreen {
   private static let SHADOW_CASCADE_LEVELS_COUNT = 3
   private static let SHADOW_CASCADE_ZMULT: Float = 4
   private static var SHADOW_CASCADE_LEVELS: [Float] = [200, 450, 750, 1000]
-  private static let SUN_POSITION = float3(700, 700, 700)
-  private static let MODEL_SCALE: Float = 1
+  private static var SUN_POSITION = float3(700, 600, 500)
+  private static let MODEL_SCALE: Float = 0.5
   private static let MODEL_OFFSET_Y: Float = 0
 
   var options: Options
@@ -29,6 +29,7 @@ final class CascadedShadowsMap: ExampleScreen {
   var outputDepthTexture: MTLTexture!
 
   private var isDebugMode = false
+  private var time: Float = 0
 
   private let depthStencilState: MTLDepthStencilState?
 
@@ -135,12 +136,13 @@ final class CascadedShadowsMap: ExampleScreen {
       cascadePlaneDistances: cascadePlaneDistances,
       shadowTexSize: [texRes, texRes],
       lightsCount: 2,
-      worldSize: float3(Self.FLOOR_SIZE, 100, Self.FLOOR_SIZE)
+      worldSize: float3(Self.FLOOR_SIZE, 100, Self.FLOOR_SIZE),
+      time: 0
     )
     return buffer
   }()
 
-  private var model = Model(name: "Animated_T-Rex_Dinosaur_Biting_Attack_Loop")
+  private var model = Model(name: "Arcade_Fighter_1")
 
   init(options: Options) {
     self.options = options
@@ -285,6 +287,8 @@ final class CascadedShadowsMap: ExampleScreen {
   func update(elapsedTime: Float, deltaTime: Float) {
     arcballCamera.update(deltaTime: deltaTime)
     model.update(deltaTime: deltaTime)
+
+    time = elapsedTime
   }
 
   func updateUniforms() {
@@ -294,6 +298,9 @@ final class CascadedShadowsMap: ExampleScreen {
     let debugCameraBuffPtr = debugCameraBuffer
       .contents()
       .bindMemory(to: CameraUniforms.self, capacity: 1)
+    let settingsBuffPtr = settingsBuffer
+      .contents()
+      .bindMemory(to: CascadedShadowsMap_Settings.self, capacity: 1)
 
     cameraBuffPtr.pointee.position = arcballCamera.position
     cameraBuffPtr.pointee.projectionMatrix = arcballCamera.projectionMatrix
@@ -302,6 +309,8 @@ final class CascadedShadowsMap: ExampleScreen {
     debugCameraBuffPtr.pointee.position = debugCamera.position
     debugCameraBuffPtr.pointee.projectionMatrix = debugCamera.projectionMatrix
     debugCameraBuffPtr.pointee.viewMatrix = debugCamera.viewMatrix
+
+    settingsBuffPtr.pointee.time = time
 
     cameraBuffPtr.pointee.near = Self.CAMERA_NEAR
     cameraBuffPtr.pointee.far = Self.CAMERA_FAR
@@ -484,7 +493,13 @@ final class CascadedShadowsMap: ExampleScreen {
       debugCamPassDescriptor.depthAttachment.storeAction = .store
       descriptor = debugCamPassDescriptor
     } else {
-      descriptor = view.currentRenderPassDescriptor!
+      descriptor = outputPassDescriptor
+      descriptor.colorAttachments[0].texture = outputTexture
+      descriptor.colorAttachments[0].loadAction = .clear
+      descriptor.colorAttachments[0].storeAction = .store
+      descriptor.depthAttachment.texture = outputDepthTexture
+      descriptor.depthAttachment.storeAction = .dontCare
+//      descriptor = view.currentRenderPassDescriptor!
     }
 
     guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {

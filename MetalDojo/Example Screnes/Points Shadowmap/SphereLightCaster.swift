@@ -39,7 +39,6 @@ struct SphereLightCaster: Transformable, PipelineStates {
 
   private let shadowPipelineState: MTLRenderPipelineState
 
-
   private var sphere: Sphere
   private var centerSphere: Sphere
 

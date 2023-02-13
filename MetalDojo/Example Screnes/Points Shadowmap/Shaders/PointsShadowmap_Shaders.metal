@@ -6,35 +6,15 @@
 //
 
 #include <metal_stdlib>
+#import "../../../Shared/Shader/Vertex.h"
 #import "./PointsShadowmap.h"
 using namespace metal;
 
-constant bool is_cubemap_render [[function_constant(0)]];
-constant bool is_not_cubemap_render = !is_cubemap_render;
-constant bool is_sphere_back_side [[function_constant(1)]];
-constant bool is_shaded_and_shadowed [[function_constant(2)]];
-constant bool is_cut_off_alpha [[function_constant(3)]];
+constant bool is_sphere_back_side [[function_constant(CustomFnConstant)]];
+constant bool is_shaded_and_shadowed [[function_constant(CustomFnConstant + 1)]];
+constant bool is_cut_off_alpha [[function_constant(CustomFnConstant + 2)]];
 
 constant float shadow_camera_depth = 25.0;
-
-struct VertexIn {
-  vector_float4 position [[attribute(Position)]];
-  vector_float3 normal [[attribute(Normal)]];
-  vector_float2 uv [[attribute(UV)]];
-};
-
-struct VertexOut {
-  vector_float4 position [[position]];
-  vector_float3 normal;
-  vector_float2 uv;
-  vector_float3 worldPos;
-  uint face [[render_target_array_index, function_constant(is_cubemap_render)]];
-};
-
-struct FragmentOut {
-  float depth [[depth(any), function_constant(is_cubemap_render)]];
-  float4 color [[color(0), function_constant(is_not_cubemap_render)]];
-};
 
 // -------- helpers --------
 
@@ -143,13 +123,13 @@ fragment FragmentOut pointsShadowmap_fragmentMain(VertexOut in [[stage_in]],
 vertex VertexOut pointsShadowmap_vertex(const VertexIn in [[stage_in]],
                                         const uint instanceId [[instance_id]],
                                         constant Uniforms &uniforms [[buffer(UniformsBuffer)]],
-                                        constant CameraUniforms &perspCameraUniforms [[buffer(CameraUniformsBuffer), function_constant(is_not_cubemap_render)]],
-                                        constant PointsShadowmap_View *sideUniforms [[buffer(ShadowCameraUniformsBuffer), function_constant(is_cubemap_render)]]) {
+                                        constant CameraUniforms &perspCameraUniforms [[buffer(CameraUniformsBuffer), function_constant(does_not_render_to_texture_array)]],
+                                        constant PointsShadowmap_View *sideUniforms [[buffer(ShadowCameraUniformsBuffer), function_constant(renders_to_texture_array)]]) {
   float4 worldPos = uniforms.modelMatrix * in.position;
   VertexOut out;
-  if (is_cubemap_render) {
-    out.face = instanceId;
-    float4 screenPos = sideUniforms[out.face].viewProjectionMatrix * worldPos;
+  if (renders_to_texture_array) {
+    out.layer = instanceId;
+    float4 screenPos = sideUniforms[out.layer].viewProjectionMatrix * worldPos;
     out.position = screenPos;
   } else {
     out.position = perspCameraUniforms.projectionMatrix *

@@ -14,18 +14,18 @@ enum AppleMetalPipelineStates: PipelineStates {
     isLight: Bool = false,
     lightsCount: Int = 1
   ) throws -> MTLRenderPipelineState {
-    let fnConstantValues = MTLFunctionConstantValues()
+    let fnConstantValues = Self.getFnConstants()
     var isLight = isLight
     var lightsCount = lightsCount
     fnConstantValues.setConstantValue(
       &isLight,
       type: .bool,
-      index: 0
+      index: CustomFnConstant.index
     )
     fnConstantValues.setConstantValue(
       &lightsCount,
       type: .uint,
-      index: 1
+      index: CustomFnConstant.index + 1
     )
     let vertexFunction = try Renderer.library?.makeFunction(
       name: "appleMetal_vertex",
@@ -52,7 +52,7 @@ enum AppleMetalPipelineStates: PipelineStates {
     bounceFactor: float3 = float3(repeating: 1),
     checkEntitiesCollisions: Bool = false
   ) throws -> MTLComputePipelineState {
-    let fnConstantValues = MTLFunctionConstantValues()
+    let fnConstantValues = Self.getFnConstants()
     var entitiesCount = entitiesCount
     var entityRadius = entityRadius
     var gravity = gravity
@@ -61,27 +61,27 @@ enum AppleMetalPipelineStates: PipelineStates {
     fnConstantValues.setConstantValue(
       &entitiesCount,
       type: .uint,
-      index: 0
+      index: CustomFnConstant.index
     )
     fnConstantValues.setConstantValue(
       &entityRadius,
       type: .float,
-      index: 1
+      index: CustomFnConstant.index + 1
     )
     fnConstantValues.setConstantValue(
       &gravity,
       type: .float3,
-      index: 2
+      index: CustomFnConstant.index + 2
     )
     fnConstantValues.setConstantValue(
       &bounceFactor,
       type: .float3,
-      index: 3
+      index: CustomFnConstant.index + 3
     )
     fnConstantValues.setConstantValue(
       &checkEntitiesCollisions,
       type: .bool,
-      index: 4
+      index: CustomFnConstant.index + 4
     )
     let computeFunction = try Renderer.library.makeFunction(
       name: fnName,

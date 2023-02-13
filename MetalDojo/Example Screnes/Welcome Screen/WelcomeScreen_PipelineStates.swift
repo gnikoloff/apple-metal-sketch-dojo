@@ -10,9 +10,17 @@
 import MetalKit
 
 enum WelcomeScreen_PipelineStates: PipelineStates {
-  static func createWelcomeScreenPSO(colorPixelFormat: MTLPixelFormat) -> MTLRenderPipelineState {
-    let vertexFunction = Renderer.library?.makeFunction(name: "vertex_welcomeScreen")
-    let fragmentFunction = Renderer.library?.makeFunction(name: "fragment_welcomeScreen")
+  static func createWelcomeScreenPSO(colorPixelFormat: MTLPixelFormat) throws -> MTLRenderPipelineState {
+    let fnConstants = Self.getFnConstants()
+    
+    let vertexFunction = try Renderer.library?.makeFunction(
+      name: "vertex_welcomeScreen",
+      constantValues: fnConstants
+    )
+    let fragmentFunction = try Renderer.library?.makeFunction(
+      name: "fragment_welcomeScreen",
+      constantValues: fnConstants
+    )
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction

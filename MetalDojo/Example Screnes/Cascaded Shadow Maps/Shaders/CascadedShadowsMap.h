@@ -30,6 +30,7 @@ typedef struct {
   vector_float2 shadowTexSize;
   uint lightsCount;
   vector_float3 worldSize;
+  float time;
 } CascadedShadowsMap_Settings;
 
 #endif /* CascadedShadowsMap_h */

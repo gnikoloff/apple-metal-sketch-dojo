@@ -17,13 +17,19 @@ class WelcomeScreen {
   var projectsGrid: ProjectsGrid
 
   init(options: Options) {
-    pipelineState = WelcomeScreen_PipelineStates.createWelcomeScreenPSO(
-      colorPixelFormat: Renderer.viewColorFormat
-    )
+    do {
+      try pipelineState = WelcomeScreen_PipelineStates.createWelcomeScreenPSO(
+        colorPixelFormat: Renderer.viewColorFormat
+      )
+    } catch {
+      fatalError(error.localizedDescription)
+    }
+    
     let projWidth = Float(options.drawableSize.width) * 0.4
     let projHeight = projWidth * (1 / (16 / 9))
     projectsGrid = ProjectsGrid(
       projects: [
+        ProjectModel(name: "Whatever"),
         ProjectModel(name: "Whatever"),
         ProjectModel(name: "Whatever"),
         ProjectModel(name: "Whatever")

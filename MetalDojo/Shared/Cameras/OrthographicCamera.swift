@@ -37,7 +37,10 @@ struct OrthographicCamera: Camera {
   }
 
   mutating func update(size: CGSize) {
-    // ...
+    left = 0
+    right = Float(size.width)
+    bottom = 0
+    top = Float(size.height)
   }
 
   mutating func update(deltaTime: Float) {

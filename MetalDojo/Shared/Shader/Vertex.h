@@ -12,6 +12,7 @@
 #import "./Common.h"
 
 constant bool renders_to_texture_array [[function_constant(RendersToTargetArray)]];
+constant bool does_not_render_to_texture_array = !renders_to_texture_array;
 constant bool has_skeleton [[function_constant(IsSkeletonAnimation)]];
 constant bool renders_depth [[function_constant(RendersDepth)]];
 
@@ -37,6 +38,7 @@ struct VertexIn {
   vector_float4 position [[attribute(Position)]];
   vector_float3 normal [[attribute(Normal)]];
   vector_float2 uv [[attribute(UV)]];
+  vector_float3 color [[attribute(Color)]];
   vector_float3 tangent [[attribute(Tangent)]];
   vector_float3 bitangent [[attribute(Bitangent)]];
   ushort4 joints [[attribute(Joints), function_constant(has_skeleton)]];
@@ -45,8 +47,10 @@ struct VertexIn {
 
 struct VertexOut {
   vector_float4 position [[position]];
+  uint instanceId [[flat]];
   vector_float3 normal;
   vector_float2 uv;
+  vector_float3 color;
   vector_float3 worldPos;
   vector_float3 worldTangent;
   vector_float3 worldBitangent;
@@ -55,6 +59,7 @@ struct VertexOut {
 
 struct FragmentOut {
   float depth [[depth(any), function_constant(renders_depth)]];
+  float4 color [[color(0), function_constant(does_not_render_to_texture_array)]];
 };
 
 #endif /* Header_h */

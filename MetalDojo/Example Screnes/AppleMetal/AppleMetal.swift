@@ -117,11 +117,10 @@ class AppleMetalScreen: ExampleScreen {
 
     var lights: [Light] = []
 
-    for i in 0 ..< Self.LIGHTS_COUNT {
+    for _ in 0 ..< Self.LIGHTS_COUNT {
       var light = Self.buildDefaultLight()
       light.type = Point
       light.color = float3.random(in: 0.2 ..< 1)
-//      light.attenuation = 0.5
       light.position = float3(
         Float.random(in: -0.5 ..< 0.5),
         Float.random(in: -0.3 ..< 0.3),
@@ -134,7 +133,6 @@ class AppleMetalScreen: ExampleScreen {
 
     lightsBuffer = Self.createLightBuffer(lights: lights)
 
-//    let frustumHeight: Float = 0.65
     let frustumWidth: Float = 0.71875 * 2.5
     let frustumHeight = frustumWidth / perspCamera.aspect
     perspCamera.distance = frustumHeight * 0.5 / tan(perspCamera.fov * 0.5)
@@ -145,6 +143,7 @@ class AppleMetalScreen: ExampleScreen {
     let instanceBufferPointer = self.instanceBuffer
       .contents()
       .bindMemory(to: AppleMetal_MeshInstance.self, capacity: Self.MESHES_COUNT)
+
     Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { _ in
       if self.mode == .physics {
         for i in 0 ..< Self.MESHES_COUNT {
@@ -210,7 +209,7 @@ class AppleMetalScreen: ExampleScreen {
     cameraBufferPointer.pointee.viewMatrix = perspCamera.viewMatrix
     cameraBufferPointer.pointee.projectionMatrix = perspCamera.projectionMatrix
     cameraBufferPointer.pointee.position = perspCamera.position
-    cameraBufferPointer.pointee.time = elapsedTime
+//    cameraBufferPointer.pointee.time = elapsedTime
   }
 
   func updateLights(commandBuffer: MTLCommandBuffer) {

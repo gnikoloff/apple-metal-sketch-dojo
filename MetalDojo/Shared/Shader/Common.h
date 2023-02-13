@@ -64,7 +64,6 @@ typedef struct {
   vector_float3 position;
   float near;
   float far;
-  float time;
 } CameraUniforms;
 
 typedef struct {
@@ -104,7 +103,8 @@ typedef struct {
 typedef enum {
   RendersToTargetArray = 0,
   IsSkeletonAnimation = 1,
-  RendersDepth = 2
+  RendersDepth = 2,
+  CustomFnConstant = 10
 } FunctionConstants;
 
 #endif /* Common_h */

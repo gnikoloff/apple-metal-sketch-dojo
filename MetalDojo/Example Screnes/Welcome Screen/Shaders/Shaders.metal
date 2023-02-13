@@ -8,18 +8,9 @@
 #include <metal_stdlib>
 #import "../../../Shared/Shader/Common.h"
 #import "../../../Shared/Shader/ShaderHelpers.h"
+#import "../../../Shared/Shader/Vertex.h"
 #import "./WelcomeScreen.h"
 using namespace metal;
-
-struct VertexIn {
-  float4 position [[attribute(Position)]];
-  float2 uv [[attribute(UV)]];
-};
-
-struct VertexOut {
-  float4 position [[position]];
-  float2 uv;
-};
 
 vertex VertexOut vertex_welcomeScreen(const VertexIn in [[stage_in]],
                                       constant CameraUniforms &cameraUniforms [[buffer(UniformsBuffer + 1)]]) {

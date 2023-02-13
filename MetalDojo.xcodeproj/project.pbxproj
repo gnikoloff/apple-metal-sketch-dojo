@@ -36,7 +36,7 @@
 		FF51997E29794B5E00F25BBF /* AppleMetal_Forward.metal in Sources */ = {isa = PBXBuildFile; fileRef = FF51997D29794B5E00F25BBF /* AppleMetal_Forward.metal */; };
 		FF63BD4B29642E0400A08F8F /* Cube.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF63BD4A29642E0400A08F8F /* Cube.swift */; };
 		FF63BD4D29642F1000A08F8F /* Sphere.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF63BD4C29642F1000A08F8F /* Sphere.swift */; };
-		FF649E7D2997F89000FC61F8 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop.usdz in Resources */ = {isa = PBXBuildFile; fileRef = FF649E7C2997F89000FC61F8 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop.usdz */; };
+		FF649E7D2997F89000FC61F8 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop-old.usdz in Resources */ = {isa = PBXBuildFile; fileRef = FF649E7C2997F89000FC61F8 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop-old.usdz */; };
 		FF6BD4F62965A72200EB957B /* PerspectiveCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6BD4F52965A72200EB957B /* PerspectiveCamera.swift */; };
 		FF6BD4F82965A74000EB957B /* FPCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6BD4F72965A74000EB957B /* FPCamera.swift */; };
 		FF6BD4FA2965A74E00EB957B /* ArcballCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6BD4F92965A74E00EB957B /* ArcballCamera.swift */; };
@@ -57,6 +57,7 @@
 		FF979BC1295DAA9D00021E5D /* EaseFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF979BC0295DAA9D00021E5D /* EaseFunc.swift */; };
 		FF979BC3295DC22C00021E5D /* RangeReplaceableCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF979BC2295DC22C00021E5D /* RangeReplaceableCollection.swift */; };
 		FF979BC6295DC36000021E5D /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF979BC5295DC36000021E5D /* Project.swift */; };
+		FF9FED42299949940037C8E1 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop.usdz in Resources */ = {isa = PBXBuildFile; fileRef = FF9FED41299949940037C8E1 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop.usdz */; };
 		FFB840AF295B243B00B9338D /* MetalDojoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840AE295B243B00B9338D /* MetalDojoApp.swift */; };
 		FFB840B3295B243B00B9338D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFB840B2295B243B00B9338D /* Assets.xcassets */; };
 		FFB840B6295B243B00B9338D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFB840B5295B243B00B9338D /* Preview Assets.xcassets */; };
@@ -87,6 +88,10 @@
 		FFC323C52979603900770BA3 /* ShaderHelpers.metal in Sources */ = {isa = PBXBuildFile; fileRef = FFC323C42979603900770BA3 /* ShaderHelpers.metal */; };
 		FFC323C72979611600770BA3 /* Lighting.metal in Sources */ = {isa = PBXBuildFile; fileRef = FFC323C62979611600770BA3 /* Lighting.metal */; };
 		FFC8DC962979EB03003138F6 /* AppleMetal_Compute.metal in Sources */ = {isa = PBXBuildFile; fileRef = FFC8DC952979EB03003138F6 /* AppleMetal_Compute.metal */; };
+		FFD37E08299961E200D43E45 /* my_animated_tyrannosaurus_rex.usdz in Resources */ = {isa = PBXBuildFile; fileRef = FFD37E07299961E200D43E45 /* my_animated_tyrannosaurus_rex.usdz */; };
+		FFD37E0A2999625100D43E45 /* Arcade_Fighter_1.usdz in Resources */ = {isa = PBXBuildFile; fileRef = FFD37E092999625100D43E45 /* Arcade_Fighter_1.usdz */; };
+		FFD37E0C2999662500D43E45 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop-compressed.usdz in Resources */ = {isa = PBXBuildFile; fileRef = FFD37E0B2999662500D43E45 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop-compressed.usdz */; };
+		FFD37E0E299967B600D43E45 /* Barricade_-_Transformers_Earth_Wars.usdz in Resources */ = {isa = PBXBuildFile; fileRef = FFD37E0D299967B600D43E45 /* Barricade_-_Transformers_Earth_Wars.usdz */; };
 		FFE5330A2985A87F00A55407 /* FunctionConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE533092985A87F00A55407 /* FunctionConstants.swift */; };
 		FFE5330C2985AAB400A55407 /* WelcomeScreen_PipelineStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE5330B2985AAB400A55407 /* WelcomeScreen_PipelineStates.swift */; };
 		FFFE7BBE297AD0D00089EC37 /* WelcomeScreen_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFE7BBD297AD0D00089EC37 /* WelcomeScreen_Extensions.swift */; };
@@ -127,7 +132,7 @@
 		FF51997D29794B5E00F25BBF /* AppleMetal_Forward.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = AppleMetal_Forward.metal; sourceTree = "<group>"; };
 		FF63BD4A29642E0400A08F8F /* Cube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cube.swift; sourceTree = "<group>"; };
 		FF63BD4C29642F1000A08F8F /* Sphere.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sphere.swift; sourceTree = "<group>"; };
-		FF649E7C2997F89000FC61F8 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = "Animated_T-Rex_Dinosaur_Biting_Attack_Loop.usdz"; sourceTree = "<group>"; };
+		FF649E7C2997F89000FC61F8 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop-old.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = "Animated_T-Rex_Dinosaur_Biting_Attack_Loop-old.usdz"; sourceTree = "<group>"; };
 		FF6BD4F52965A72200EB957B /* PerspectiveCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerspectiveCamera.swift; sourceTree = "<group>"; };
 		FF6BD4F72965A74000EB957B /* FPCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPCamera.swift; sourceTree = "<group>"; };
 		FF6BD4F92965A74E00EB957B /* ArcballCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArcballCamera.swift; sourceTree = "<group>"; };
@@ -150,6 +155,7 @@
 		FF979BC0295DAA9D00021E5D /* EaseFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EaseFunc.swift; sourceTree = "<group>"; };
 		FF979BC2295DC22C00021E5D /* RangeReplaceableCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeReplaceableCollection.swift; sourceTree = "<group>"; };
 		FF979BC5295DC36000021E5D /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		FF9FED41299949940037C8E1 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; name = "Animated_T-Rex_Dinosaur_Biting_Attack_Loop.usdz"; path = "../../../../../../Documents/Animated_T-Rex_Dinosaur_Biting_Attack_Loop.usdz"; sourceTree = "<group>"; };
 		FFB840AB295B243B00B9338D /* MetalDojo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetalDojo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFB840AE295B243B00B9338D /* MetalDojoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalDojoApp.swift; sourceTree = "<group>"; };
 		FFB840B2295B243B00B9338D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -185,6 +191,10 @@
 		FFC323C82979645E00770BA3 /* LightingHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LightingHelpers.h; sourceTree = "<group>"; };
 		FFC323C92979695B00770BA3 /* Entry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Entry.h; sourceTree = "<group>"; };
 		FFC8DC952979EB03003138F6 /* AppleMetal_Compute.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = AppleMetal_Compute.metal; sourceTree = "<group>"; };
+		FFD37E07299961E200D43E45 /* my_animated_tyrannosaurus_rex.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = my_animated_tyrannosaurus_rex.usdz; sourceTree = "<group>"; };
+		FFD37E092999625100D43E45 /* Arcade_Fighter_1.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = Arcade_Fighter_1.usdz; sourceTree = "<group>"; };
+		FFD37E0B2999662500D43E45 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop-compressed.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = "Animated_T-Rex_Dinosaur_Biting_Attack_Loop-compressed.usdz"; sourceTree = "<group>"; };
+		FFD37E0D299967B600D43E45 /* Barricade_-_Transformers_Earth_Wars.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = "Barricade_-_Transformers_Earth_Wars.usdz"; sourceTree = "<group>"; };
 		FFE533092985A87F00A55407 /* FunctionConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionConstants.swift; sourceTree = "<group>"; };
 		FFE5330B2985AAB400A55407 /* WelcomeScreen_PipelineStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreen_PipelineStates.swift; sourceTree = "<group>"; };
 		FFFE7BBD297AD0D00089EC37 /* WelcomeScreen_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreen_Extensions.swift; sourceTree = "<group>"; };
@@ -399,7 +409,12 @@
 		FF76AC7229819D48005A93D1 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				FF649E7C2997F89000FC61F8 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop.usdz */,
+				FFD37E0B2999662500D43E45 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop-compressed.usdz */,
+				FFD37E092999625100D43E45 /* Arcade_Fighter_1.usdz */,
+				FFD37E07299961E200D43E45 /* my_animated_tyrannosaurus_rex.usdz */,
+				FF649E7C2997F89000FC61F8 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop-old.usdz */,
+				FFD37E0D299967B600D43E45 /* Barricade_-_Transformers_Earth_Wars.usdz */,
+				FF9FED41299949940037C8E1 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop.usdz */,
 				FF9489FD299807400033EE4A /* city.usdz */,
 			);
 			path = Assets;
@@ -611,9 +626,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				FFB840B6295B243B00B9338D /* Preview Assets.xcassets in Resources */,
+				FFD37E0A2999625100D43E45 /* Arcade_Fighter_1.usdz in Resources */,
+				FFD37E0C2999662500D43E45 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop-compressed.usdz in Resources */,
 				FFB840B3295B243B00B9338D /* Assets.xcassets in Resources */,
-				FF649E7D2997F89000FC61F8 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop.usdz in Resources */,
+				FF649E7D2997F89000FC61F8 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop-old.usdz in Resources */,
+				FFD37E08299961E200D43E45 /* my_animated_tyrannosaurus_rex.usdz in Resources */,
 				FF9489FE299807400033EE4A /* city.usdz in Resources */,
+				FF9FED42299949940037C8E1 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop.usdz in Resources */,
+				FFD37E0E299967B600D43E45 /* Barricade_-_Transformers_Earth_Wars.usdz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

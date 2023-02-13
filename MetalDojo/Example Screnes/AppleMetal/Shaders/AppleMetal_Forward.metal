@@ -9,28 +9,11 @@
 #import "./AppleMetal.h"
 #import "../../../Shared/Shader/ShaderHelpers.h"
 #import "../../../Shared/Shader/LightingHelpers.h"
+#import "../../../Shared/Shader/Vertex.h"
 using namespace metal;
 
-constant bool IS_LIGHT [[function_constant(0)]];
-constant uint LIGHTS_COUNT [[function_constant(1)]];
-
-struct VertexIn {
-  vector_float4 position [[attribute(Position)]];
-  vector_float3 normal [[attribute(Normal)]];
-  vector_float3 color [[attribute(Color)]];
-};
-
-struct VertexOut {
-  vector_float4 position [[position]];
-  vector_float3 normal;
-  vector_float3 worldPos;
-  vector_float3 color;
-};
-
-
-struct FragmentOut {
-  float4 color [[color(0)]];
-};
+constant bool IS_LIGHT [[function_constant(CustomFnConstant)]];
+constant uint LIGHTS_COUNT [[function_constant(CustomFnConstant + 1)]];
 
 vertex VertexOut appleMetal_vertex(const VertexIn in [[stage_in]],
                               const uint iid [[instance_id]],
@@ -41,7 +24,7 @@ vertex VertexOut appleMetal_vertex(const VertexIn in [[stage_in]],
                               constant AppleMetal_AnimSettings &animSettings [[buffer(AnimationSettingsBuffer)]]) {
 
   constant AppleMetal_MeshInstance &instance = instances[iid];
-  matrix_float4x4 rotMatrix = rotation3d(instance.position, perspCameraUniforms.time);
+  matrix_float4x4 rotMatrix = rotation3d(instance.position, 2);
   float4 worldPos = 0.0;
   if (IS_LIGHT) {
     constant Light &light = lights[iid];

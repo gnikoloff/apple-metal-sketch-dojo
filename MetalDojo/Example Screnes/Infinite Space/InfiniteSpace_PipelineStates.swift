@@ -27,9 +27,16 @@ enum InfiniteSpacePipelineStates: PipelineStates {
     return Renderer.device.makeDepthStencilState(descriptor: descriptor)
   }
 
-  static func createGBufferPSO(colorPixelFormat: MTLPixelFormat) -> MTLRenderPipelineState {
-    let vertexFunction = Renderer.library?.makeFunction(name: "infiniteSpace_vertexCube")
-    let fragmentFunction = Renderer.library?.makeFunction(name: "infiniteSpace_fragmentCube")
+  static func createGBufferPSO(colorPixelFormat: MTLPixelFormat) throws -> MTLRenderPipelineState {
+    let fnConstantValues = Self.getFnConstants()
+    let vertexFunction = try Renderer.library?.makeFunction(
+      name: "infiniteSpace_vertexCube",
+      constantValues: fnConstantValues
+    )
+    let fragmentFunction = try Renderer.library?.makeFunction(
+      name: "infiniteSpace_fragmentCube",
+      constantValues: fnConstantValues
+    )
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
@@ -41,9 +48,16 @@ enum InfiniteSpacePipelineStates: PipelineStates {
 
   static func createPointLightPSO(
     colorPixelFormat: MTLPixelFormat
-  ) -> MTLRenderPipelineState {
-    let vertexFunction = Renderer.library?.makeFunction(name: "InfiniteSpace_vertexPointLight")
-    let fragmentFunction = Renderer.library?.makeFunction(name: "InfiniteSpace_fragmentPointLight")
+  ) throws -> MTLRenderPipelineState {
+    let fnConstantValues = Self.getFnConstants()
+    let vertexFunction = try Renderer.library?.makeFunction(
+      name: "InfiniteSpace_vertexPointLight",
+      constantValues: fnConstantValues
+    )
+    let fragmentFunction = try Renderer.library?.makeFunction(
+      name: "InfiniteSpace_fragmentPointLight",
+      constantValues: fnConstantValues
+    )
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
@@ -65,9 +79,16 @@ enum InfiniteSpacePipelineStates: PipelineStates {
 
   static func createSunLightPSO(
     colorPixelFormat: MTLPixelFormat
-  ) -> MTLRenderPipelineState {
-    let vertexFunction = Renderer.library?.makeFunction(name: "infiniteSpace_vertexQuad")
-    let fragmentFunction = Renderer.library?.makeFunction(name: "InfiniteSpace_fragmentDeferredSun")
+  ) throws -> MTLRenderPipelineState {
+    let fnConstantValues = Self.getFnConstants()
+    let vertexFunction = try Renderer.library?.makeFunction(
+      name: "infiniteSpace_vertexQuad",
+      constantValues: fnConstantValues
+    )
+    let fragmentFunction = try Renderer.library?.makeFunction(
+      name: "InfiniteSpace_fragmentDeferredSun",
+      constantValues: fnConstantValues
+    )
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction

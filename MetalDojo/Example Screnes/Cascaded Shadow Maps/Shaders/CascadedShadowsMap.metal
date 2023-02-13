@@ -11,9 +11,8 @@
 #import "./CascadedShadowsMap.h"
 using namespace metal;
 
-constant bool does_not_render_to_texture_array = !renders_to_texture_array;
-constant bool instances_have_unique_positions [[function_constant(10)]];
-constant bool uses_debug_camera [[function_constant(11)]];
+constant bool instances_have_unique_positions [[function_constant(CustomFnConstant)]];
+constant bool uses_debug_camera [[function_constant(CustomFnConstant + 1)]];
 
 uint ShadowLayerIdxCalculate(float3 worldPos,
                              constant CameraUniforms &cameraUniforms,
@@ -60,9 +59,11 @@ float ShadowCalculate(float3 worldPos,
     return 0;
   }
 
+  float3 lightDir = float3(700, 600, 500);
+  lightDir = normalize(lightDir);
+
   // calculate bias (based on depth map resolution and slope)
-  float3 lightDir = normalize(float3(10, 10, 10));
-  float bias = max(0.01 * (dot(normal, lightDir)), 0.0001);
+  float bias = max(0.5 * (dot(normal, lightDir)), 0.05);
 //  float biasModifier = 2;
 
   if (layer == 0) {
@@ -103,23 +104,23 @@ vertex VertexOut cascadedShadows_vertex(const VertexIn in [[stage_in]],
                                         constant float4x4 *instanceLightMatrices [[buffer(LightsMatricesBuffer), function_constant(renders_to_texture_array)]],
                                         constant CameraUniforms &cameraUniforms [[buffer(CameraUniformsBuffer), function_constant(does_not_render_to_texture_array)]],
                                         constant CameraUniforms &debugCameraUniforms [[buffer(DebugCameraBuffer), function_constant(does_not_render_to_texture_array)]],
-                                        constant float4x4 *jointMatrices [[buffer(JointBuffer), function_constant(has_skeleton)]]) {
-float4 position = in.position;
-float4 normal = float4(in.normal, 0);
-if (has_skeleton) {
-  float4 weights = in.weights;
-  ushort4 joints = in.joints;
-  position =
-      weights.x * (jointMatrices[joints.x] * position) +
-      weights.y * (jointMatrices[joints.y] * position) +
-      weights.z * (jointMatrices[joints.z] * position) +
-      weights.w * (jointMatrices[joints.w] * position);
-  normal =
-      weights.x * (jointMatrices[joints.x] * normal) +
-      weights.y * (jointMatrices[joints.y] * normal) +
-      weights.z * (jointMatrices[joints.z] * normal) +
-      weights.w * (jointMatrices[joints.w] * normal);
-}
+                                          constant float4x4 *jointMatrices [[buffer(JointBuffer), function_constant(has_skeleton)]]) {
+  float4 position = in.position;
+  float4 normal = float4(in.normal, 0);
+  if (has_skeleton) {
+    float4 weights = in.weights;
+    ushort4 joints = in.joints;
+    position =
+        weights.x * (jointMatrices[joints.x] * position) +
+        weights.y * (jointMatrices[joints.y] * position) +
+        weights.z * (jointMatrices[joints.z] * position) +
+        weights.w * (jointMatrices[joints.w] * position);
+    normal =
+        weights.x * (jointMatrices[joints.x] * normal) +
+        weights.y * (jointMatrices[joints.y] * normal) +
+        weights.z * (jointMatrices[joints.z] * normal) +
+        weights.w * (jointMatrices[joints.w] * normal);
+  }
 
   float4 worldPos = uniforms.modelMatrix * position;
   if (instances_have_unique_positions) {
@@ -220,13 +221,13 @@ fragment float4 fragment_pbr(VertexOut in [[stage_in]],
                              constant float4x4 *instanceLightMatrices [[buffer(LightsMatricesBuffer)]]) {
 
   constexpr sampler textureSampler(
-    filter::linear,
+    filter::nearest,
     address::repeat,
-    mip_filter::linear);
+    mip_filter::nearest);
 
   Material material = _material;
   if (!is_null_texture(baseColorTexture)) {
-    float4 color = baseColorTexture.sample(textureSampler,in.uv);
+    float4 color = baseColorTexture.sample(textureSampler, in.uv);
     material.baseColor = color.rgb;
   }
 
@@ -271,8 +272,7 @@ fragment float4 fragment_pbr(VertexOut in [[stage_in]],
                                  settings,
                                  instanceLightMatrices,
                                  shadowTextures);
-//
-//
+
 //  constexpr array<float3, 4> colors = {
 //    float3(1, 0, 0),
 //    float3(0, 1, 0),
