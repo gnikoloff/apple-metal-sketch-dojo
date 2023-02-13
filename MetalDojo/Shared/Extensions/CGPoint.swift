@@ -8,23 +8,20 @@
 // swiftlint:disable identifier_name
 
 import Foundation
+import UIKit
 
 extension CGPoint {
   func isInsidePolygon(vertices: [CGPoint]) -> Bool {
     guard !vertices.isEmpty else {
-      return false      
+      return false
     }
-    var j = vertices.last!
-    var c = false
-    for i in vertices {
-      let a = (i.y > y) != (j.y > y)
-      let b = (x < (j.x - i.x) * (y - i.y) / (j.y - i.y) + i.x)
-      if a && b {
-        c = true
-      }
-      j = i
+    let p = UIBezierPath()
+    p.move(to: vertices[0])
+    for vert in vertices {
+      p.addLine(to: vert)
     }
-    return c
+    p.close()
+    return p.contains(self)
   }
   static func + (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
     CGPoint(x: lhs.x + rhs.x, y: lhs.y + rhs.y)

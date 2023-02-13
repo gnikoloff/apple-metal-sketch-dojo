@@ -210,6 +210,7 @@ class AppleMetalScreen: ExampleScreen {
     cameraBufferPointer.pointee.viewMatrix = perspCamera.viewMatrix
     cameraBufferPointer.pointee.projectionMatrix = perspCamera.projectionMatrix
     cameraBufferPointer.pointee.position = perspCamera.position
+    
   }
 
   func updateLights(commandBuffer: MTLCommandBuffer) {

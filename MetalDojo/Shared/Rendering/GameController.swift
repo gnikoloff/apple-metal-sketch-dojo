@@ -60,17 +60,18 @@ extension GameController: MTKViewDelegate {
     elapsedTime += dt
     lastTime = currentTime
 
-    welcomeScreen.update(elapsedTime: Float(elapsedTime), deltaTime: Float(dt))
+    let felapsedTime = Float(elapsedTime)
+    let fdt = Float(dt)
+
+    welcomeScreen.update(elapsedTime: felapsedTime, deltaTime: fdt)
 
     if drawAllScreens {
       for var screen in screens {
-        screen.update(elapsedTime: Float(elapsedTime), deltaTime: Float(dt))
+        screen.update(elapsedTime: felapsedTime, deltaTime: fdt)
       }
     }
 
-    guard
-      var descriptor = view.currentRenderPassDescriptor,
-      let commandBuffer = Renderer.commandQueue.makeCommandBuffer() else {
+    guard let commandBuffer = Renderer.commandQueue.makeCommandBuffer() else {
       return
     }
 
@@ -92,9 +93,11 @@ extension GameController: MTKViewDelegate {
     commandBuffer.commit()
 
     options.mouseDown = false
+
+    InputController.shared.reset()
   }
 
   func dismissSingleProject() {
-//    scene.dismissSingleProject()
+    welcomeScreen.dismissSingleProject()
   }
 }

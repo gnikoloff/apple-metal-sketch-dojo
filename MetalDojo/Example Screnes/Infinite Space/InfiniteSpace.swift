@@ -192,12 +192,7 @@ final class InfiniteSpace: ExampleScreen {
       label: "G-Buffer Position + Specular Color Base Texture",
       storageMode: .memoryless
     )
-    outputDepthTexture = TextureController.makeTexture(
-      size: size,
-      pixelFormat: .depth32Float,
-      label: "G-Buffer Depth Texture",
-      storageMode: .memoryless
-    )
+    outputDepthTexture = Self.createDepthOutputTexture(size: size)
     outputTexture = Self.createOutputTexture(
       size: size,
       label: "InfiniteSpace output texture"
@@ -387,10 +382,6 @@ final class InfiniteSpace: ExampleScreen {
       attachment?.loadAction = .clear
       attachment?.storeAction = .dontCare
     }
-
-    descriptor.depthAttachment.texture = outputDepthTexture
-    descriptor.depthAttachment.storeAction = .dontCare
-
     guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
       return
     }

@@ -5,71 +5,97 @@
 //  Created by Georgi Nikoloff on 27.12.22.
 //
 
+// swiftlint:disable identifier_name
+
 import MetalKit
 
-class Panel {
+class Panel: Equatable {
+  static func == (lhs: Panel, rhs: Panel) -> Bool {
+    lhs.uuid == rhs.uuid
+  }
+
+  private var uuid = UUID()
   var dots: [Dot]
   var project: ProjectModel
+  var zIndex: Int = 0
   weak var texture: MTLTexture!
 
-  private let indices: [UInt16] = [
+  private var indices: [UInt16] = [
     0, 1, 2,
     2, 1, 3
   ]
 
-  var vertexBuffer: MTLBuffer
-  var indexBuffer: MTLBuffer
-  var settingsBuffer: MTLBuffer
+  lazy private var vertexBuffer: MTLBuffer = {
+    Renderer.device.makeBuffer(
+      length: MemoryLayout<float4>.stride * 4
+    )!
+  }()
+
+  lazy private var indexBuffer: MTLBuffer = {
+    Renderer.device.makeBuffer(
+      bytes: &indices,
+      length: MemoryLayout<UInt16>.stride * 6
+    )!
+  }()
+
+  lazy private var settingsBuffer: MTLBuffer = {
+    Renderer.device.makeBuffer(
+      length: MemoryLayout<WelcomeScreen_FragmentSettings>.stride
+    )!
+  }()
 
   init(size: float2, dots: [Dot], project: ProjectModel) {
     self.dots = dots
     self.project = project
-    self.vertexBuffer = Renderer.device.makeBuffer(
-      length: MemoryLayout<float4>.stride * 4
-    )!
-    self.indexBuffer = Renderer.device.makeBuffer(
-      bytes: &indices,
-      length: MemoryLayout<UInt16>.stride * 6
-    )!
-    self.settingsBuffer = Renderer.device.makeBuffer(
-      length: MemoryLayout<WelcomeScreen_FragmentSettings>.stride
-    )!
-
   }
 }
 
 extension Panel {
   func expand(factor: Float, screenWidth: Float, screenHeight: Float) {
-    dots[0].targetPos.x += (0 - dots[0].targetPos.x) * factor
-    dots[0].targetPos.y += (0 - dots[0].targetPos.y) * factor
+    dots[0].expandPos.x = 0
+    dots[0].expandPos.y = 0
 
-    dots[1].targetPos.x += (screenWidth - dots[1].targetPos.x) * factor
-    dots[1].targetPos.y += (0 - dots[1].targetPos.y) * factor
+    dots[1].expandPos.x = screenWidth
+    dots[1].expandPos.y = 0
 
-    dots[2].targetPos.x += (screenWidth - dots[2].targetPos.x) * factor
-    dots[2].targetPos.y += (screenHeight - dots[2].targetPos.y) * factor
+    dots[2].expandPos.x = screenWidth
+    dots[2].expandPos.y = screenHeight
 
-    dots[3].targetPos.x += (0 - dots[3].targetPos.x) * factor
-    dots[3].targetPos.y += (screenHeight - dots[3].targetPos.y) * factor
-  }
-  func collapse(factor: Float) {
-    dots[0].targetPos.x += (dots[0].mainScreenOldPos.x - dots[0].targetPos.x) * factor
-    dots[0].targetPos.y += (dots[0].mainScreenOldPos.y - dots[0].targetPos.y) * factor
+    dots[3].expandPos.x = 0
+    dots[3].expandPos.y = screenHeight
 
-    dots[1].targetPos.x += (dots[1].mainScreenOldPos.x - dots[1].targetPos.x) * factor
-    dots[1].targetPos.y += (dots[1].mainScreenOldPos.y - dots[1].targetPos.y) * factor
-
-    dots[2].targetPos.x += (dots[2].mainScreenOldPos.x - dots[2].targetPos.x) * factor
-    dots[2].targetPos.y += (dots[2].mainScreenOldPos.y - dots[2].targetPos.y) * factor
-
-    dots[3].targetPos.x += (dots[3].mainScreenOldPos.x - dots[3].targetPos.x) * factor
-    dots[3].targetPos.y += (dots[2].mainScreenOldPos.y - dots[3].targetPos.y) * factor
-  }
-  func beforeExpand() {
-    for dot in dots {
-      dot.cacheMainScreenPos()
+    for i in 0 ..< dots.count {
+      let fi = Float(i)
+      let dot = dots[i]
+      dot.physicsMixFactor = 1 - simd_clamp(0, 1, factor * (fi + 1))
     }
   }
+  func collapse(factor: Float) {
+    for i in 0 ..< dots.count {
+      let fi = Float(i)
+      let dot = dots[i]
+      dot.physicsMixFactor = simd_clamp(0, 1, factor * (fi + 1))
+    }
+  }
+
+  func beforeExpand() {
+    // ...
+  }
+
+  func afterExpand() {
+    // ...
+  }
+
+  func beforeClose() {
+    for dot in dots {
+      dot.targetPosPhysics += float2.random(in: -20 ..< 20)
+    }
+  }
+
+  func afterClose() {
+    // ...
+  }
+
   func updateInterleavedArray() {
     var ptr = settingsBuffer.contents().bindMemory(to: WelcomeScreen_FragmentSettings.self, capacity: 1)
     let width = dots[1].pos.x - dots[0].pos.x

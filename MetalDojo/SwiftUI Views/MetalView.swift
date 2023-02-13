@@ -69,6 +69,8 @@ struct MetalView: View {
               options.activeProjectName = nil
             }) {
               Text("Back")
+                .background(Color(.red))
+                
             }
             Spacer()
             Text(activeProjectName)

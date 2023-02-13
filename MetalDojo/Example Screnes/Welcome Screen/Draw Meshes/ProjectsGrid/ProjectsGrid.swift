@@ -17,6 +17,7 @@ class ProjectsGrid {
   var dots: [Dot] = []
   var sticks: [Stick] = []
   var panels: [Panel] = []
+  var sortedPanels: [Panel] = []
   var options: Options
 
   var totalHeight: Float
@@ -31,21 +32,19 @@ class ProjectsGrid {
     self.totalHeight = Float(projects.count) * rowHeight
     self.options = options
 
+    let screenWidth = Float(options.drawableSize.width)
+    let screenHeight = Float(options.drawableSize.height)
+
     let size = options.drawableSize
     let floatWidth = Float(size.width)
 
+    var i = 0
+
     for y in 0 ..< rowsCount {
       let realy = Float(y) * rowHeight - totalHeight / 2 + Float(options.drawableSize.height) / 2
-      dots.append(
-        Dot(
-          pos: float2(-colWidth / 2 + floatWidth / 2, realy)
-        )
-      )
-      dots.append(
-        Dot(
-          pos: float2(colWidth / 2 + floatWidth / 2, realy)
-        )
-      )
+      dots.append(Dot(pos: float2(-colWidth / 2 + floatWidth / 2, realy)))
+      dots.append(Dot(pos: float2(colWidth / 2 + floatWidth / 2, realy)))
+      i += 1
       sticks.append(Stick(
         startPoint: dots[dots.count - 1],
         endPoint: dots[dots.count - 2]
@@ -84,23 +83,27 @@ class ProjectsGrid {
       )
       panels.append(panel)
     }
+
+    sortedPanels = panels
   }
 
   func updateVertices(deltaTime: Float) {
     let allowInteractionWithVertices = !options.isProjectTransition && options.activeProjectName == nil
+
     for i in 0 ..< panels.count {
       let p = panels[i]
       let vertices: [CGPoint] = p.dots.map { d in
         return CGPoint(x: CGFloat(d.pos.x), y: CGFloat(d.pos.y))
       }
+
       if allowInteractionWithVertices && options.mouseDown {
         let isIntersect = options.mouse.isInsidePolygon(vertices: vertices)
         if isIntersect {
           onProjectClicked(idx: i)
+          return
         }
       }
     }
-
 
     for d in dots {
       if allowInteractionWithVertices {
@@ -111,7 +114,7 @@ class ProjectsGrid {
         dt: deltaTime
       )
     }
-//
+
     for _ in 0 ..< ProjectsGrid.VERLET_ITERATIONS_COUNT {
       for s in sticks {
         s.update()
@@ -122,7 +125,6 @@ class ProjectsGrid {
     }
 
     for panel in panels {
-      var panel = panel
       panel.updateInterleavedArray()
     }
   }
@@ -132,6 +134,11 @@ class ProjectsGrid {
       p.project.name == options.activeProjectName
     }!
     options.isProjectTransition = true
+
+    for p in self.panels {
+      p.beforeClose()
+    }
+
     let tween = Tween(
       duration: 1,
       delay: 0,
@@ -139,12 +146,14 @@ class ProjectsGrid {
       onUpdate: { time in
         let factor = Float(time)
         p.collapse(factor: factor)
-        for s in self.sticks {
-          s.stiffness += (0.0005 - s.stiffness) * Float(time)
-        }
       },
       onComplete: {
         self.options.isProjectTransition = false
+        self.options.activeProjectName = nil
+        for p in self.panels {
+          p.afterClose()
+          p.zIndex = 0
+        }
       }
     )
     tween.start()
@@ -154,13 +163,21 @@ class ProjectsGrid {
     let p = panels[idx]
 
     self.options.activeProjectName = p.project.name
-    self.options.isProjectTransition = true
 
-    panels.rearrange(from: idx, to: panels.count - 1)
+//    panels.rearrange(from: idx, to: panels.count - 1)
+    p.zIndex = 999
+    sortedPanels = panels.sorted(by: { p0, p1 in
+      p0.zIndex < p1.zIndex
+    })
+
     let screenWidth = Float(options.drawableSize.width)
     let screenHeight = Float(options.drawableSize.height)
 
-    p.beforeExpand()
+    for p in panels {
+      p.beforeExpand()
+    }
+
+    options.isProjectTransition = true
     let tween = Tween(
       duration: 1,
       delay: 0,
@@ -172,12 +189,12 @@ class ProjectsGrid {
           screenWidth: screenWidth,
           screenHeight: screenHeight
         )
-        for s in self.sticks {
-          s.stiffness += (0 - s.stiffness) * factor
-        }
       },
       onComplete: {
-        self.options.isProjectTransition = false
+        self.options.isProjectTransition = true
+        for p in self.panels {
+          p.afterExpand()
+        }
       }
     )
     tween.start()
@@ -187,7 +204,8 @@ class ProjectsGrid {
     encoder: MTLRenderCommandEncoder,
     cameraUniforms: CameraUniforms
   ) {
-    for panel in panels {
+
+    for panel in sortedPanels {
       panel.draw(
         encoder: encoder,
         cameraUniforms: cameraUniforms

@@ -57,13 +57,11 @@ struct ArcballCamera: Camera {
       * scrollSensitivity
     distance = min(maxDistance, distance)
     distance = max(minDistance, distance)
-    input.mouseScroll = .zero
     if input.leftMouseDown {
       let sensitivity = Settings.mousePanSensitivity
       rotation.x += input.mouseDelta.y * sensitivity
       rotation.y += input.mouseDelta.x * sensitivity
       rotation.x = max(-.pi / 2, min(rotation.x, .pi / 2))
-      input.mouseDelta = .zero
     }
     let rotateMatrix = float4x4(
       rotationYXZ: [-rotation.x, rotation.y, 0])

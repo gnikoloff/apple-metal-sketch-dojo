@@ -37,6 +37,11 @@ class InputController {
     }
   }
 
+  func reset() {
+    mouseScroll = .zero
+    mouseDelta = .zero
+  }
+
   private init() {
     motion = CMMotionManager()
     if motion.isAccelerometerAvailable {

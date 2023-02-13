@@ -24,15 +24,15 @@ class WelcomeScreen {
     } catch {
       fatalError(error.localizedDescription)
     }
-    
+
     let projWidth = Float(options.drawableSize.width) * 0.4
     let projHeight = projWidth * (1 / (16 / 9))
     projectsGrid = ProjectsGrid(
       projects: [
-        ProjectModel(name: "Whatever"),
-        ProjectModel(name: "Whatever"),
-        ProjectModel(name: "Whatever"),
-        ProjectModel(name: "Whatever")
+        ProjectModel(name: "Whatever 1"),
+        ProjectModel(name: "Whatever 2"),
+        ProjectModel(name: "Whatever 3"),
+        ProjectModel(name: "Whatever 4")
       ],
       colWidth: projWidth,
       rowHeight: projHeight,
@@ -43,7 +43,10 @@ class WelcomeScreen {
   }
 
   func resize(view: MTKView, size: CGSize) {
-    orthoCamera.update(size: size)
+    orthoCamera.left = 0
+    orthoCamera.right = Float(size.width)
+    orthoCamera.bottom = Float(size.height)
+    orthoCamera.top = 0
   }
 
   func updateUniforms() {
@@ -78,5 +81,9 @@ class WelcomeScreen {
     )
 
     renderEncoder.endEncoding()
+  }
+
+  func dismissSingleProject() {
+    projectsGrid.dismissSingleProject()
   }
 }
