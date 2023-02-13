@@ -35,17 +35,47 @@ class AppleMetalScreen: ExampleScreen {
   private let lightPipelineState: MTLRenderPipelineState
   private let updateLightsPipelineState: MTLComputePipelineState
   private let updatePointsPipelineState: MTLComputePipelineState
-  private let cameraBuffer: MTLBuffer
-  private let instanceBuffer: MTLBuffer
-  private let animSettingsBuffer: MTLBuffer
-  private let lightsBuffer: MTLBuffer
   private var finalTexture: MTLTexture!
 
   private var perspCamera = ArcballCamera()
   private var mesh = Cube(size: float3(repeating: 0.005), inwardNormals: false)
   private var lightSphere = Sphere(size: 0.0125)
 
-  private static func makeInstancesBuffer() -> MTLBuffer {
+  lazy private var animSettingsBuffer: MTLBuffer = {
+    var animSettings = AppleMetal_AnimSettings()
+    animSettings.mode = 0
+    return Renderer.device.makeBuffer(
+      bytes: &animSettings,
+      length: MemoryLayout<AppleMetal_AnimSettings>.stride
+    )!
+  }()
+
+  lazy private var cameraBuffer: MTLBuffer = {
+    Renderer.device.makeBuffer(
+      length: MemoryLayout<CameraUniforms>.stride,
+      options: []
+    )!
+  }()
+
+  lazy private var lightsBuffer: MTLBuffer = {
+    var lights: [Light] = []
+    for _ in 0 ..< Self.LIGHTS_COUNT {
+      var light = Self.buildDefaultLight()
+      light.type = Point
+      light.color = float3.random(in: 0.2 ..< 1)
+      light.position = float3(
+        Float.random(in: -0.5 ..< 0.5),
+        Float.random(in: -0.3 ..< 0.3),
+        -0.08
+      )
+      light.prevPosition = light.position
+      light.velocity = float3.random(in: -0.5 ..< 0.5)
+      lights.append(light)
+    }
+    return Self.createLightBuffer(lights: lights)
+  }()
+
+  lazy private var instanceBuffer: MTLBuffer = {
     let instanceBuffer = Renderer.device.makeBuffer(
       length: MemoryLayout<AppleMetal_MeshInstance>.stride * Self.MESHES_COUNT,
       options: []
@@ -57,8 +87,8 @@ class AppleMetalScreen: ExampleScreen {
       let x = APPLE_WORD_POSITIONS[i * 2 + 0] - 0.5
       let y = APPLE_WORD_POSITIONS[i * 2 + 1] - 0.5
       let idx = i * 2 + 1 > METAL_WORD_POSITIONS.count ? METAL_WORD_POSITIONS.count / 2 - 2 : i
-      let x2 = (METAL_WORD_POSITIONS[idx * 2 + 0] ?? 0) - 0.5
-      let y2 = (METAL_WORD_POSITIONS[idx * 2 + 1] ?? 0) - 0.5
+      let x2 = (METAL_WORD_POSITIONS[idx * 2 + 0]) - 0.5
+      let y2 = (METAL_WORD_POSITIONS[idx * 2 + 1]) - 0.5
       instanceBufferPointer[i].position = float3(x, y, 0)
       instanceBufferPointer[i].position1 = float3(x, y, 0)
       instanceBufferPointer[i].position2 = float3(x2, y2, 0)
@@ -68,7 +98,7 @@ class AppleMetalScreen: ExampleScreen {
       instanceBufferPointer[i].rotateAxis = float3.random(in: 0 ..< 1)
     }
     return instanceBuffer
-  }
+  }()
 
   init(options: Options) {
     self.options = options
@@ -100,39 +130,6 @@ class AppleMetalScreen: ExampleScreen {
     }
     depthStencilState = Self.buildDepthStencilState()
 
-    cameraBuffer = Renderer.device.makeBuffer(
-      length: MemoryLayout<CameraUniforms>.stride,
-      options: []
-    )!
-    instanceBuffer = Self.makeInstancesBuffer()
-    animSettingsBuffer = Renderer.device.makeBuffer(
-      length: MemoryLayout<AppleMetal_AnimSettings>.stride,
-      options: []
-    )!
-    let animSettingsBufferPointer = animSettingsBuffer
-      .contents()
-      .bindMemory(to: AppleMetal_AnimSettings.self, capacity: 1)
-
-    animSettingsBufferPointer.pointee.mode = 0
-
-    var lights: [Light] = []
-
-    for _ in 0 ..< Self.LIGHTS_COUNT {
-      var light = Self.buildDefaultLight()
-      light.type = Point
-      light.color = float3.random(in: 0.2 ..< 1)
-      light.position = float3(
-        Float.random(in: -0.5 ..< 0.5),
-        Float.random(in: -0.3 ..< 0.3),
-        -0.08
-      )
-      light.prevPosition = light.position
-      light.velocity = float3.random(in: -0.5 ..< 0.5)
-      lights.append(light)
-    }
-
-    lightsBuffer = Self.createLightBuffer(lights: lights)
-
     let frustumWidth: Float = 0.71875 * 2.5
     let frustumHeight = frustumWidth / perspCamera.aspect
     perspCamera.distance = frustumHeight * 0.5 / tan(perspCamera.fov * 0.5)
@@ -143,6 +140,10 @@ class AppleMetalScreen: ExampleScreen {
     let instanceBufferPointer = self.instanceBuffer
       .contents()
       .bindMemory(to: AppleMetal_MeshInstance.self, capacity: Self.MESHES_COUNT)
+
+    let animSettingsBufferPointer = self.animSettingsBuffer
+      .contents()
+      .bindMemory(to: AppleMetal_AnimSettings.self, capacity: 1)
 
     Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { _ in
       if self.mode == .physics {
@@ -209,7 +210,6 @@ class AppleMetalScreen: ExampleScreen {
     cameraBufferPointer.pointee.viewMatrix = perspCamera.viewMatrix
     cameraBufferPointer.pointee.projectionMatrix = perspCamera.projectionMatrix
     cameraBufferPointer.pointee.position = perspCamera.position
-//    cameraBufferPointer.pointee.time = elapsedTime
   }
 
   func updateLights(commandBuffer: MTLCommandBuffer) {

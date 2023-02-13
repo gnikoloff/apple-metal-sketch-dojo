@@ -45,7 +45,7 @@
 		FF6E29E1296736D600D2E59A /* InfiniteSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6E29E0296736D600D2E59A /* InfiniteSpace.swift */; };
 		FF6E29E8296739A900D2E59A /* InfiniteSpace_Compute.metal in Sources */ = {isa = PBXBuildFile; fileRef = FF6E29E7296739A900D2E59A /* InfiniteSpace_Compute.metal */; };
 		FF6E29EA29673C5600D2E59A /* InfiniteSpace_PipelineStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6E29E929673C5600D2E59A /* InfiniteSpace_PipelineStates.swift */; };
-		FF6E29ED2967550300D2E59A /* InfintieSpace_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6E29EC2967550300D2E59A /* InfintieSpace_Extensions.swift */; };
+		FF6E29ED2967550300D2E59A /* InfiniteSpace_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6E29EC2967550300D2E59A /* InfiniteSpace_Extensions.swift */; };
 		FF76AC7729819EB6005A93D1 /* TextureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF76AC7629819EB6005A93D1 /* TextureController.swift */; };
 		FF76AC7929819F2E005A93D1 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF76AC7829819F2E005A93D1 /* Model.swift */; };
 		FF76AC7B29819F86005A93D1 /* Mesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF76AC7A29819F86005A93D1 /* Mesh.swift */; };
@@ -143,7 +143,7 @@
 		FF6E29E7296739A900D2E59A /* InfiniteSpace_Compute.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = InfiniteSpace_Compute.metal; sourceTree = "<group>"; };
 		FF6E29E929673C5600D2E59A /* InfiniteSpace_PipelineStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfiniteSpace_PipelineStates.swift; sourceTree = "<group>"; };
 		FF6E29EB2967513900D2E59A /* InfiniteSpace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfiniteSpace.h; sourceTree = "<group>"; };
-		FF6E29EC2967550300D2E59A /* InfintieSpace_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfintieSpace_Extensions.swift; sourceTree = "<group>"; };
+		FF6E29EC2967550300D2E59A /* InfiniteSpace_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfiniteSpace_Extensions.swift; sourceTree = "<group>"; };
 		FF76AC7629819EB6005A93D1 /* TextureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureController.swift; sourceTree = "<group>"; };
 		FF76AC7829819F2E005A93D1 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		FF76AC7A29819F86005A93D1 /* Mesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mesh.swift; sourceTree = "<group>"; };
@@ -401,7 +401,7 @@
 				FF4BABA32976BB5700FE734C /* Shaders */,
 				FF6E29E929673C5600D2E59A /* InfiniteSpace_PipelineStates.swift */,
 				FF6E29E0296736D600D2E59A /* InfiniteSpace.swift */,
-				FF6E29EC2967550300D2E59A /* InfintieSpace_Extensions.swift */,
+				FF6E29EC2967550300D2E59A /* InfiniteSpace_Extensions.swift */,
 			);
 			path = "Infinite Space";
 			sourceTree = "<group>";
@@ -716,7 +716,7 @@
 				FF25C923296351AD0056C317 /* WelcomeScreen.swift in Sources */,
 				FFB840CC295B28F000B9338D /* Renderer.swift in Sources */,
 				FF08FB092981893E00689272 /* Plane.swift in Sources */,
-				FF6E29ED2967550300D2E59A /* InfintieSpace_Extensions.swift in Sources */,
+				FF6E29ED2967550300D2E59A /* InfiniteSpace_Extensions.swift in Sources */,
 				FFC323C72979611600770BA3 /* Lighting.metal in Sources */,
 				FF6BD4F62965A72200EB957B /* PerspectiveCamera.swift in Sources */,
 				FFB840E4295B43B500B9338D /* Stick.swift in Sources */,

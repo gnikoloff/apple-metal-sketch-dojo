@@ -33,12 +33,6 @@ final class InfiniteSpace: ExampleScreen {
   private let computeBoxesPipelineState: MTLComputePipelineState
   private let computePointLightsPipelineState: MTLComputePipelineState
 
-  private var cameraBuffer: MTLBuffer
-  private var sunLightBuffer: MTLBuffer
-  private var pointLightBuffer: MTLBuffer
-  private let controlPointsBuffer: MTLBuffer
-  private let cubesMaterialsBuffer: MTLBuffer
-
   private var normalShininessBaseColorTexture: MTLTexture!
   private var positionSpecularColorTexture: MTLTexture!
 
@@ -46,14 +40,14 @@ final class InfiniteSpace: ExampleScreen {
   private var cube: Cube
   private var pointLightSphere: Sphere
 
-  private static func createCameraBuffer() -> MTLBuffer {
-    return Renderer.device.makeBuffer(
+  lazy private var cameraBuffer: MTLBuffer = {
+    Renderer.device.makeBuffer(
       length: MemoryLayout<CameraUniforms>.stride,
       options: []
     )!
-  }
+  }()
 
-  private static func createCubesMaterialsBuffer() -> MTLBuffer {
+  lazy private var cubesMaterialsBuffer: MTLBuffer = {
     let materialsBuffer = Renderer.device.makeBuffer(
       length: MemoryLayout<Material>.stride * Self.BOXES_COUNT,
       options: []
@@ -67,9 +61,9 @@ final class InfiniteSpace: ExampleScreen {
       bufferPointer[i].specularColor = float3(Float.random(in: 0..<0.4), 0, 0)
     }
     return materialsBuffer
-  }
+  }()
 
-  private static func createSunLightsBuffer() -> MTLBuffer {
+  lazy private var sunLightBuffer: MTLBuffer = {
     var lights: [Light] = []
     var sunLight0 = Self.buildDefaultLight()
     sunLight0.position = [100, -100, 100]
@@ -80,9 +74,9 @@ final class InfiniteSpace: ExampleScreen {
     sunLight1.color = float3(repeating: 0.8)
     lights.append(sunLight1)
     return Self.createLightBuffer(lights: lights)
-  }
+  }()
 
-  private static func createPointLightsBuffer() -> MTLBuffer {
+  lazy private var pointLightBuffer: MTLBuffer = {
 //    let worldX = Self.WORLD_SIZE[0]
 //    let worldY = Self.WORLD_SIZE[1]
     var pointLights: [Light] = []
@@ -93,18 +87,18 @@ final class InfiniteSpace: ExampleScreen {
       light.position = float3(
 //        Float.random(in: -worldX..<worldX) * 2,
 //        Float.random(in: -worldY..<worldY) * 2,
-        cos(Float(i)) * Float.random(in: 0 ..< WORLD_SIZE[0]) + 1,
-        sin(Float(i)) * Float.random(in: 0 ..< WORLD_SIZE[1]) + 1,
-        Float.random(in: 0 ..< WORLD_SIZE[2])
+        cos(Float(i)) * Float.random(in: 0 ..< Self.WORLD_SIZE[0]) + 1,
+        sin(Float(i)) * Float.random(in: 0 ..< Self.WORLD_SIZE[1]) + 1,
+        Float.random(in: 0 ..< Self.WORLD_SIZE[2])
       )
       light.attenuation = [0.1, 1, 8]
       light.speed = Float.random(in: 0.02 ..< 0.1)
       pointLights.append(light)
     }
     return Self.createLightBuffer(lights: pointLights)
-  }
+  }()
 
-  private static func createBoxesControlPointsBuffer() -> MTLBuffer {
+  lazy private var controlPointsBuffer: MTLBuffer = {
     // create boxes initial data
     let controlPointsCount = Self.BOX_SEGMENTS_COUNT * Self.BOXES_COUNT
     let controlPointsBuffer = Renderer.device.makeBuffer(
@@ -117,8 +111,8 @@ final class InfiniteSpace: ExampleScreen {
       let randZ = Float.random(
         in: 0 ..< Self.WORLD_SIZE[2]
       )
-      let moveRadiusX = Float.random(in: 0 ..< WORLD_SIZE[0] * 1.2) + 1
-      let moveRadiusY = Float.random(in: 0 ..< WORLD_SIZE[1] * 1.2) + 1
+      let moveRadiusX = Float.random(in: 0 ..< Self.WORLD_SIZE[0] * 1.2) + 1
+      let moveRadiusY = Float.random(in: 0 ..< Self.WORLD_SIZE[1] * 1.2) + 1
       for n in 0 ..< Self.BOX_SEGMENTS_COUNT {
         let controlPointIdx = i * Self.BOX_SEGMENTS_COUNT + n
         let randMoveRadX = Float.random(in: 0.5 ..< 1) * moveRadiusX
@@ -147,7 +141,7 @@ final class InfiniteSpace: ExampleScreen {
       }
     }
     return controlPointsBuffer
-  }
+  }()
 
   init(options: Options) {
     self.options = options
@@ -168,8 +162,6 @@ final class InfiniteSpace: ExampleScreen {
     perspCamera.target.y = 0.1
     perspCamera.target.z = 30
     perspCamera.position.y = 0.2
-//    perspCamera.position.x = 1
-//    perspCamera.position.z = -2
 
     cube = Cube(
       size: [0.075, 0.075, 1],
@@ -177,12 +169,6 @@ final class InfiniteSpace: ExampleScreen {
       inwardNormals: true
     )
     pointLightSphere = Sphere(size: 1)
-
-    cameraBuffer = Self.createCameraBuffer()
-    cubesMaterialsBuffer = Self.createCubesMaterialsBuffer()
-    controlPointsBuffer = Self.createBoxesControlPointsBuffer()
-    sunLightBuffer = Self.createSunLightsBuffer()
-    pointLightBuffer = Self.createPointLightsBuffer()
 
     boidsSettings.boxSegmentsCount = UInt32(Self.BOX_SEGMENTS_COUNT)
     boidsSettings.worldSize = Self.WORLD_SIZE

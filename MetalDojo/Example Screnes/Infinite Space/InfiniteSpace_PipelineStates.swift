@@ -9,8 +9,6 @@ import Foundation
 import Metal
 import ModelIO
 
-
-
 extension MTLRenderPipelineDescriptor {
   func setColorAttachmentPixelFormatsForInfiniteSpace(_ colorPixelFormat: MTLPixelFormat) {
     colorAttachments[0].pixelFormat = colorPixelFormat
@@ -20,7 +18,6 @@ extension MTLRenderPipelineDescriptor {
 }
 
 enum InfiniteSpacePipelineStates: PipelineStates {
-
   static func buildLightingDepthStencilState() -> MTLDepthStencilState? {
     let descriptor = MTLDepthStencilDescriptor()
     descriptor.isDepthWriteEnabled = false
