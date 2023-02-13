@@ -32,8 +32,11 @@ struct ArcballCamera: Camera {
 
   let minDistance: Float = 0.0
   let maxDistance: Float = 1000
+
   var target: float3 = [0, 0, 0]
   var distance: Float = 2.5
+  var minPolarAngle: Float = -.pi / 2
+  var maxPolarAngle: Float = .pi / 2
 
   mutating func update(size: CGSize) {
     aspect = Float(size.width / size.height)
@@ -61,7 +64,7 @@ struct ArcballCamera: Camera {
       let sensitivity = Settings.mousePanSensitivity
       rotation.x += input.mouseDelta.y * sensitivity
       rotation.y += input.mouseDelta.x * sensitivity
-      rotation.x = max(-.pi / 2, min(rotation.x, .pi / 2))
+      rotation.x = max(minPolarAngle, min(rotation.x, maxPolarAngle))
     }
     let rotateMatrix = float4x4(
       rotationYXZ: [-rotation.x, rotation.y, 0])

@@ -194,6 +194,7 @@ final class CascadedShadowsMap: ExampleScreen {
 
     arcballCamera.distance = 300
     arcballCamera.rotation = float3(0, -.pi, .pi * 2)
+    arcballCamera.maxPolarAngle = -0.1
     debugCamera.position = float3(500, 500, 50)
 
     cube = Cube(size: Self.CUBES_SIZE)

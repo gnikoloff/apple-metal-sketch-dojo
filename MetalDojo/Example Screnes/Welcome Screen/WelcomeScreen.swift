@@ -8,7 +8,7 @@
 import MetalKit
 
 class WelcomeScreen {
-  private let label = "Welcome Screen Render Pass"
+//  private let label = "Welcome Screen Render Pass"
 
   private var pipelineState: MTLRenderPipelineState
   private var orthoCameraUniforms = CameraUniforms()
@@ -66,13 +66,11 @@ class WelcomeScreen {
     let clearColor = MTLClearColor(red: 1, green: 1, blue: 1, alpha: 1)
     descriptor.colorAttachments[0].clearColor = clearColor
     guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
-
       return
     }
 
     updateUniforms()
 
-    renderEncoder.label = label
     renderEncoder.setRenderPipelineState(pipelineState)
 
     projectsGrid.draw(

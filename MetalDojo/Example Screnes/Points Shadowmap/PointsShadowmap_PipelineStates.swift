@@ -26,7 +26,7 @@ enum PointsShadowmapPipelineStates: PipelineStates {
     pipelineDescriptor.colorAttachments[0].pixelFormat = .invalid
     pipelineDescriptor.depthAttachmentPixelFormat = .depth16Unorm
     pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultLayout
-    return Self.createPSO(descriptor: pipelineDescriptor)
+    return createPSO(descriptor: pipelineDescriptor)
   }
 
   static func createForwardPSO(
@@ -73,6 +73,6 @@ enum PointsShadowmapPipelineStates: PipelineStates {
     pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultLayout
     pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
 
-    return Self.createPSO(descriptor: pipelineDescriptor)
+    return createPSO(descriptor: pipelineDescriptor)
   }
 }
