@@ -16,9 +16,11 @@ class Panel: Equatable {
 
   private var uuid = UUID()
   var dots: [Dot]
-  var project: ProjectModel
+  var name: String
   var zIndex: Int = 0
   weak var texture: MTLTexture!
+
+  private var uniforms = Uniforms()
 
   private var indices: [UInt16] = [
     0, 1, 2,
@@ -38,38 +40,58 @@ class Panel: Equatable {
     )!
   }()
 
-  lazy private var settingsBuffer: MTLBuffer = {
-    Renderer.device.makeBuffer(
-      length: MemoryLayout<WelcomeScreen_FragmentSettings>.stride
-    )!
-  }()
+//  lazy private var settingsBuffer: MTLBuffer = {
+//    Renderer.device.makeBuffer(
+//      length: MemoryLayout<WelcomeScreen_FragmentSettings>.stride
+//    )!
+//  }()
 
-  init(size: float2, dots: [Dot], project: ProjectModel) {
+  init(dots: [Dot], name: String) {
     self.dots = dots
-    self.project = project
+    self.name = name
   }
 }
 
 extension Panel {
   func expand(factor: Float, screenWidth: Float, screenHeight: Float) {
-    dots[0].expandPos.x = 0
-    dots[0].expandPos.y = 0
+    let topLeft = float2.zero
+    let topRight = float2(screenWidth, 0)
+    let bottomLeft = float2(0, screenHeight)
+    let bottomRight = float2(screenWidth, screenHeight)
 
-    dots[1].expandPos.x = screenWidth
-    dots[1].expandPos.y = 0
+    let nearestTopLeft = dots.sorted(by: { d0, d1 in
+      d0.pos.dist(to: topLeft) < d1.pos.dist(to: topLeft)
+    }).first!
 
-    dots[2].expandPos.x = screenWidth
-    dots[2].expandPos.y = screenHeight
+    let nearestTopRight = dots.sorted(by: { d0, d1 in
+      d0.pos.dist(to: topRight) < d1.pos.dist(to: topRight)
+    }).first!
 
-    dots[3].expandPos.x = 0
-    dots[3].expandPos.y = screenHeight
+    let nearestBottomLeft = dots.sorted(by: { d0, d1 in
+      d0.pos.dist(to: bottomLeft) < d1.pos.dist(to: bottomLeft)
+    }).first!
 
-    for i in 0 ..< dots.count {
-      let fi = Float(i)
-      let dot = dots[i]
-      dot.physicsMixFactor = 1 - simd_clamp(0, 1, factor * (fi + 1))
-    }
+    let nearestBottomRight = dots.sorted(by: { d0, d1 in
+      d0.pos.dist(to: bottomRight) < d1.pos.dist(to: bottomRight)
+    }).first!
+
+    nearestTopLeft.expandPos.x = 0
+    nearestTopLeft.expandPos.y = 0
+    nearestTopLeft.physicsMixFactor = 1 - simd_clamp(0, 1, factor * 1)
+
+    nearestTopRight.expandPos.x = screenWidth
+    nearestTopRight.expandPos.y = 0
+    nearestTopRight.physicsMixFactor = 1 - simd_clamp(0, 1, factor * 2)
+
+    nearestBottomLeft.expandPos.x = 0
+    nearestBottomLeft.expandPos.y = screenHeight
+    nearestBottomLeft.physicsMixFactor = 1 - simd_clamp(0, 1, factor * 3)
+
+    nearestBottomRight.expandPos.x = screenWidth
+    nearestBottomRight.expandPos.y = screenHeight
+    nearestBottomRight.physicsMixFactor = 1 - simd_clamp(0, 1, factor * 4)
   }
+  
   func collapse(factor: Float) {
     for i in 0 ..< dots.count {
       let fi = Float(i)
@@ -97,12 +119,12 @@ extension Panel {
   }
 
   func updateInterleavedArray() {
-    var ptr = settingsBuffer.contents().bindMemory(to: WelcomeScreen_FragmentSettings.self, capacity: 1)
-    let width = dots[1].pos.x - dots[0].pos.x
-    let height = dots[2].pos.y - dots[0].pos.y
-//    let angle = atan2(height, width)
-//    print(angle)
-    ptr.pointee.surfaceSize = float2(width, height)
+//    var ptr = settingsBuffer.contents().bindMemory(to: WelcomeScreen_FragmentSettings.self, capacity: 1)
+//    let width = dots[1].pos.x - dots[0].pos.x
+//    let height = dots[2].pos.y - dots[0].pos.y
+////    let angle = atan2(height, width)
+////    print(angle)
+//    ptr.pointee.surfaceSize = float2(width, height)
 
     var interleavedArray = vertexBuffer.contents().bindMemory(to: Float.self, capacity: 16)
     interleavedArray[0] = dots[1].pos.x
@@ -130,7 +152,22 @@ extension Panel {
     cameraUniforms: CameraUniforms
   ) {
     var camUniforms = cameraUniforms
-    
+
+//    uniforms.uvMatrix = float3x3.makeUvTransform(
+//      tx: 0,
+//      ty: 0,
+//      sx: 1,
+//      sy: 1,
+//      rotation: angle,
+//      cx: 0.5,
+//      cy: 0.5
+//    )
+
+    encoder.setVertexBytes(
+      &uniforms,
+      length: MemoryLayout<Uniforms>.stride,
+      index: UniformsBuffer.index
+    )
     encoder.setVertexBytes(
       &camUniforms,
       length: MemoryLayout<CameraUniforms>.stride,
@@ -141,11 +178,11 @@ extension Panel {
       offset: 0,
       index: 0
     )
-    encoder.setFragmentBuffer(
-      settingsBuffer,
-      offset: 0,
-      index: FragmentSettingsBuffer.index
-    )
+//    encoder.setFragmentBuffer(
+//      settingsBuffer,
+//      offset: 0,
+//      index: FragmentSettingsBuffer.index
+//    )
     encoder.setFragmentTexture(
       texture,
       index: ProjectTexture.index

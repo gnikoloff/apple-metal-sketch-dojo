@@ -5,6 +5,8 @@
 //  Created by Georgi Nikoloff on 04.01.23.
 //
 
+// swiftlint:disable identifier_name
+
 import CoreGraphics
 import simd
 
@@ -20,12 +22,22 @@ struct OrthographicCamera: Camera {
   var center = float3.zero
   var target: float3 = [0, 0, 0]
   var up: float3 = [0, 1, 0]
+  var zoom: Float = 1
 
   var viewMatrix: float4x4 {
     return float4x4(eye: position, center: target, up: up)
   }
 
   var projectionMatrix: float4x4 {
+    let dx = (self.right - self.left) / (zoom * 2)
+    let dy = (self.top - self.bottom) / (zoom * 2)
+    let cx = (self.right + self.left) / 2
+    let cy = (self.top + self.bottom) / 2
+    let left = cx - dx
+    let right = cx + dx
+    let top = cy + dy
+    let bottom = cy - dy
+
     return float4x4(
       left: left,
       right: right,

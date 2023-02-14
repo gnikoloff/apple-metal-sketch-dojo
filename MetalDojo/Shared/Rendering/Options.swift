@@ -18,6 +18,7 @@ class Options: ObservableObject {
 
   var isProjectTransition = false
   var mouse: CGPoint = CGPoint(x: -2000, y: -2000)
+  var pinchFactor: CGFloat = CGFloat(1)
 
   var mouseDown: Bool = false
 

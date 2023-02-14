@@ -7,83 +7,56 @@
 
 // swiftlint:disable identifier_name
 
-import Foundation
-import simd
 import MetalKit
 
-class ProjectsGrid {
-  static let VERLET_ITERATIONS_COUNT = 5
-
-  var dots: [Dot] = []
-  var sticks: [Stick] = []
-  var panels: [Panel] = []
-  var sortedPanels: [Panel] = []
-  var options: Options
-
-  var totalHeight: Float
+class ProjectsGrid: VerletGrid {
+  private var projects: [ProjectModel] = []
 
   init(
     projects: [ProjectModel],
-    colWidth: Float,
-    rowHeight: Float,
     options: Options
   ) {
-    let rowsCount = projects.count + 1
-    self.totalHeight = Float(projects.count) * rowHeight
-    self.options = options
+    self.projects = projects
 
     let screenWidth = Float(options.drawableSize.width)
     let screenHeight = Float(options.drawableSize.height)
 
-    let size = options.drawableSize
-    let floatWidth = Float(size.width)
+    let fprojectsCount = Float(projects.count)
 
-    var i = 0
+    let idealColWidth = screenWidth / fprojectsCount
+    let colWidth = idealColWidth * 1
+    let rowHeight = colWidth * (screenHeight / screenWidth)
 
-    for y in 0 ..< rowsCount {
-      let realy = Float(y) * rowHeight - totalHeight / 2 + Float(options.drawableSize.height) / 2
-      dots.append(Dot(pos: float2(-colWidth / 2 + floatWidth / 2, realy)))
-      dots.append(Dot(pos: float2(colWidth / 2 + floatWidth / 2, realy)))
-      i += 1
-      sticks.append(Stick(
-        startPoint: dots[dots.count - 1],
-        endPoint: dots[dots.count - 2]
-      ))
-      if y > 0 {
-        sticks.append(Stick(
-          startPoint: dots[dots.count - 3],
-          endPoint: dots[dots.count - 2]
-        ))
-        sticks.append(Stick(
-          startPoint: dots[dots.count - 4],
-          endPoint: dots[dots.count - 1]
-        ))
-        sticks.append(Stick(
-          startPoint: dots[dots.count - 1],
-          endPoint: dots[dots.count - 3]
-        ))
-        sticks.append(Stick(
-          startPoint: dots[dots.count - 2],
-          endPoint: dots[dots.count - 4]
-        ))
-      }
-    }
+    let totalWidth = fprojectsCount * colWidth
+    let totalHeight = fprojectsCount * rowHeight
 
+    super.init(
+      options: options,
+      colWidth: colWidth,
+      rowHeight: rowHeight,
+      totalWidth: totalWidth,
+      totalHeight: totalHeight
+    )
+
+//    makeHorizontalLayout(colsCount: projects.count + 1)
+    makeVerticalLayout(rowsCount: projects.count + 1, offset: float2(screenWidth / 2.8, 0))
+    makePanels()
+  }
+
+  func makePanels() {
     for i in 0 ..< projects.count {
       let project = projects[i]
       let panel = Panel(
-        size: float2(colWidth, rowHeight),
         dots: [
           dots[i * 2 + 0],
           dots[i * 2 + 1],
           dots[i * 2 + 3],
           dots[i * 2 + 2]
         ],
-        project: project
+        name: project.name
       )
       panels.append(panel)
     }
-
     sortedPanels = panels
   }
 
@@ -105,33 +78,12 @@ class ProjectsGrid {
       }
     }
 
-    for d in dots {
-      if allowInteractionWithVertices {
-        d.interactMouse(mousePos: options.mouse)
-      }
-      d.update(
-        size: options.drawableSize,
-        dt: deltaTime
-      )
-    }
-
-    for _ in 0 ..< ProjectsGrid.VERLET_ITERATIONS_COUNT {
-      for s in sticks {
-        s.update()
-      }
-      for d in dots {
-        d.constrain(size: options.drawableSize)
-      }
-    }
-
-    for panel in panels {
-      panel.updateInterleavedArray()
-    }
+    super.updateVerlet(deltaTime: deltaTime)
   }
 
   func dismissSingleProject() {
     let p = panels.first { p in
-      p.project.name == options.activeProjectName
+      p.name == options.activeProjectName
     }!
     options.isProjectTransition = true
 
@@ -162,10 +114,9 @@ class ProjectsGrid {
   func onProjectClicked(idx: Int) {
     let p = panels[idx]
 
-    self.options.activeProjectName = p.project.name
+    self.options.activeProjectName = p.name
 
-//    panels.rearrange(from: idx, to: panels.count - 1)
-    p.zIndex = 999
+    p.zIndex = 1
     sortedPanels = panels.sorted(by: { p0, p1 in
       p0.zIndex < p1.zIndex
     })
@@ -198,18 +149,5 @@ class ProjectsGrid {
       }
     )
     tween.start()
-  }
-
-  func draw(
-    encoder: MTLRenderCommandEncoder,
-    cameraUniforms: CameraUniforms
-  ) {
-
-    for panel in sortedPanels {
-      panel.draw(
-        encoder: encoder,
-        cameraUniforms: cameraUniforms
-      )
-    }
   }
 }

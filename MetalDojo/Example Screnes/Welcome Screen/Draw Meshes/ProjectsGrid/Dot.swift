@@ -44,37 +44,43 @@ extension Dot {
     targetPosPhysics += vel
     targetPosPhysics += gravity
 
-    pos += mix(float2.zero, (targetPosPhysics - pos) * 0.4, t: physicsMixFactor)
-    pos += mix(float2.zero, (expandPos - pos) * 0.4, t: 1 - physicsMixFactor)
+    pos += mix(float2.zero, (targetPosPhysics - pos) * 0.2, t: physicsMixFactor)
+    pos += mix(float2.zero, (expandPos - pos) * 0.2, t: 1 - physicsMixFactor)
   }
 
   func interactMouse(mousePos: CGPoint) {
+    let mousePos = mousePos * (1 + (1 - WelcomeScreen.cameraZoom))
     let delta = targetPosPhysics - mousePos
     let dist = delta.magSq()
-    let magr: Float = 100 * 100
+    let magr: Float = 200 * 200 * (1 + (1 - WelcomeScreen.cameraZoom))
     if dist < magr {
-      targetPosPhysics = float2(Float(mousePos.x), Float(mousePos.y))
-      let f = delta.normalizeTo(length: 1 - (dist / magr)) * 50
-      targetPosPhysics += f
+      targetPosPhysics += (float2(Float(mousePos.x), Float(mousePos.y)) - targetPosPhysics) * 0.6
+//      let f = delta.normalizeTo(length: 1 - (dist / magr)) * 100 * (1 + (1 - WelcomeScreen.cameraZoom))
+//      targetPosPhysics += f
     }
   }
 
   func constrain(size: CGSize) {
-    let w = Float(size.width)
-    let h = Float(size.height)
+    let fwidth = Float(size.width)
+    let fheight = Float(size.height)
+    let w = fwidth * (1 + (1 - WelcomeScreen.cameraZoom))
+    let h = fheight * (1 + (1 - WelcomeScreen.cameraZoom))
+    let l: Float = 0 // -fwidth * (1 - WelcomeScreen.cameraZoom)
+    let t: Float = 0 // -fheight * (1 - WelcomeScreen.cameraZoom)
+
     if w == 0 || h == 0 {
       return
     }
-    let bounce: Float = 0.3
-
+    let bounce: Float = 0.9
+//
     if targetPosPhysics.x > w {
       let velX = (targetPosPhysics.x - oldPos.x) * bounce
       targetPosPhysics.x = w
       oldPos.x = targetPosPhysics.x + velX
     }
-    if targetPosPhysics.x < 0 {
+    if targetPosPhysics.x < l {
       let velX = (targetPosPhysics.x - oldPos.x) * bounce
-      targetPosPhysics.x = 0
+      targetPosPhysics.x = l
       oldPos.x = targetPosPhysics.x + velX
     }
 
@@ -83,9 +89,9 @@ extension Dot {
       targetPosPhysics.y = h
       oldPos.y = targetPosPhysics.y + velY
     }
-    if targetPosPhysics.y < 0 {
+    if targetPosPhysics.y < t {
       let velY = (targetPosPhysics.y - oldPos.y) * bounce
-      targetPosPhysics.y = 0
+      targetPosPhysics.y = t
       oldPos.y = targetPosPhysics.y + velY
     }
   }

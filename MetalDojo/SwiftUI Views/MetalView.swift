@@ -14,6 +14,8 @@ struct MetalView: View {
   @State private var gameController: GameController?
   @State private var previousTranslation = CGSize.zero
   @State private var previousScroll: CGFloat = 1
+  @State private var scale: CGFloat = 1
+  @State private var lastScale: CGFloat = 1
   @EnvironmentObject var options: Options
 
   var body: some View {
@@ -24,10 +26,7 @@ struct MetalView: View {
           width: value.translation.width - previousTranslation.width,
           height: value.translation.height - previousTranslation.height)
         previousTranslation = value.translation
-
-
         options.mouse = value.location
-//        print(value.location.y * 2 / metalView.drawableSize.height)
         options.mouse.x *= dpr
         options.mouse.y *= dpr
         InputController.shared.touchLocation = value.location
@@ -38,9 +37,21 @@ struct MetalView: View {
 //        print(InputController.shared.touchLocation)
       }
       .onEnded { _ in
-//        options.mouse = CGPoint(x: -1000, y: -1000)
+        options.mouse = CGPoint(x: -1000, y: -1000)
         previousTranslation = .zero
       }
+    let pinchGesture = MagnificationGesture()
+      .onChanged { val in
+        let delta = val / self.lastScale
+        lastScale = val
+        let newScale = scale * delta
+        scale = newScale
+        options.pinchFactor = scale
+      }
+      .onEnded { _ in
+        self.lastScale = 1
+      }
+    let simultGesture = SimultaneousGesture(dragGesture, pinchGesture)
     return ZStack {
       GeometryReader { geometry in
         MetalViewRepresentable(metalView: $metalView, gameController: gameController)
@@ -52,7 +63,7 @@ struct MetalView: View {
               options: options
             )
           }
-          .gesture(dragGesture)
+          .gesture(simultGesture)
           .onClickGesture { point in
             options.mouse = point
             options.mouse.x *= dpr

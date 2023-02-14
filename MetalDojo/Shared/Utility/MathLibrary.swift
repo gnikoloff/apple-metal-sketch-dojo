@@ -186,6 +186,14 @@ extension float3x3 {
     self.init()
     columns = matrix.upperLeft.inverse.transpose.columns
   }
+  static func makeUvTransform(tx: Float, ty: Float, sx: Float, sy: Float, rotation: Float, cx: Float, cy: Float) -> float3x3 {
+    let c = cos(rotation)
+    let s = sin(rotation)
+    let col0 = float3(sx * c, -sy * c, 0)
+    let col1 = float3(sx * c, sy * c, 0)
+    let col2 = float3(-sx * (c * cx + s * cy) + cx + tx, -sy * (-s * cx + c * cy) + cy + ty, 1)
+    return float3x3(columns: (col0, col1, col2))
+  }
 }
 
 // MARK: - float2

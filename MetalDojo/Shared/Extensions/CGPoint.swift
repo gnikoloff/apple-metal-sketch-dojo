@@ -29,4 +29,7 @@ extension CGPoint {
   static func += (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
     CGPoint(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
   }
+  static func * (lhs: CGPoint, rhs: Float) -> CGPoint {
+    CGPoint(x: lhs.x * CGFloat(rhs), y: lhs.y * CGFloat(rhs))
+  }
 }
