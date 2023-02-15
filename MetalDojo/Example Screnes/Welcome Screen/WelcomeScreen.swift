@@ -13,6 +13,7 @@ class WelcomeScreen {
   static var cameraZoom: Float = 1
 
   private var pipelineState: MTLRenderPipelineState
+  private var debugAABBPipelineState: MTLRenderPipelineState
   private var orthoCameraUniforms = CameraUniforms()
   private var orthoCamera = OrthographicCamera()
   private var options: Options
@@ -28,19 +29,12 @@ class WelcomeScreen {
       try pipelineState = WelcomeScreen_PipelineStates.createWelcomeScreenPSO(
         colorPixelFormat: Renderer.viewColorFormat
       )
+      try debugAABBPipelineState = WelcomeScreen_PipelineStates.createDebugAABBBoxes()
     } catch {
       fatalError(error.localizedDescription)
     }
 
-    projectsGrid = ProjectsGrid(
-      projects: [
-        ProjectModel(name: "Whatever 1"),
-        ProjectModel(name: "Whatever 2"),
-        ProjectModel(name: "Whatever 3"),
-        ProjectModel(name: "Whatever 4")
-      ],
-      options: options
-    )
+    projectsGrid = ProjectsGrid(options: options)
     infoGrid = InfoGrid(options: options)
 
     orthoCamera.position.z -= 1
@@ -66,6 +60,7 @@ class WelcomeScreen {
 
   func update(elapsedTime: Float, deltaTime: Float) {
     projectsGrid.updateVertices(deltaTime: deltaTime)
+    projectsGrid.testCollisionWith(grid: infoGrid)
     infoGrid.updateVerlet(deltaTime: deltaTime)
     Self.cameraZoom = simd_clamp(Float(options.pinchFactor), 0, 1)
 //    orthoCamera.zoom = Self.cameraZoom
@@ -89,6 +84,10 @@ class WelcomeScreen {
 
     infoGrid.draw(encoder: renderEncoder, cameraUniforms: orthoCameraUniforms)
     projectsGrid.draw(encoder: renderEncoder, cameraUniforms: orthoCameraUniforms)
+
+    renderEncoder.setRenderPipelineState(debugAABBPipelineState)
+    projectsGrid.drawDebug(encoder: renderEncoder, cameraUniforms: orthoCameraUniforms)
+    infoGrid.drawDebug(encoder: renderEncoder, cameraUniforms: orthoCameraUniforms)
 
     renderEncoder.endEncoding()
   }

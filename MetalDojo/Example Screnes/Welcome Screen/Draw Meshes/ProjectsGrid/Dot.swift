@@ -95,4 +95,10 @@ extension Dot {
       oldPos.y = targetPosPhysics.y + velY
     }
   }
+
+  func isInside(polygon: [Dot]) -> Bool {
+    let poss = polygon.map { $0.pos }
+    return self.pos.isInside(polygon: poss)
+  }
+
 }

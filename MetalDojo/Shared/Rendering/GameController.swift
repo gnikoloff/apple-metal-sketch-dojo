@@ -18,9 +18,8 @@ final class GameController: NSObject {
   var lastTime: Double = CFAbsoluteTimeGetCurrent()
   var elapsedTime: Double = 0
 
-  // Screens
   var welcomeScreen: WelcomeScreen
-  var screens: [ExampleScreen] = []
+  var screens: [Demo] = []
 
   var drawAllScreens = true
 

@@ -224,6 +224,17 @@ extension float2 {
     }
     return val
   }
+  func isInside(polygon: [float2]) -> Bool {
+    var pJ = polygon.last!
+    var contains = false
+    for pI in polygon {
+      if (((pI.y >= self.y) != (pJ.y >= self.y)) && (self.x <= (pJ.x - pI.x) * (self.y - pI.y) / (pJ.y - pI.y) + pI.x)) {
+            contains = !contains
+      }
+      pJ=pI
+    }
+    return contains
+  }
 }
 
 // MARK: - float3

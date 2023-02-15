@@ -13,22 +13,23 @@
 using namespace metal;
 
 vertex VertexOut vertex_welcomeScreen(const VertexIn in [[stage_in]],
-                                      constant Uniforms &uniforms [[buffer(UniformsBuffer)]],
                                       constant CameraUniforms &cameraUniforms [[buffer(UniformsBuffer + 1)]]) {
   float4 pos = in.position;
   VertexOut out {
     .position = cameraUniforms.projectionMatrix *
                 cameraUniforms.viewMatrix *
-                pos,
-    .uv = in.uv
+                pos
   };
+
+  if (has_uv) {
+    out.uv = in.uv;
+  }
+
   return out;
 }
 
 fragment float4 fragment_welcomeScreen(VertexOut in [[stage_in]],
-                                       texture2d<float> projectTexture [[texture(ProjectTexture)]]
-//                                       constant WelcomeScreen_FragmentSettings &settings [[buffer(FragmentSettingsBuffer)]]
-                                       ) {
+                                       texture2d<float> projectTexture [[texture(ProjectTexture)]]) {
 //  uint texWidth = projectTexture.get_width();
 //  uint texHeight = projectTexture.get_height();
 //  float2 imageSize = float2(texWidth, texHeight);
@@ -38,4 +39,8 @@ fragment float4 fragment_welcomeScreen(VertexOut in [[stage_in]],
                       min_filter::linear);
   return projectTexture.sample(s, in.uv);
 //  return float4(in.uv, 0.0, 1.0);
+}
+
+fragment float4 fragment_welcomeDebugAABB(VertexOut in [[stage_in]]) {
+  return float4(1.0, 0.0, 0.0, 1.0);
 }

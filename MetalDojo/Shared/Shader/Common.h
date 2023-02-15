@@ -105,6 +105,7 @@ typedef enum {
   RendersToTargetArray = 0,
   IsSkeletonAnimation = 1,
   RendersDepth = 2,
+  HasUV = 3,
   CustomFnConstant = 10
 } FunctionConstants;
 

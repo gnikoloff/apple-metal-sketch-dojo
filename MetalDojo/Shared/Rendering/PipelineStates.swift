@@ -14,11 +14,13 @@ extension PipelineStates {
   static func getFnConstants(
     hasSkeleton: Bool = false,
     rendersToTargetArray: Bool = false,
-    rendersDepth: Bool = false
+    rendersDepth: Bool = false,
+    hasUv: Bool = true
   ) -> MTLFunctionConstantValues {
     var hasSkeleton = hasSkeleton
     var rendersToTargetArray = rendersToTargetArray
     var rendersDepth = rendersDepth
+    var hasUv = hasUv
 
     let fnConstantValues = MTLFunctionConstantValues()
     fnConstantValues.setConstantValue(
@@ -35,6 +37,11 @@ extension PipelineStates {
       &rendersDepth,
       type: .bool,
       index: RendersDepth.index
+    )
+    fnConstantValues.setConstantValue(
+      &hasUv,
+      type: .bool,
+      index: HasUV.index
     )
     return fnConstantValues
   }

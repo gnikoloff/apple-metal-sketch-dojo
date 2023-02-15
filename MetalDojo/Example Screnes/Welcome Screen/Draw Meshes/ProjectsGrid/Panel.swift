@@ -8,6 +8,7 @@
 // swiftlint:disable identifier_name
 
 import MetalKit
+import UIKit
 
 class Panel: Equatable {
   static func == (lhs: Panel, rhs: Panel) -> Bool {
@@ -21,6 +22,9 @@ class Panel: Equatable {
   weak var texture: MTLTexture!
 
   private var uniforms = Uniforms()
+  private var width: Float
+  private var height: Float
+  private var oldDot0Pos = float2.zero
 
   private var indices: [UInt16] = [
     0, 1, 2,
@@ -30,6 +34,12 @@ class Panel: Equatable {
   lazy private var vertexBuffer: MTLBuffer = {
     Renderer.device.makeBuffer(
       length: MemoryLayout<float4>.stride * 4
+    )!
+  }()
+
+  lazy private var debugAABBVertexBuffer: MTLBuffer = {
+    Renderer.device.makeBuffer(
+      length: MemoryLayout<float2>.stride * 5
     )!
   }()
 
@@ -46,7 +56,9 @@ class Panel: Equatable {
 //    )!
 //  }()
 
-  init(dots: [Dot], name: String) {
+  init(width: Float, height: Float, dots: [Dot], name: String) {
+    self.width = width
+    self.height = height
     self.dots = dots
     self.name = name
   }
@@ -91,7 +103,6 @@ extension Panel {
     nearestBottomRight.expandPos.y = screenHeight
     nearestBottomRight.physicsMixFactor = 1 - simd_clamp(0, 1, factor * 4)
   }
-  
   func collapse(factor: Float) {
     for i in 0 ..< dots.count {
       let fi = Float(i)
@@ -146,7 +157,73 @@ extension Panel {
     interleavedArray[13] = dots[3].pos.y
     interleavedArray[14] = 0
     interleavedArray[15] = 1
+//
+    let leftMostDot = dots.sorted(by: { d0, d1 in
+      d0.pos.x < d1.pos.x
+    }).first!
+    let rightMostDot = dots.sorted(by: { d0, d1 in
+      d0.pos.x > d1.pos.x
+    }).first!
+    let topMostDot = dots.sorted(by: { d0, d1 in
+      d0.pos.y < d1.pos.y
+    }).first!
+    let bottomMostDot = dots.sorted(by: { d0, d1 in
+      d0.pos.y > d1.pos.y
+    }).first!
+
+    let center = float3(
+      x: (leftMostDot.pos.x + rightMostDot.pos.x) / 2,
+      y: (topMostDot.pos.y + bottomMostDot.pos.y) / 2,
+      z: 0
+    )
+
+    let p1 = dots[0].pos
+    let p2 = dots[1].pos
+    let p3 = float2(rightMostDot.pos.x, topMostDot.pos.x)
+
+    let angle = .pi / 2 - atan(distance(p1, p3) / distance(p2, p3))
+
+    let rotMatrix = float4x4(rotationZ: angle)
+
+    var interleavedAABBDebugArray = debugAABBVertexBuffer
+      .contents()
+      .bindMemory(to: float2.self, capacity: 5)
+
+    let translateMatrix = float4x4(translation: center)
+    let matrix = translateMatrix * rotMatrix
+
+    let _t0 = matrix * float4(x: -width / 2, y: -height / 2, z: 0, w: 1)
+    let _t1 = matrix * float4(x: width / 2, y: -height / 2, z: 0, w: 1)
+    let _t2 = matrix * float4(x: width / 2, y: height / 2, z: 0, w: 1)
+    let _t3 = matrix * float4(x: -width / 2, y: height / 2, z: 0, w: 1)
+
+    interleavedAABBDebugArray[0] = float2(x: _t0.x, y: _t0.y)
+    interleavedAABBDebugArray[1] = float2(x: _t1.x, y: _t1.y)
+    interleavedAABBDebugArray[2] = float2(x: _t2.x, y: _t2.y)
+    interleavedAABBDebugArray[3] = float2(x: _t3.x, y: _t3.y)
+    interleavedAABBDebugArray[4] = interleavedAABBDebugArray[0]
+
+    oldDot0Pos = dots[0].pos
   }
+
+  func drawDebugAABB(
+    encoder: MTLRenderCommandEncoder,
+    cameraUniforms: CameraUniforms
+  ) {
+    var camUniforms = cameraUniforms
+    encoder.setVertexBytes(
+      &camUniforms,
+      length: MemoryLayout<CameraUniforms>.stride,
+      index: UniformsBuffer.index + 1
+    )
+    encoder.setVertexBuffer(
+      debugAABBVertexBuffer,
+      offset: 0,
+      index: 0
+    )
+    encoder.drawPrimitives(type: .lineStrip, vertexStart: 0, vertexCount: 5)
+  }
+
   func draw(
     encoder: MTLRenderCommandEncoder,
     cameraUniforms: CameraUniforms
@@ -163,11 +240,6 @@ extension Panel {
 //      cy: 0.5
 //    )
 
-    encoder.setVertexBytes(
-      &uniforms,
-      length: MemoryLayout<Uniforms>.stride,
-      index: UniformsBuffer.index
-    )
     encoder.setVertexBytes(
       &camUniforms,
       length: MemoryLayout<CameraUniforms>.stride,

@@ -33,6 +33,8 @@ class InfoGrid: VerletGrid {
   func makePanels() {
     for i in 0 ..< 3 {
       let panel = Panel(
+        width: colWidth,
+        height: rowHeight,
         dots: [
           dots[i * 2 + 0],
           dots[i * 2 + 1],

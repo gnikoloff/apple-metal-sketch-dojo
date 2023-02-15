@@ -18,7 +18,8 @@ enum WordAnimMode {
   case word0, word1
 }
 
-class AppleMetalScreen: ExampleScreen {
+class AppleMetalScreen: Demo {
+  static let SCREEN_NAME = "Apple Metal"
   private static let MESHES_COUNT = APPLE_WORD_POSITIONS.count / 2
   private static let LIGHTS_COUNT = 15
 
@@ -133,6 +134,7 @@ class AppleMetalScreen: ExampleScreen {
     let frustumWidth: Float = 0.71875 * 2.5
     let frustumHeight = frustumWidth / perspCamera.aspect
     perspCamera.distance = frustumHeight * 0.5 / tan(perspCamera.fov * 0.5)
+    perspCamera.update(deltaTime: 0)
 
     mesh.instanceCount = Self.MESHES_COUNT
     lightSphere.instanceCount = Self.LIGHTS_COUNT
@@ -202,7 +204,9 @@ class AppleMetalScreen: ExampleScreen {
   }
 
   func update(elapsedTime: Float, deltaTime: Float) {
-    perspCamera.update(deltaTime: deltaTime)
+    if isActive() {
+      perspCamera.update(deltaTime: deltaTime)
+    }
 
     let cameraBufferPointer = cameraBuffer
       .contents()
@@ -210,7 +214,7 @@ class AppleMetalScreen: ExampleScreen {
     cameraBufferPointer.pointee.viewMatrix = perspCamera.viewMatrix
     cameraBufferPointer.pointee.projectionMatrix = perspCamera.projectionMatrix
     cameraBufferPointer.pointee.position = perspCamera.position
-    
+
   }
 
   func updateLights(commandBuffer: MTLCommandBuffer) {

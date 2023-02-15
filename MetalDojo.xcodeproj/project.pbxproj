@@ -15,11 +15,13 @@
 		FF08FB092981893E00689272 /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF08FB082981893E00689272 /* Plane.swift */; };
 		FF09791429958720003E3EA0 /* CascadedShadowsMap_TexturesDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF09791329958720003E3EA0 /* CascadedShadowsMap_TexturesDebugger.swift */; };
 		FF097916299643A6003E3EA0 /* CascadedShadowsMap_CameraDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF097915299643A6003E3EA0 /* CascadedShadowsMap_CameraDebugger.swift */; };
-		FF15619D29608765007D14E4 /* ExampleScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF15619C29608765007D14E4 /* ExampleScreen.swift */; };
 		FF15619F29608791007D14E4 /* PointsShadowmap.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF15619E29608791007D14E4 /* PointsShadowmap.swift */; };
 		FF1561A129608D49007D14E4 /* PointsShadowmap_PipelineStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1561A029608D49007D14E4 /* PointsShadowmap_PipelineStates.swift */; };
 		FF1B99EE299BBB22009306FD /* VerletGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1B99ED299BBB22009306FD /* VerletGrid.swift */; };
 		FF1B99F0299BC01A009306FD /* InfoGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1B99EF299BC01A009306FD /* InfoGrid.swift */; };
+		FF1B99F4299CDB0D009306FD /* Demo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1B99F3299CDB0C009306FD /* Demo.swift */; };
+		FF1B99F6299CDD4A009306FD /* DemoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1B99F5299CDD4A009306FD /* DemoHeaderView.swift */; };
+		FF1B99F8299CE1C5009306FD /* DemoInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1B99F7299CE1C5009306FD /* DemoInfoView.swift */; };
 		FF2433572965C43F00041EF6 /* SphereLightCaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2433562965C43F00041EF6 /* SphereLightCaster.swift */; };
 		FF25C918296338650056C317 /* Submesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25C917296338650056C317 /* Submesh.swift */; };
 		FF25C91A296338BC0056C317 /* Drawable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25C919296338BC0056C317 /* Drawable.swift */; };
@@ -110,11 +112,13 @@
 		FF09791329958720003E3EA0 /* CascadedShadowsMap_TexturesDebugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CascadedShadowsMap_TexturesDebugger.swift; sourceTree = "<group>"; };
 		FF097915299643A6003E3EA0 /* CascadedShadowsMap_CameraDebugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CascadedShadowsMap_CameraDebugger.swift; sourceTree = "<group>"; };
 		FF097917299658DE003E3EA0 /* CascadedShadowsMap_ArgumentBuffers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CascadedShadowsMap_ArgumentBuffers.h; sourceTree = "<group>"; };
-		FF15619C29608765007D14E4 /* ExampleScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleScreen.swift; sourceTree = "<group>"; };
 		FF15619E29608791007D14E4 /* PointsShadowmap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsShadowmap.swift; sourceTree = "<group>"; };
 		FF1561A029608D49007D14E4 /* PointsShadowmap_PipelineStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsShadowmap_PipelineStates.swift; sourceTree = "<group>"; };
 		FF1B99ED299BBB22009306FD /* VerletGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerletGrid.swift; sourceTree = "<group>"; };
 		FF1B99EF299BC01A009306FD /* InfoGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoGrid.swift; sourceTree = "<group>"; };
+		FF1B99F3299CDB0C009306FD /* Demo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Demo.swift; sourceTree = "<group>"; };
+		FF1B99F5299CDD4A009306FD /* DemoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoHeaderView.swift; sourceTree = "<group>"; };
+		FF1B99F7299CE1C5009306FD /* DemoInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoInfoView.swift; sourceTree = "<group>"; };
 		FF2433562965C43F00041EF6 /* SphereLightCaster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphereLightCaster.swift; sourceTree = "<group>"; };
 		FF25C917296338650056C317 /* Submesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submesh.swift; sourceTree = "<group>"; };
 		FF25C919296338BC0056C317 /* Drawable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drawable.swift; sourceTree = "<group>"; };
@@ -266,7 +270,7 @@
 		FF15619A296086B9007D14E4 /* Example Screnes */ = {
 			isa = PBXGroup;
 			children = (
-				FF15619C29608765007D14E4 /* ExampleScreen.swift */,
+				FF1B99F3299CDB0C009306FD /* Demo.swift */,
 				FF25C9202963502C0056C317 /* Welcome Screen */,
 				FF15619B2960872B007D14E4 /* Points Shadowmap */,
 				FF08FAFB298184A600689272 /* Cascaded Shadow Maps */,
@@ -500,6 +504,8 @@
 			children = (
 				FFB840AE295B243B00B9338D /* MetalDojoApp.swift */,
 				FFB840C6295B279D00B9338D /* MetalView.swift */,
+				FF1B99F5299CDD4A009306FD /* DemoHeaderView.swift */,
+				FF1B99F7299CE1C5009306FD /* DemoInfoView.swift */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -685,6 +691,7 @@
 				FFB840D1295B2E5D00B9338D /* MathLibrary.swift in Sources */,
 				FF25C91C296339E30056C317 /* PointsShadowmap_Shaders.metal in Sources */,
 				FF76AC7929819F2E005A93D1 /* Model.swift in Sources */,
+				FF1B99F8299CE1C5009306FD /* DemoInfoView.swift in Sources */,
 				FF44A1D129648C2100C7A4F3 /* PointsShadowmap_Extensions.swift in Sources */,
 				FFB840F5295C90FA00B9338D /* CGPoint.swift in Sources */,
 				FF51997A2979498200F25BBF /* AppleMetal_PipelineStates.swift in Sources */,
@@ -732,6 +739,7 @@
 				FF25C923296351AD0056C317 /* WelcomeScreen.swift in Sources */,
 				FFB840CC295B28F000B9338D /* Renderer.swift in Sources */,
 				FF08FB092981893E00689272 /* Plane.swift in Sources */,
+				FF1B99F6299CDD4A009306FD /* DemoHeaderView.swift in Sources */,
 				FF6E29ED2967550300D2E59A /* InfiniteSpace_Extensions.swift in Sources */,
 				FFC323C72979611600770BA3 /* Lighting.metal in Sources */,
 				FF6BD4F62965A72200EB957B /* PerspectiveCamera.swift in Sources */,
@@ -754,10 +762,10 @@
 				FF8BDA4C297F14A000C0787C /* CGSize.swift in Sources */,
 				FFE5330C2985AAB400A55407 /* WelcomeScreen_PipelineStates.swift in Sources */,
 				FF44A1CC29645BB700C7A4F3 /* Attributes.swift in Sources */,
-				FF15619D29608765007D14E4 /* ExampleScreen.swift in Sources */,
 				FFB99DAC2982ED3300F97DDB /* Animation.swift in Sources */,
 				FFB99DB12982ED8800F97DDB /* AnimationClip.swift in Sources */,
 				FF6E29E8296739A900D2E59A /* InfiniteSpace_Compute.metal in Sources */,
+				FF1B99F4299CDB0D009306FD /* Demo.swift in Sources */,
 				FF88380E2990034600F62A9D /* CascadedShadowsMap_Debug.metal in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -10,18 +10,11 @@
 import MetalKit
 
 class ProjectsGrid: VerletGrid {
-  private var projects: [ProjectModel] = []
-
-  init(
-    projects: [ProjectModel],
-    options: Options
-  ) {
-    self.projects = projects
-
+  init(options: Options) {
     let screenWidth = Float(options.drawableSize.width)
     let screenHeight = Float(options.drawableSize.height)
 
-    let fprojectsCount = Float(projects.count)
+    let fprojectsCount = Float(options.projects.count)
 
     let idealColWidth = screenWidth / fprojectsCount
     let colWidth = idealColWidth * 1
@@ -39,14 +32,16 @@ class ProjectsGrid: VerletGrid {
     )
 
 //    makeHorizontalLayout(colsCount: projects.count + 1)
-    makeVerticalLayout(rowsCount: projects.count + 1, offset: float2(screenWidth / 2.8, 0))
+    makeVerticalLayout(rowsCount: options.projects.count + 1, offset: float2(screenWidth / 2.8, 0))
     makePanels()
   }
 
   func makePanels() {
-    for i in 0 ..< projects.count {
-      let project = projects[i]
+    for i in 0 ..< options.projects.count {
+      let project = options.projects[i]
       let panel = Panel(
+        width: colWidth,
+        height: rowHeight,
         dots: [
           dots[i * 2 + 0],
           dots[i * 2 + 1],
@@ -112,6 +107,8 @@ class ProjectsGrid: VerletGrid {
   }
 
   func onProjectClicked(idx: Int) {
+    options.resetMousePos()
+
     let p = panels[idx]
 
     self.options.activeProjectName = p.name
@@ -142,7 +139,7 @@ class ProjectsGrid: VerletGrid {
         )
       },
       onComplete: {
-        self.options.isProjectTransition = true
+        self.options.isProjectTransition = false
         for p in self.panels {
           p.afterExpand()
         }

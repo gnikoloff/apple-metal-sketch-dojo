@@ -41,7 +41,7 @@ extension Renderer {
 
   }
 
-  func draw(screens: [ExampleScreen], in view: MTKView) {
+  func draw(screens: [Demo], in view: MTKView) {
     
   }
 }

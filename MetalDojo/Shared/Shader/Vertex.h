@@ -15,6 +15,7 @@ constant bool renders_to_texture_array [[function_constant(RendersToTargetArray)
 constant bool does_not_render_to_texture_array = !renders_to_texture_array;
 constant bool has_skeleton [[function_constant(IsSkeletonAnimation)]];
 constant bool renders_depth [[function_constant(RendersDepth)]];
+constant bool has_uv [[function_constant(HasUV)]];
 
 constant float3 TRIANGLE_VERTICES_NDC[6] = {
   float3(-1,  1,  0),    // triangle 1
@@ -37,7 +38,7 @@ constant float2 TRIANGLE_UVS[6] = {
 struct VertexIn {
   vector_float4 position [[attribute(Position)]];
   vector_float3 normal [[attribute(Normal)]];
-  vector_float2 uv [[attribute(UV)]];
+  vector_float2 uv [[attribute(UV), function_constant(has_uv)]];
   vector_float3 color [[attribute(Color)]];
   vector_float3 tangent [[attribute(Tangent)]];
   vector_float3 bitangent [[attribute(Bitangent)]];

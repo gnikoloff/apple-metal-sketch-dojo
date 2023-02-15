@@ -9,7 +9,11 @@
 
 import MetalKit
 
-final class CascadedShadowsMap: ExampleScreen {
+final class CascadedShadowsMap: Demo {
+  static let SCREEN_NAME = "Animated Model"
+
+  internal var isFirstRender = true
+
   private static let CUBES_COUNT = 20
   private static let CUBES_POS_RADIUS: Float = 400
   private static let CUBES_SIZE = float3(10, 200, 10)
@@ -43,13 +47,8 @@ final class CascadedShadowsMap: ExampleScreen {
   private let cubesPipelineState: MTLRenderPipelineState
   private let modelPipelineState: MTLRenderPipelineState
 
-  private let cameraBuffer: MTLBuffer
-  private let debugCameraBuffer: MTLBuffer
-  private let lightMatricesBuffer: MTLBuffer
-
   private var camDebugTexture: MTLTexture!
   private var camDebugDepthTexture: MTLTexture!
-  private var shadowDepthTexture: MTLTexture
 
   private var lightMatrices: [float4x4] = []
   private var debugCamera = PerspectiveCamera()
@@ -58,6 +57,8 @@ final class CascadedShadowsMap: ExampleScreen {
   private var floor: Plane
   private var texturesDebugger: CascadedShadowsMap_TexturesDebugger
   private var cameraFrustumDebuger: CascadedShadowsMap_CameraDebugger
+
+  private var model = Model(name: "Arcade_Fighter_1")
 
   lazy private var supportsLayerSelection: Bool = {
     Renderer.device.supportsFamily(MTLGPUFamily.mac2) || Renderer.device.supportsFamily(MTLGPUFamily.apple5)
@@ -142,7 +143,36 @@ final class CascadedShadowsMap: ExampleScreen {
     return buffer
   }()
 
-  private var model = Model(name: "Arcade_Fighter_1")
+  lazy private var shadowDepthTexture: MTLTexture = {
+    TextureController.makeTexture(
+      size: CGSize(width: Self.SHADOW_RESOLUTION, height: Self.SHADOW_RESOLUTION),
+      pixelFormat: .depth32Float,
+      label: "Shadow Depth Texture",
+      type: .type2DArray,
+      arrayLength: Self.SHADOW_CASCADE_LEVELS_COUNT
+    )!
+  }()
+
+  lazy private var cameraBuffer: MTLBuffer = {
+    Renderer.device.makeBuffer(
+      length: MemoryLayout<CameraUniforms>.stride,
+      options: []
+    )!
+  }()
+
+  lazy private var debugCameraBuffer: MTLBuffer = {
+    Renderer.device.makeBuffer(
+      length: MemoryLayout<CameraUniforms>.stride,
+      options: []
+    )!
+  }()
+
+  lazy private var lightMatricesBuffer: MTLBuffer = {
+    Renderer.device.makeBuffer(
+      length: MemoryLayout<float4x4>.stride * Self.SHADOW_CASCADE_LEVELS_COUNT,
+      options: []
+    )!
+  }()
 
   init(options: Options) {
     self.options = options
@@ -171,30 +201,10 @@ final class CascadedShadowsMap: ExampleScreen {
     debugCamPassDescriptor = MTLRenderPassDescriptor()
     depthStencilState = Self.buildDepthStencilState()
 
-    shadowDepthTexture = TextureController.makeTexture(
-      size: CGSize(width: Self.SHADOW_RESOLUTION, height: Self.SHADOW_RESOLUTION),
-      pixelFormat: .depth32Float,
-      label: "Shadow Depth Texture",
-      type: .type2DArray,
-      arrayLength: Self.SHADOW_CASCADE_LEVELS_COUNT
-    )!
-
-    cameraBuffer = Renderer.device.makeBuffer(
-      length: MemoryLayout<CameraUniforms>.stride,
-      options: []
-    )!
-    debugCameraBuffer = Renderer.device.makeBuffer(
-      length: MemoryLayout<CameraUniforms>.stride,
-      options: []
-    )!
-    lightMatricesBuffer = Renderer.device.makeBuffer(
-      length: MemoryLayout<float4x4>.stride * Self.SHADOW_CASCADE_LEVELS_COUNT,
-      options: []
-    )!
-
     arcballCamera.distance = 300
     arcballCamera.rotation = float3(0, -.pi, .pi * 2)
     arcballCamera.maxPolarAngle = -0.1
+    arcballCamera.update(deltaTime: 0)
     debugCamera.position = float3(500, 500, 50)
 
     cube = Cube(size: Self.CUBES_SIZE)
@@ -287,7 +297,10 @@ final class CascadedShadowsMap: ExampleScreen {
   }
 
   func update(elapsedTime: Float, deltaTime: Float) {
-    arcballCamera.update(deltaTime: deltaTime)
+    if isActive() {
+      arcballCamera.update(deltaTime: deltaTime)
+    }
+
     model.update(deltaTime: deltaTime)
 
     time = elapsedTime
@@ -297,6 +310,12 @@ final class CascadedShadowsMap: ExampleScreen {
     let cameraBuffPtr = cameraBuffer
       .contents()
       .bindMemory(to: CameraUniforms.self, capacity: 1)
+    cameraBuffPtr.pointee.position = arcballCamera.position
+    cameraBuffPtr.pointee.projectionMatrix = arcballCamera.projectionMatrix
+    cameraBuffPtr.pointee.viewMatrix = arcballCamera.viewMatrix
+    cameraBuffPtr.pointee.near = Self.CAMERA_NEAR
+    cameraBuffPtr.pointee.far = Self.CAMERA_FAR
+
     let debugCameraBuffPtr = debugCameraBuffer
       .contents()
       .bindMemory(to: CameraUniforms.self, capacity: 1)
@@ -304,18 +323,11 @@ final class CascadedShadowsMap: ExampleScreen {
       .contents()
       .bindMemory(to: CascadedShadowsMap_Settings.self, capacity: 1)
 
-    cameraBuffPtr.pointee.position = arcballCamera.position
-    cameraBuffPtr.pointee.projectionMatrix = arcballCamera.projectionMatrix
-    cameraBuffPtr.pointee.viewMatrix = arcballCamera.viewMatrix
-
     debugCameraBuffPtr.pointee.position = debugCamera.position
     debugCameraBuffPtr.pointee.projectionMatrix = debugCamera.projectionMatrix
     debugCameraBuffPtr.pointee.viewMatrix = debugCamera.viewMatrix
 
     settingsBuffPtr.pointee.time = time
-
-    cameraBuffPtr.pointee.near = Self.CAMERA_NEAR
-    cameraBuffPtr.pointee.far = Self.CAMERA_FAR
 
     let lightMatricesPtr = lightMatricesBuffer
       .contents()

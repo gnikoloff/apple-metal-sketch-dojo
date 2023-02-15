@@ -9,8 +9,8 @@
 
 import MetalKit
 
-final class PointsShadowmap: ExampleScreen {
-
+final class PointsShadowmap: Demo {
+  static let SCREEN_NAME = "Points Light Casters"
 
   private static let SHADOW_PASS_LABEL = "Point Shadow Pass"
   private static let FORWARD_PASS_LABEL = "Point ShadowMap Pass"
@@ -75,6 +75,7 @@ final class PointsShadowmap: ExampleScreen {
     }
 
     perspCamera.distance = 3
+    perspCamera.update(deltaTime: 0)
 
     depthStencilState = Self.buildDepthStencilState()
 
@@ -104,7 +105,12 @@ final class PointsShadowmap: ExampleScreen {
   }
 
   func update(elapsedTime: Float, deltaTime: Float) {
-    perspCamera.update(deltaTime: deltaTime)
+    if isActive() {
+      perspCamera.update(deltaTime: deltaTime)
+    }
+    perspCameraUniforms.viewMatrix = perspCamera.viewMatrix
+    perspCameraUniforms.projectionMatrix = perspCamera.projectionMatrix
+    perspCameraUniforms.position = perspCamera.position
 
     let moveRadius: Float = 0.4
     sphere0.position.x = sin(elapsedTime) * moveRadius
@@ -122,10 +128,6 @@ final class PointsShadowmap: ExampleScreen {
     sphere1.rotation.x = -elapsedTime * 0.8
     sphere1.rotation.y = elapsedTime * 0.8
     sphere1.rotation.z = -elapsedTime
-
-    perspCameraUniforms.viewMatrix = perspCamera.viewMatrix
-    perspCameraUniforms.projectionMatrix = perspCamera.projectionMatrix
-    perspCameraUniforms.position = perspCamera.position
   }
 
   func drawShadowCubeMap(commandBuffer: MTLCommandBuffer) {

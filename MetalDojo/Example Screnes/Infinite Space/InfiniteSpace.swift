@@ -10,9 +10,12 @@
 
 import MetalKit
 
-final class InfiniteSpace: ExampleScreen {
-  private static let POINT_LIGHTS_COUNT: Int = 100
-  private static let BOXES_COUNT: Int = 3000
+final class InfiniteSpace: Demo {
+  static let SCREEN_NAME = "Infinite Space"
+
+  static let POINT_LIGHTS_COUNT: Int = 200
+  static let BOXES_COUNT: Int = 3000
+
   private static let BOX_SEGMENTS_COUNT = 10
   private static let WORLD_SIZE: float3 = [3.75, 3.75, 40]
 

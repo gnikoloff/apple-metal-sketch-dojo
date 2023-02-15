@@ -10,12 +10,14 @@ import MetalKit
 
 struct MetalView: View {
   @State private var dpr = UIScreen().scale
-  @State private var metalView = MTKView()
-  @State private var gameController: GameController?
   @State private var previousTranslation = CGSize.zero
   @State private var previousScroll: CGFloat = 1
   @State private var scale: CGFloat = 1
   @State private var lastScale: CGFloat = 1
+  @State private var isDemoInfoOpen: Bool = false
+  @State private var metalView = MTKView()
+  @State private var gameController: GameController?
+
   @EnvironmentObject var options: Options
 
   var body: some View {
@@ -30,14 +32,9 @@ struct MetalView: View {
         options.mouse.x *= dpr
         options.mouse.y *= dpr
         InputController.shared.touchLocation = value.location
-//        if abs(value.translation.width) > 1 ||
-//          abs(value.translation.height) > 1 {
-//          InputController.shared.touchLocation = nil
-//        }
-//        print(InputController.shared.touchLocation)
       }
       .onEnded { _ in
-        options.mouse = CGPoint(x: -1000, y: -1000)
+        options.resetMousePos()
         previousTranslation = .zero
       }
     let pinchGesture = MagnificationGesture()
@@ -54,7 +51,10 @@ struct MetalView: View {
     let simultGesture = SimultaneousGesture(dragGesture, pinchGesture)
     return ZStack {
       GeometryReader { geometry in
-        MetalViewRepresentable(metalView: $metalView, gameController: gameController)
+        MetalViewRepresentable(
+          metalView: $metalView,
+          gameController: gameController
+        )
           .ignoresSafeArea(.all)
           .onAppear {
             options.drawableSize = geometry.size * dpr
@@ -72,22 +72,18 @@ struct MetalView: View {
             options.mouseDown = true
           }
       }
-      if let activeProjectName = options.activeProjectName {
-        VStack {
-          HStack {
-            Button(action: {
-              gameController!.dismissSingleProject()
-              options.activeProjectName = nil
-            }) {
-              Text("Back")
-                .background(Color(.red))
-                
-            }
-            Spacer()
-            Text(activeProjectName)
-          }
-            .padding()
-          Spacer()
+      if let activeProjectName = options.activeProjectName,
+         !options.isProjectTransition {
+        DemoHeaderView(
+          activeProjectName: activeProjectName,
+          isDemoInfoOpen: $isDemoInfoOpen,
+          gameController: $gameController
+        )
+        if isDemoInfoOpen {
+          DemoInfoView(
+            activeProjectName: activeProjectName,
+            isDemoInfoOpen: $isDemoInfoOpen
+          )
         }
       }
     }
