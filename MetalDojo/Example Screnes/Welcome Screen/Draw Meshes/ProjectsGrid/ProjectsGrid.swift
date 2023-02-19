@@ -17,7 +17,7 @@ class ProjectsGrid: VerletGrid {
     let colWidth = idealColWidth * 1
     let rowHeight = colWidth * (options.drawableSize.y / options.drawableSize.x)
 
-    let totalWidth = fprojectsCount * colWidth
+    let totalWidth = colWidth * 2
     let totalHeight = fprojectsCount * rowHeight
 
     super.init(
@@ -29,11 +29,7 @@ class ProjectsGrid: VerletGrid {
       flipPositions: true //options.isIphone
     )
 
-//    if options.isIphone {
-    makeIphoneLayout(rowsCount: 3, offset: float2(0, 0))
-//    } else {
-//      makeIpadLayout(rowsCount: options.projects.count + 1, offset: float2(screenWidth / 2.8, 0))
-//    }
+    makeIphoneLayout(rowsCount: 3, offset: float2(100, 30))
     makePanels()
   }
 

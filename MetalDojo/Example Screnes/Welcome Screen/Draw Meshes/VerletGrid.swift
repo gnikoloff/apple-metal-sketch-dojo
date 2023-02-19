@@ -99,16 +99,16 @@ class VerletGrid {
         uvw: 1,
         uvh: stechedOutUVs ? uvStretchHeight * fi + uvStretchHeight : 1
       )
-
     }
   }
 
   func makeIphoneLayout(rowsCount: Int, offset: float2 = float2(0, 0)) {
     for y in 0 ..< rowsCount {
-      let realy = Float(y) * rowHeight - totalHeight / 2 + options.drawableSize.y / 2
-      dots.append(Dot(pos: float2(-colWidth / 2 + options.drawableSize.x / 2, realy) + offset))
-      dots.append(Dot(pos: float2(colWidth / 2 + options.drawableSize.x / 2, realy) + offset))
-      dots.append(Dot(pos: float2(colWidth / 2 + colWidth + options.drawableSize.x / 2, realy) + offset))
+      let realy = Float(y) * rowHeight + offset.y
+      dots.append(Dot(pos: float2(offset.x, realy)))
+      dots.append(Dot(pos: float2(colWidth + offset.x, realy)))
+      dots.append(Dot(pos: float2(colWidth * 2 + offset.x, realy)))
+
       sticks.append(Stick(
         startPoint: dots[dots.count - 1],
         endPoint: dots[dots.count - 2]
