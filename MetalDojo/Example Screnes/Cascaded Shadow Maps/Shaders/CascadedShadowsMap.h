@@ -14,8 +14,7 @@
 typedef enum {
   CubeInstancesBuffer = 14,
   SettingsBuffer = 15,
-  LightsMatricesBuffer = 16,
-  DebugCameraBuffer = 17
+  LightsMatricesBuffer = 16
 } CascadedShadowsMap_BufferIndices;
 
 typedef enum {

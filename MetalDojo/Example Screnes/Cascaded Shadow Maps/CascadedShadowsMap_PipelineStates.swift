@@ -23,6 +23,7 @@ enum CascadedShadowsMap_PipelineStates: PipelineStates {
     )
     var instancesHaveUniquePositions = instancesHaveUniquePositions
     var usesDebugCamera = false
+    var isSkybox = false
     fnConstantValues.setConstantValue(
       &instancesHaveUniquePositions,
       type: .bool,
@@ -32,6 +33,11 @@ enum CascadedShadowsMap_PipelineStates: PipelineStates {
       &usesDebugCamera,
       type: .bool,
       index: CustomFnConstant.index + 1
+    )
+    fnConstantValues.setConstantValue(
+      &isSkybox,
+      type: .bool,
+      index: CustomFnConstant.index + 2
     )
     let vertexFunction = try Renderer.library.makeFunction(
       name: "cascadedShadows_vertex",
@@ -55,6 +61,7 @@ enum CascadedShadowsMap_PipelineStates: PipelineStates {
     let fnConstantValues = Self.getFnConstants(hasSkeleton: isSkeletonAnimation)
     var instancesHaveUniquePositions = instancesHaveUniquePositions
     var usesDebugCamera = usesDebugCamera
+    var isSkybox = false
     fnConstantValues.setConstantValue(
       &instancesHaveUniquePositions,
       type: .bool,
@@ -64,6 +71,11 @@ enum CascadedShadowsMap_PipelineStates: PipelineStates {
       &usesDebugCamera,
       type: .bool,
       index: CustomFnConstant.index + 1
+    )
+    fnConstantValues.setConstantValue(
+      &isSkybox,
+      type: .bool,
+      index: CustomFnConstant.index + 2
     )
     let vertexFunction = try Renderer.library?.makeFunction(
       name: "cascadedShadows_vertex",
@@ -90,6 +102,7 @@ enum CascadedShadowsMap_PipelineStates: PipelineStates {
     let fnConstantValues = Self.getFnConstants(hasSkeleton: isSkeletonAnimation)
     var instancesHaveUniquePositions = instancesHaveUniquePositions
     var usesDebugCamera = usesDebugCamera
+    var isSkybox = false
     fnConstantValues.setConstantValue(
       &instancesHaveUniquePositions,
       type: .bool,
@@ -99,6 +112,11 @@ enum CascadedShadowsMap_PipelineStates: PipelineStates {
       &usesDebugCamera,
       type: .bool,
       index: CustomFnConstant.index + 1
+    )
+    fnConstantValues.setConstantValue(
+      &isSkybox,
+      type: .bool,
+      index: CustomFnConstant.index + 2
     )
     let vertexFunction = try Renderer.library?.makeFunction(
       name: "cascadedShadows_vertex",
@@ -199,4 +217,43 @@ enum CascadedShadowsMap_PipelineStates: PipelineStates {
     pipelineDescriptor.depthAttachmentPixelFormat = .depth16Unorm
     return Self.createPSO(descriptor: pipelineDescriptor)
   }
+
+  static func createSkyboxPSO() throws -> MTLRenderPipelineState {
+    let pipelineDescriptor = MTLRenderPipelineDescriptor()
+    let fnConstantValues = Self.getFnConstants()
+    var instancesHaveUniquePositions = false
+    var usesDebugCamera = false
+    var isSkybox = true
+    
+    fnConstantValues.setConstantValue(
+      &instancesHaveUniquePositions,
+      type: .bool,
+      index: CustomFnConstant.index
+    )
+    fnConstantValues.setConstantValue(
+      &usesDebugCamera,
+      type: .bool,
+      index: CustomFnConstant.index + 1
+    )
+    fnConstantValues.setConstantValue(
+      &isSkybox,
+      type: .bool,
+      index: CustomFnConstant.index + 2
+    )
+    let vertexFunction = try Renderer.library.makeFunction(
+      name: "cascadedShadows_vertex",
+      constantValues: fnConstantValues
+    )
+    let fragmentFunction = try Renderer.library.makeFunction(
+      name: "cascadedShadows_skybox",
+      constantValues: fnConstantValues
+    )
+    pipelineDescriptor.vertexFunction = vertexFunction
+    pipelineDescriptor.fragmentFunction = fragmentFunction
+    pipelineDescriptor.colorAttachments[0].pixelFormat = Renderer.viewColorFormat
+    pipelineDescriptor.depthAttachmentPixelFormat = .depth16Unorm
+    pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultLayout
+    return createPSO(descriptor: pipelineDescriptor)
+  }
+
 }

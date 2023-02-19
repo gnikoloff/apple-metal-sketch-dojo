@@ -13,6 +13,7 @@ using namespace metal;
 
 constant bool instances_have_unique_positions [[function_constant(CustomFnConstant)]];
 constant bool uses_debug_camera [[function_constant(CustomFnConstant + 1)]];
+constant bool is_skybox [[function_constant(CustomFnConstant + 2)]];
 
 uint ShadowLayerIdxCalculate(float3 worldPos,
                              constant CameraUniforms &cameraUniforms,
@@ -103,11 +104,11 @@ vertex VertexOut cascadedShadows_vertex(const VertexIn in [[stage_in]],
                                         constant float4x4 *cubeInstances [[buffer(CubeInstancesBuffer), function_constant(instances_have_unique_positions)]],
                                         constant float4x4 *instanceLightMatrices [[buffer(LightsMatricesBuffer), function_constant(renders_to_texture_array)]],
                                         constant CameraUniforms &cameraUniforms [[buffer(CameraUniformsBuffer), function_constant(does_not_render_to_texture_array)]],
-                                        constant CameraUniforms &debugCameraUniforms [[buffer(DebugCameraBuffer), function_constant(does_not_render_to_texture_array)]],
                                           constant float4x4 *jointMatrices [[buffer(JointBuffer), function_constant(has_skeleton)]]) {
   float4 position = in.position;
   float4 normal = float4(in.normal, 0);
   VertexOut out;
+
   if (has_skeleton) {
     float4 weights = in.weights;
     ushort4 joints = in.joints;
@@ -146,15 +147,15 @@ vertex VertexOut cascadedShadows_vertex(const VertexIn in [[stage_in]],
     float4x4 lightMatrix = instanceLightMatrices[uid];
     out.position = lightMatrix * worldPos;
   } else {
-    if (uses_debug_camera) {
-      out.position =  debugCameraUniforms.projectionMatrix *
-                      debugCameraUniforms.viewMatrix *
-                      worldPos;
-    } else {
-      out.position =  cameraUniforms.projectionMatrix *
-                      cameraUniforms.viewMatrix *
-                      worldPos;
-    }
+    out.position =  cameraUniforms.projectionMatrix *
+                    cameraUniforms.viewMatrix *
+                    worldPos;
+  }
+
+  if (is_skybox) {
+    float4x4 vp = cameraUniforms.projectionMatrix *
+                  cameraUniforms.viewMatrix;
+    out.position = (vp * position).xyzw;
   }
 
   if (renders_to_texture_array) {
@@ -295,6 +296,10 @@ fragment float4 fragment_pbr(VertexOut in [[stage_in]],
                      shadow);
 }
 
+fragment float4 cascadedShadows_skybox() {
+  return float4(1);
+}
+
 float4 PBRLighting(constant Light *lights,
                    uint lightsCount,
                    Material material,
@@ -332,3 +337,5 @@ float4 PBRLighting(constant Light *lights,
   float4 color = float4(diffuseColor * opacity + specularColor, opacity);
   return color;
 }
+
+

@@ -44,6 +44,7 @@ final class CascadedShadowsMap: Demo {
   private let modelPipelineState: MTLRenderPipelineState
 
   private var lightMatrices: [float4x4] = []
+  private var cameraUniforms = CameraUniforms()
   private var debugCamera = PerspectiveCamera()
   private var arcballCamera = ArcballCamera(distance: 300)
   private var cube: Cube
@@ -150,20 +151,6 @@ final class CascadedShadowsMap: Demo {
     )!
   }()
 
-  lazy private var cameraBuffer: MTLBuffer = {
-    Renderer.device.makeBuffer(
-      length: MemoryLayout<CameraUniforms>.stride,
-      options: []
-    )!
-  }()
-
-  lazy private var debugCameraBuffer: MTLBuffer = {
-    Renderer.device.makeBuffer(
-      length: MemoryLayout<CameraUniforms>.stride,
-      options: []
-    )!
-  }()
-
   lazy private var lightMatricesBuffer: MTLBuffer = {
     Renderer.device.makeBuffer(
       length: MemoryLayout<float4x4>.stride * Self.SHADOW_CASCADE_LEVELS_COUNT,
@@ -201,11 +188,11 @@ final class CascadedShadowsMap: Demo {
     arcballCamera.position = float3(300, 300, 300)
     arcballCamera.maxPolarAngle = -0.1
     arcballCamera.maxDistance = 700
-//    arcballCamera.update(deltaTime: 0)
     debugCamera.position = float3(500, 500, 50)
 
     cube = Cube(size: Self.CUBES_SIZE)
     cube.position.y = Self.CUBES_SIZE.y / 2
+
     floor = Plane(size: float3(Self.FLOOR_SIZE, Self.FLOOR_SIZE, 1))
 
     floor.rotation.x = .pi * 0.5
@@ -314,25 +301,15 @@ final class CascadedShadowsMap: Demo {
   }
 
   func updateUniforms() {
-    let cameraBuffPtr = cameraBuffer
-      .contents()
-      .bindMemory(to: CameraUniforms.self, capacity: 1)
-    cameraBuffPtr.pointee.position = arcballCamera.position
-    cameraBuffPtr.pointee.projectionMatrix = arcballCamera.projectionMatrix
-    cameraBuffPtr.pointee.viewMatrix = arcballCamera.viewMatrix
-    cameraBuffPtr.pointee.near = Self.CAMERA_NEAR
-    cameraBuffPtr.pointee.far = Self.CAMERA_FAR
+    cameraUniforms.position = arcballCamera.position
+    cameraUniforms.projectionMatrix = arcballCamera.projectionMatrix
+    cameraUniforms.viewMatrix = arcballCamera.viewMatrix
+    cameraUniforms.near = Self.CAMERA_NEAR
+    cameraUniforms.far = Self.CAMERA_FAR
 
-    let debugCameraBuffPtr = debugCameraBuffer
-      .contents()
-      .bindMemory(to: CameraUniforms.self, capacity: 1)
     let settingsBuffPtr = settingsBuffer
       .contents()
       .bindMemory(to: CascadedShadowsMap_Settings.self, capacity: 1)
-
-    debugCameraBuffPtr.pointee.position = debugCamera.position
-    debugCameraBuffPtr.pointee.projectionMatrix = debugCamera.projectionMatrix
-    debugCameraBuffPtr.pointee.viewMatrix = debugCamera.viewMatrix
 
     settingsBuffPtr.pointee.time = time
 
@@ -376,53 +353,52 @@ final class CascadedShadowsMap: Demo {
     shadowPassDescriptor.depthAttachment.storeAction = .store
     shadowPassDescriptor.renderTargetArrayLength = Self.SHADOW_CASCADE_LEVELS_COUNT
 
-    guard let shadowRenderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: shadowPassDescriptor) else {
+    guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: shadowPassDescriptor) else {
       return
     }
 
-    shadowRenderEncoder.setVertexBuffer(
+    renderEncoder.setVertexBuffer(
       lightMatricesBuffer,
       offset: 0,
       index: LightsMatricesBuffer.index
     )
-    shadowRenderEncoder.setVertexBuffer(
+    renderEncoder.setVertexBuffer(
       cubesInstancesBuffer,
       offset: 0,
       index: CubeInstancesBuffer.index
     )
-    shadowRenderEncoder.setVertexBuffer(
+    renderEncoder.setVertexBuffer(
       settingsBuffer,
       offset: 0,
       index: SettingsBuffer.index
     )
 
-    shadowRenderEncoder.setDepthStencilState(depthStencilState)
-
-    shadowRenderEncoder.setRenderPipelineState(cubesShadowPipelineState)
+    renderEncoder.pushDebugGroup("Shadow meshes render")
+    renderEncoder.setDepthStencilState(depthStencilState)
+    renderEncoder.setRenderPipelineState(cubesShadowPipelineState)
     cube.instanceCount = Self.CUBES_COUNT * Self.SHADOW_CASCADE_LEVELS_COUNT
-    cube.draw(renderEncoder: shadowRenderEncoder)
+    cube.draw(renderEncoder: renderEncoder)
 
-    shadowRenderEncoder.setRenderPipelineState(floorShadowPipelineState)
+    renderEncoder.setRenderPipelineState(floorShadowPipelineState)
     floor.instanceCount = Self.SHADOW_CASCADE_LEVELS_COUNT
-    floor.draw(renderEncoder: shadowRenderEncoder)
+    floor.draw(renderEncoder: renderEncoder)
 
-    shadowRenderEncoder.setRenderPipelineState(modelShadowPipelineState)
-
+    renderEncoder.setRenderPipelineState(modelShadowPipelineState)
     for model in models {
       model.instanceCount = Self.SHADOW_CASCADE_LEVELS_COUNT
-      model.draw(encoder: shadowRenderEncoder, useTextures: true)
+      model.draw(encoder: renderEncoder, useTextures: true)
     }
 
-    shadowRenderEncoder.endEncoding()
+    renderEncoder.popDebugGroup()
+
+    renderEncoder.endEncoding()
   }
 
   func drawMainScene(in view: MTKView, commandBuffer: MTLCommandBuffer) {
-//    let descriptor = view.currentRenderPassDescriptor!
-
     let descriptor = outputPassDescriptor
     descriptor.colorAttachments[0].texture = outputTexture
     descriptor.colorAttachments[0].loadAction = .clear
-//    descriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
+    descriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
     descriptor.colorAttachments[0].storeAction = .store
     descriptor.depthAttachment.texture = outputDepthTexture
     descriptor.depthAttachment.storeAction = .dontCare
@@ -431,15 +407,12 @@ final class CascadedShadowsMap: Demo {
       return
     }
 
-    renderEncoder.setVertexBuffer(
-      cameraBuffer,
-      offset: 0,
+    var cameraUniforms = cameraUniforms
+
+    renderEncoder.setVertexBytes(
+      &cameraUniforms,
+      length: MemoryLayout<CameraUniforms>.stride,
       index: CameraUniformsBuffer.index
-    )
-    renderEncoder.setVertexBuffer(
-      debugCameraBuffer,
-      offset: 0,
-      index: DebugCameraBuffer.index
     )
     renderEncoder.setVertexBuffer(
       lightMatricesBuffer,
@@ -456,10 +429,9 @@ final class CascadedShadowsMap: Demo {
       offset: 0,
       index: SettingsBuffer.index
     )
-
-    renderEncoder.setFragmentBuffer(
-      cameraBuffer,
-      offset: 0,
+    renderEncoder.setFragmentBytes(
+      &cameraUniforms,
+      length: MemoryLayout<CameraUniforms>.stride,
       index: CameraUniformsBuffer.index
     )
     renderEncoder.setFragmentBuffer(
@@ -487,8 +459,8 @@ final class CascadedShadowsMap: Demo {
       index: ShadowTextures.index
     )
 
+    renderEncoder.pushDebugGroup("Main scene floor and cubes")
     renderEncoder.setDepthStencilState(depthStencilState)
-
     renderEncoder.setRenderPipelineState(floorPipelineState)
     floor.instanceCount = 1
     floor.draw(renderEncoder: renderEncoder)
@@ -496,30 +468,20 @@ final class CascadedShadowsMap: Demo {
     renderEncoder.setRenderPipelineState(cubesPipelineState)
     cube.instanceCount = Self.CUBES_COUNT
     cube.draw(renderEncoder: renderEncoder)
+    renderEncoder.popDebugGroup()
 
+    renderEncoder.pushDebugGroup("Main scene model")
     renderEncoder.setRenderPipelineState(modelPipelineState)
     for model in models {
       model.instanceCount = 1
       model.draw(encoder: renderEncoder, useTextures: true)
     }
+    renderEncoder.popDebugGroup()
 
-    renderEncoder.setRenderPipelineState(texturesDebugger.floorPipelineDebugState)
-    floor.instanceCount = 1
-    floor.draw(renderEncoder: renderEncoder)
-
-    renderEncoder.setRenderPipelineState(texturesDebugger.cubesPipelineDebugState)
-    cube.instanceCount = Self.CUBES_COUNT
-    cube.draw(renderEncoder: renderEncoder)
-
-    renderEncoder.setRenderPipelineState(texturesDebugger.modelPipelineDebugState)
-
-    for model in models {
-      model.instanceCount = 1
-      model.draw(encoder: renderEncoder, useTextures: true)
-    }
-
+    renderEncoder.pushDebugGroup("Main scene shadow cascades debug")
     texturesDebugger.shadowsDepthTexture = shadowDepthTexture
     texturesDebugger.draw(renderEncoder: renderEncoder)
+    renderEncoder.popDebugGroup()
 
     renderEncoder.endEncoding()
   }

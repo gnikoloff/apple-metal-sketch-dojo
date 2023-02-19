@@ -133,7 +133,9 @@ class ProjectsGrid: VerletGrid {
       )
     }
 
+    options.activeProjectName = p.name
     options.isProjectTransition = true
+    
     let tween = Tween(
       duration: 1,
       delay: 0,
@@ -148,7 +150,6 @@ class ProjectsGrid: VerletGrid {
       },
       onComplete: {
         self.options.isProjectTransition = false
-        self.options.activeProjectName = p.name
         for p in self.panels {
           p.afterExpand()
         }

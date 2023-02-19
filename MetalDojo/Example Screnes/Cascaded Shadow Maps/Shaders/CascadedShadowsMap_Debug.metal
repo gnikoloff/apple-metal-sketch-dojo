@@ -32,8 +32,7 @@ vertex VertexOut CSMFrustumDebugger_vertex(VertexIn in [[stage_in]],
 
 vertex VertexOut CascadedShadowsMap_vertexDebug(const uint vertexId [[vertex_id]],
                                                 const uint instanceId [[instance_id]],
-                                                constant float3 *vertices [[buffer(VertexBuffer)]],
-                                                constant CameraUniforms &cameraUniforms [[buffer(DebugCameraBuffer)]]) {
+                                                constant float3 *vertices [[buffer(VertexBuffer)]]) {
 
   VertexOut out;
   if (is_texture_visualize_debug) {
@@ -52,15 +51,6 @@ vertex VertexOut CascadedShadowsMap_vertexDebug(const uint vertexId [[vertex_id]
     out.position = pos;
     out.uv = TRIANGLE_UVS[vertexId];
     out.worldPos = float3(instanceId, 0, 0);
-  } else {
-    if (is_light_space_frustum_vertices_debug) {
-      float3 pos = vertices[vertexId];
-      out.position = cameraUniforms.projectionMatrix * cameraUniforms.viewMatrix * float4(pos, 1);
-    } else {
-      constant float3 &pos = vertices[instanceId * 8 + vertexId];
-      out.position = cameraUniforms.projectionMatrix * cameraUniforms.viewMatrix * float4(pos, 1);
-      out.worldPos = float3(instanceId) / 3 + 0.2;
-    }
   }
 
   return out;

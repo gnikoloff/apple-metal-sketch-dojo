@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainHeaderView: View {
   @Binding var isInfoOverlayOpen: Bool
+  @Binding var visible: Bool
   @EnvironmentObject var options: Options
 
   var body: some View {
@@ -46,6 +47,6 @@ struct MainHeaderView: View {
       .padding(.leading, options.hasTopNotch ? 1 : 24)
       Spacer()
     }
-    .opacity(options.activeProjectName == WelcomeScreen.SCREEN_NAME ? 1 : 0)
+    .opacity(visible ? 1 : 0)
   }
 }

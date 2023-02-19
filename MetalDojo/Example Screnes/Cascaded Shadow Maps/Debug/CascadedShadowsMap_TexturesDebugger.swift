@@ -16,27 +16,12 @@ final class CascadedShadowsMap_TexturesDebugger {
 
   weak var shadowsDepthTexture: MTLTexture?
 
-  var floorPipelineDebugState: MTLRenderPipelineState
-  var cubesPipelineDebugState: MTLRenderPipelineState
-  var modelPipelineDebugState: MTLRenderPipelineState
-
   init(cascadesCount: Int) {
     self.cascadesCount = cascadesCount
     do {
       try debugCSMTexturesPipelineState = CascadedShadowsMap_PipelineStates.makeCSMVertexlessPipelineState(
         isTextureDebug: true,
         isCsmTextureDebug: true
-      )
-      try floorPipelineDebugState = CascadedShadowsMap_PipelineStates.createMeshPSO(
-        usesDebugCamera: true
-      )
-      try cubesPipelineDebugState = CascadedShadowsMap_PipelineStates.createMeshPSO(
-        instancesHaveUniquePositions: true,
-        usesDebugCamera: true
-      )
-      try modelPipelineDebugState = CascadedShadowsMap_PipelineStates.createPBRPSO(
-        usesDebugCamera: true,
-        isSkeletonAnimation: true
       )
     } catch {
       fatalError(error.localizedDescription)

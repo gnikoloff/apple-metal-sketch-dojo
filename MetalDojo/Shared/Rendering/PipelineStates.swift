@@ -63,8 +63,15 @@ extension PipelineStates {
     let descriptor = MTLDepthStencilDescriptor()
     descriptor.depthCompareFunction = .less
     descriptor.isDepthWriteEnabled = true
-    return Renderer.device.makeDepthStencilState(
-      descriptor: descriptor)
+    return Renderer.device.makeDepthStencilState(descriptor: descriptor)
   }
+
+  static func buildSkyboxDepthStencilState() -> MTLDepthStencilState? {
+    let descriptor = MTLDepthStencilDescriptor()
+    descriptor.depthCompareFunction = .lessEqual
+    descriptor.isDepthWriteEnabled = true
+    return Renderer.device.makeDepthStencilState(descriptor: descriptor)
+  }
+
 }
 

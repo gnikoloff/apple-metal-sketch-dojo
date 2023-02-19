@@ -17,6 +17,7 @@ struct MetalView: View {
   @State private var isInfoOverlayOpen: Bool = false
   @State private var metalView = MTKView()
   @State private var gameController: GameController?
+  @State private var showMainHeader: Bool = false
 
   @EnvironmentObject var options: Options
 
@@ -94,8 +95,15 @@ struct MetalView: View {
         }
       }
 
-      MainHeaderView(isInfoOverlayOpen: $isInfoOverlayOpen)
+//      if showMainHeader {
+        MainHeaderView(isInfoOverlayOpen: $isInfoOverlayOpen, visible: $showMainHeader)
+//      }
       InfoOverlayView(isInfoOverlayOpen: $isInfoOverlayOpen)
+    }
+    .onReceive(options.$activeProjectName) { activeProjectName in
+      withAnimation {
+        self.showMainHeader = activeProjectName == WelcomeScreen.SCREEN_NAME
+      }
     }
   }
 }
