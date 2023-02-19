@@ -1,0 +1,12 @@
+{
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "levels" : [
+    {
+      "filename" : "apple-metal-sketch-dojo-ipad.png",
+      "mipmap-level" : "base"
+    }
+  ]
+}

@@ -9,6 +9,7 @@
 // swiftlint:disable identifier_name
 
 import MetalKit
+import os
 
 class Model: Transformable {
   var name: String
@@ -16,6 +17,7 @@ class Model: Transformable {
   var meshes: [Mesh]
   let hasTransparency: Bool
   var instanceCount: Int = 1
+  var cullMode: MTLCullMode = .back
   var boundingBox = MDLAxisAlignedBoundingBox()
   var size: float3 {
     return boundingBox.maxBounds - boundingBox.minBounds
@@ -43,9 +45,6 @@ class Model: Transformable {
     let mdlMeshes = asset.childObjects(of: MDLMesh.self) as? [MDLMesh] ?? []
 
     _ = mdlMeshes.map { mdlMesh in
-//      let scaleMatrix = float4x4(scaling: 0.02)
-//      let transform = MDLTransform(matrix: scaleMatrix)
-//      mdlMesh.transform = transform
       mdlMesh.addTangentBasis(
         forTextureCoordinateAttributeNamed: MDLVertexAttributeTextureCoordinate,
         tangentAttributeNamed: MDLVertexAttributeTangent,
@@ -73,6 +72,7 @@ class Model: Transformable {
     let assetAnimations = asset.animations.objects.compactMap {
       $0 as? MDLPackedJointAnimation
     }
+
     let animations
       = Dictionary(uniqueKeysWithValues: assetAnimations.map {
       ($0.name, AnimationComponent.load(animation: $0))
@@ -162,6 +162,8 @@ class Model: Transformable {
             index: MaterialBuffer.index
           )
         }
+
+        encoder.setCullMode(cullMode)
 
         encoder.drawIndexedPrimitives(
           type: .triangle,

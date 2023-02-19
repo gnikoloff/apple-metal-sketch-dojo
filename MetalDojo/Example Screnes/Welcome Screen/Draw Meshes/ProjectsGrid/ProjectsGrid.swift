@@ -11,14 +11,11 @@ import MetalKit
 
 class ProjectsGrid: VerletGrid {
   init(options: Options) {
-    let screenWidth = Float(options.drawableSize.width)
-    let screenHeight = Float(options.drawableSize.height)
-
     let fprojectsCount = Float(options.projects.count)
 
-    let idealColWidth = screenWidth / fprojectsCount
+    let idealColWidth = options.drawableSize.x * 0.4
     let colWidth = idealColWidth * 1
-    let rowHeight = colWidth * (screenHeight / screenWidth)
+    let rowHeight = colWidth * (options.drawableSize.y / options.drawableSize.x)
 
     let totalWidth = fprojectsCount * colWidth
     let totalHeight = fprojectsCount * rowHeight
@@ -28,26 +25,45 @@ class ProjectsGrid: VerletGrid {
       colWidth: colWidth,
       rowHeight: rowHeight,
       totalWidth: totalWidth,
-      totalHeight: totalHeight
+      totalHeight: totalHeight,
+      flipPositions: true //options.isIphone
     )
 
-//    makeHorizontalLayout(colsCount: projects.count + 1)
-    makeVerticalLayout(rowsCount: options.projects.count + 1, offset: float2(screenWidth / 2.8, 0))
+//    if options.isIphone {
+    makeIphoneLayout(rowsCount: 3, offset: float2(0, 0))
+//    } else {
+//      makeIpadLayout(rowsCount: options.projects.count + 1, offset: float2(screenWidth / 2.8, 0))
+//    }
     makePanels()
   }
 
   func makePanels() {
+    let dotsLayoutIphone: [[Dot]] = [
+      [dots[0], dots[1], dots[3], dots[4]],
+      [dots[1], dots[2], dots[4], dots[5]],
+      [dots[3], dots[4], dots[6], dots[7]],
+      [dots[4], dots[5], dots[7], dots[8]]
+    ]
     for i in 0 ..< options.projects.count {
       let project = options.projects[i]
+      let dotLayout = dotsLayoutIphone[i]
+      
+//      var dotLayout: [Dot]
+//      if options.isIphone {
+//        dotLayout = dotsLayoutIphone[i]
+//      } else {
+//        dotLayout = [
+//          dots[i * 2 + 0],
+//          dots[i * 2 + 1],
+//          dots[i * 2 + 3],
+//          dots[i * 2 + 2]
+//        ]
+//      }
+
       let panel = Panel(
         width: colWidth,
         height: rowHeight,
-        dots: [
-          dots[i * 2 + 0],
-          dots[i * 2 + 1],
-          dots[i * 2 + 3],
-          dots[i * 2 + 2]
-        ],
+        dots: dotLayout,
         name: project.name
       )
       panels.append(panel)
@@ -56,16 +72,15 @@ class ProjectsGrid: VerletGrid {
   }
 
   func updateVertices(deltaTime: Float) {
-    let allowInteractionWithVertices = !options.isProjectTransition && options.activeProjectName == nil
+    let screenWidth = Float()
+
+    let allowInteractionWithVertices = !options.isProjectTransition && options.isHomescreen
 
     for i in 0 ..< panels.count {
       let p = panels[i]
-      let vertices: [CGPoint] = p.dots.map { d in
-        return CGPoint(x: CGFloat(d.pos.x), y: CGFloat(d.pos.y))
-      }
-
       if allowInteractionWithVertices && options.mouseDown {
-        let isIntersect = options.mouse.isInsidePolygon(vertices: vertices)
+        var invMouse = options.mouse
+        let isIntersect = invMouse.isInside(polygon: p.polygon)
         if isIntersect {
           onProjectClicked(idx: i)
           return
@@ -81,6 +96,7 @@ class ProjectsGrid: VerletGrid {
       p.name == options.activeProjectName
     }!
     options.isProjectTransition = true
+    self.options.activeProjectName = WelcomeScreen.SCREEN_NAME
 
     for p in self.panels {
       p.beforeClose()
@@ -96,7 +112,6 @@ class ProjectsGrid: VerletGrid {
       },
       onComplete: {
         self.options.isProjectTransition = false
-        self.options.activeProjectName = nil
         for p in self.panels {
           p.afterClose()
           p.zIndex = 0
@@ -107,22 +122,19 @@ class ProjectsGrid: VerletGrid {
   }
 
   func onProjectClicked(idx: Int) {
-    options.resetMousePos()
 
     let p = panels[idx]
-
-    self.options.activeProjectName = p.name
 
     p.zIndex = 1
     sortedPanels = panels.sorted(by: { p0, p1 in
       p0.zIndex < p1.zIndex
     })
 
-    let screenWidth = Float(options.drawableSize.width)
-    let screenHeight = Float(options.drawableSize.height)
-
     for p in panels {
-      p.beforeExpand()
+      p.beforeExpand(
+        screenWidth: options.drawableSize.x,
+        screenHeight: options.drawableSize.y
+      )
     }
 
     options.isProjectTransition = true
@@ -134,17 +146,20 @@ class ProjectsGrid: VerletGrid {
         let factor = Float(time)
         p.expand(
           factor: factor,
-          screenWidth: screenWidth,
-          screenHeight: screenHeight
+          screenWidth: self.options.drawableSize.x,
+          screenHeight: self.options.drawableSize.y
         )
       },
       onComplete: {
         self.options.isProjectTransition = false
+        self.options.activeProjectName = p.name
         for p in self.panels {
           p.afterExpand()
         }
       }
     )
     tween.start()
+
+    options.resetMousePos()
   }
 }

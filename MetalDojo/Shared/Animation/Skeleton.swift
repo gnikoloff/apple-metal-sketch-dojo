@@ -34,9 +34,11 @@ class Skeleton {
     bindTransforms = skeleton.jointBindTransforms.float4x4Array
     restTransforms = skeleton.jointRestTransforms.float4x4Array
     parentIndices = Skeleton.getParentIndices(
-      jointPaths: jointPaths)
+      jointPaths: jointPaths
+    )
 
     let bufferSize = jointPaths.count * MemoryLayout<float4x4>.stride
+    print("bufferSize \(bufferSize)")
     jointMatrixPaletteBuffer =
       Renderer.device.makeBuffer(
         length: bufferSize,

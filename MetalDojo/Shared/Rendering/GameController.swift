@@ -19,9 +19,7 @@ final class GameController: NSObject {
   var elapsedTime: Double = 0
 
   var welcomeScreen: WelcomeScreen
-  var screens: [Demo] = []
-
-  var drawAllScreens = true
+  var demos: [String: Demo] = [:]
 
   init(metalView: MTKView, options: Options) {
     renderer = Renderer(metalView: metalView)
@@ -32,25 +30,20 @@ final class GameController: NSObject {
     metalView.delegate = self
     metalView.framebufferOnly = false
 
-    screens.append(PointsShadowmap(options: options))
-    screens.append(InfiniteSpace(options: options))
-    screens.append(AppleMetalScreen(options: options))
-    screens.append(CascadedShadowsMap(options: options))
-
-    Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { _ in
-//      self.drawAllScreens = false
-    }
+    demos[PointsShadowmap.SCREEN_NAME] = PointsShadowmap(options: options)
+    demos[InfiniteSpace.SCREEN_NAME] = InfiniteSpace(options: options)
+    demos[AppleMetalScreen.SCREEN_NAME] = AppleMetalScreen(options: options)
+    demos[CascadedShadowsMap.SCREEN_NAME] = CascadedShadowsMap(options: options)
   }
 }
 
 extension GameController: MTKViewDelegate {
   func mtkView(_ metalView: MTKView, drawableSizeWillChange size: CGSize) {
-    welcomeScreen.resize(view: metalView, size: size)
-    options.drawableSize = size
+    options.drawableSize = float2(x: Float(size.width), y: Float(size.height))
+    welcomeScreen.resize(view: metalView)
 
-    for screen in screens {
-      var screen = screen
-      screen.resize(view: metalView)
+    for (_, demo) in demos {
+      demo.resize(view: metalView)
     }
   }
   func draw(in view: MTKView) {
@@ -64,23 +57,33 @@ extension GameController: MTKViewDelegate {
 
     welcomeScreen.update(elapsedTime: felapsedTime, deltaTime: fdt)
 
-    if drawAllScreens {
-      for var screen in screens {
-        screen.update(elapsedTime: felapsedTime, deltaTime: fdt)
+    if options.isHomescreen {
+      for (_, demo) in demos {
+        demo.update(elapsedTime: felapsedTime, deltaTime: fdt)
       }
+    } else {
+      demos[options.activeProjectName]!.update(elapsedTime: felapsedTime, deltaTime: fdt)
     }
 
     guard let commandBuffer = Renderer.commandQueue.makeCommandBuffer() else {
       return
     }
 
-    if drawAllScreens {
-      for i in 0 ..< screens.count {
-        var screen = screens[i]
-        let panel = welcomeScreen.projectsGrid.panels[i]
-        screen.draw(in: view, commandBuffer: commandBuffer)
-        panel.texture = screen.outputTexture
+    if options.isHomescreen {
+      for (key, demo) in demos {
+        let panel = welcomeScreen.projectsGrid.panels.first { p in
+          p.name == key
+        }!
+        demo.draw(in: view, commandBuffer: commandBuffer)
+        panel.texture = demo.outputTexture
       }
+    } else {
+      let demo = demos[options.activeProjectName]!
+      demo.draw(in: view, commandBuffer: commandBuffer)
+      let panel = welcomeScreen.projectsGrid.panels.first { p in
+        p.name == options.activeProjectName
+      }!
+      panel.texture = demo.outputTexture
     }
 
     welcomeScreen.draw(in: view, commandBuffer: commandBuffer)
@@ -92,7 +95,6 @@ extension GameController: MTKViewDelegate {
     commandBuffer.commit()
 
     options.mouseDown = false
-
     InputController.shared.reset()
   }
 

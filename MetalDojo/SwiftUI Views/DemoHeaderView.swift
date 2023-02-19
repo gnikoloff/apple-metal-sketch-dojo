@@ -24,7 +24,6 @@ struct DemoHeaderView: View {
                 if let gameController = gameController {
                   gameController.dismissSingleProject()
                 }
-                options.activeProjectName = nil
               },
               label: {
                 Text("Back")

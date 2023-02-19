@@ -38,7 +38,7 @@ enum InfiniteSpacePipelineStates: PipelineStates {
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
     pipelineDescriptor.setColorAttachmentPixelFormatsForInfiniteSpace(colorPixelFormat)
-    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+    pipelineDescriptor.depthAttachmentPixelFormat = .depth16Unorm
     pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultLayout
     return Self.createPSO(descriptor: pipelineDescriptor)
   }
@@ -59,7 +59,7 @@ enum InfiniteSpacePipelineStates: PipelineStates {
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
     pipelineDescriptor.setColorAttachmentPixelFormatsForInfiniteSpace(colorPixelFormat)
-    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+    pipelineDescriptor.depthAttachmentPixelFormat = .depth16Unorm
     pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultLayout
     let attachment = pipelineDescriptor.colorAttachments[0]
     attachment?.isBlendingEnabled = true
@@ -90,7 +90,7 @@ enum InfiniteSpacePipelineStates: PipelineStates {
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
     pipelineDescriptor.setColorAttachmentPixelFormatsForInfiniteSpace(colorPixelFormat)
-    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+    pipelineDescriptor.depthAttachmentPixelFormat = .depth16Unorm
     return Self.createPSO(descriptor: pipelineDescriptor)
   }
 

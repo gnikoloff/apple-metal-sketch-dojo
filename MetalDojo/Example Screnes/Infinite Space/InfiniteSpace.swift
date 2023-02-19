@@ -13,7 +13,7 @@ import MetalKit
 final class InfiniteSpace: Demo {
   static let SCREEN_NAME = "Infinite Space"
 
-  static let POINT_LIGHTS_COUNT: Int = 200
+  static let POINT_LIGHTS_COUNT: Int = 300
   static let BOXES_COUNT: Int = 3000
 
   private static let BOX_SEGMENTS_COUNT = 10
@@ -38,6 +38,7 @@ final class InfiniteSpace: Demo {
 
   private var normalShininessBaseColorTexture: MTLTexture!
   private var positionSpecularColorTexture: MTLTexture!
+  private var depthTexture: MTLTexture!
 
   var options: Options
   private var cube: Cube
@@ -171,6 +172,7 @@ final class InfiniteSpace: Demo {
       segments: [1, 1, UInt32(Self.BOX_SEGMENTS_COUNT)],
       inwardNormals: true
     )
+    cube.cullMode = .none
     pointLightSphere = Sphere(size: 1)
 
     boidsSettings.boxSegmentsCount = UInt32(Self.BOX_SEGMENTS_COUNT)
@@ -181,7 +183,7 @@ final class InfiniteSpace: Demo {
   }
 
   func resize(view: MTKView) {
-    let size = options.drawableSize
+    let size = options.drawableSize.asCGSize()
     deferredSettings.viewportSize = SIMD2<UInt32>(UInt32(size.width), UInt32(size.height))
     normalShininessBaseColorTexture = TextureController.makeTexture(
       size: size,
@@ -195,6 +197,11 @@ final class InfiniteSpace: Demo {
       label: "G-Buffer Position + Specular Color Base Texture",
       storageMode: .memoryless
     )
+    depthTexture = TextureController.makeTexture(
+      size: size,
+      pixelFormat: .depth16Unorm,
+      label: "G-Buffer Depth Texture"
+    )
     outputDepthTexture = Self.createDepthOutputTexture(size: size)
     outputTexture = Self.createOutputTexture(
       size: size,
@@ -205,12 +212,11 @@ final class InfiniteSpace: Demo {
 
   func update(elapsedTime: Float, deltaTime: Float) {
     perspCamera.update(deltaTime: deltaTime)
-//    let accelometerData = InputController.shared.motion.accelerometerData
-//    let rotX = Float(accelometerData?.acceleration.x ?? 0) * 2
-//    let rotY = (Float(accelometerData?.acceleration.y ?? 0) + Float.pi / 4) * 0.2
-//    let camSpeed = deltaTime * 5
-//    perspCamera.position.x += (rotX - perspCamera.position.x) * camSpeed
-//    perspCamera.position.y += (rotY - perspCamera.position.y) * camSpeed
+
+    if options.activeProjectName == Self.SCREEN_NAME {
+      perspCamera.position.x += ((options.realMouse.x - options.drawableSize.x / 2) * 0.001 - perspCamera.position.x) * deltaTime
+//      perspCamera.position.y += ((options.realMouse.y - options.drawableSize.y / 2) * 0.001 - perspCamera.position.y) * deltaTime
+    }
 
     let camBufferPointer = cameraBuffer.contents().bindMemory(
       to: CameraUniforms.self,
@@ -310,7 +316,6 @@ final class InfiniteSpace: Demo {
   func drawSunLight(renderEncoder: MTLRenderCommandEncoder) {
     renderEncoder.pushDebugGroup("Sun Light")
     renderEncoder.setRenderPipelineState(sunLightPSO)
-    renderEncoder.setDepthStencilState(lightingDepthStencilState)
     renderEncoder.setFragmentBuffer(
       sunLightBuffer,
       offset: 0,
@@ -371,9 +376,12 @@ final class InfiniteSpace: Demo {
 //    let descriptor = view.currentRenderPassDescriptor!
     let descriptor = outputPassDescriptor
     descriptor.colorAttachments[0].texture = outputTexture
+
     descriptor.colorAttachments[0].storeAction = .store
+//    descriptor.colorAttachments[0].loadAction = .clear
+//    descriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
     descriptor.depthAttachment.texture = outputDepthTexture
-    descriptor.depthAttachment.storeAction = .store
+    descriptor.depthAttachment.storeAction = .dontCare
 
     let textures = [
       normalShininessBaseColorTexture,
@@ -385,11 +393,17 @@ final class InfiniteSpace: Demo {
       attachment?.loadAction = .clear
       attachment?.storeAction = .dontCare
     }
+    descriptor.depthAttachment.texture = depthTexture
+    descriptor.depthAttachment.storeAction = .dontCare
+
     guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
       return
     }
 
     drawGBufferRenderPass(renderEncoder: renderEncoder)
+
+    renderEncoder.setDepthStencilState(lightingDepthStencilState)
+
     drawSunLight(renderEncoder: renderEncoder)
     drawPointLight(renderEncoder: renderEncoder)
 

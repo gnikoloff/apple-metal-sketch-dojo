@@ -16,7 +16,7 @@ class Dot {
   var expandPos: float2 = .zero
 
   var gravity = float2(0, 4)
-  var friction = float2(repeating: 0.999)
+  var friction = float2(repeating: 0.9)
   var groundFriction = Float(0.7)
   var mass = Float(1)
 
@@ -48,16 +48,16 @@ extension Dot {
     pos += mix(float2.zero, (expandPos - pos) * 0.2, t: 1 - physicsMixFactor)
   }
 
-  func interactMouse(mousePos: CGPoint) {
-    let mousePos = mousePos * (1 + (1 - WelcomeScreen.cameraZoom))
+  func interactMouse(mousePos: float2) -> Bool {
+    let mousePos = mousePos
     let delta = targetPosPhysics - mousePos
     let dist = delta.magSq()
-    let magr: Float = 200 * 200 * (1 + (1 - WelcomeScreen.cameraZoom))
+    let magr: Float = 200 * 200
     if dist < magr {
-      targetPosPhysics += (float2(Float(mousePos.x), Float(mousePos.y)) - targetPosPhysics) * 0.6
-//      let f = delta.normalizeTo(length: 1 - (dist / magr)) * 100 * (1 + (1 - WelcomeScreen.cameraZoom))
-//      targetPosPhysics += f
+      targetPosPhysics += (mousePos - targetPosPhysics) * 0.6
+      return true
     }
+    return false
   }
 
   func constrain(size: CGSize) {
@@ -71,7 +71,7 @@ extension Dot {
     if w == 0 || h == 0 {
       return
     }
-    let bounce: Float = 0.9
+    let bounce: Float = 1
 //
     if targetPosPhysics.x > w {
       let velX = (targetPosPhysics.x - oldPos.x) * bounce
@@ -94,11 +94,6 @@ extension Dot {
       targetPosPhysics.y = t
       oldPos.y = targetPosPhysics.y + velY
     }
-  }
-
-  func isInside(polygon: [Dot]) -> Bool {
-    let poss = polygon.map { $0.pos }
-    return self.pos.isInside(polygon: poss)
   }
 
 }

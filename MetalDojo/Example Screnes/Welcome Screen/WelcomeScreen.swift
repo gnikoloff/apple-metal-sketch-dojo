@@ -5,23 +5,20 @@
 //  Created by Georgi Nikoloff on 02.01.23.
 //
 
+// swiftlint:disable identifier_name
+
 import MetalKit
 
 class WelcomeScreen {
-//  private let label = "Welcome Screen Render Pass"
-
+  static var SCREEN_NAME = "Welcome Screen"
   static var cameraZoom: Float = 1
 
   private var pipelineState: MTLRenderPipelineState
-  private var debugAABBPipelineState: MTLRenderPipelineState
   private var orthoCameraUniforms = CameraUniforms()
   private var orthoCamera = OrthographicCamera()
-  private var options: Options
 
-  var infoGrid: InfoGrid
+  var options: Options
   var projectsGrid: ProjectsGrid
-  private var screenWidth: Float = 1
-  private var screenHeight: Float = 1
 
   init(options: Options) {
     self.options = options
@@ -29,27 +26,20 @@ class WelcomeScreen {
       try pipelineState = WelcomeScreen_PipelineStates.createWelcomeScreenPSO(
         colorPixelFormat: Renderer.viewColorFormat
       )
-      try debugAABBPipelineState = WelcomeScreen_PipelineStates.createDebugAABBBoxes()
     } catch {
       fatalError(error.localizedDescription)
     }
 
     projectsGrid = ProjectsGrid(options: options)
-    infoGrid = InfoGrid(options: options)
 
     orthoCamera.position.z -= 1
   }
 
-  func resize(view: MTKView, size: CGSize) {
-    let fwidth = Float(size.width)
-    let fheight = Float(size.height)
+  func resize(view: MTKView) {
     orthoCamera.left = 0
-    orthoCamera.right = fwidth
-    orthoCamera.bottom = fheight
+    orthoCamera.right = options.drawableSize.x
+    orthoCamera.bottom = options.drawableSize.y
     orthoCamera.top = 0
-    screenWidth = fwidth
-    screenHeight = fheight
-
   }
 
   func updateUniforms() {
@@ -60,12 +50,6 @@ class WelcomeScreen {
 
   func update(elapsedTime: Float, deltaTime: Float) {
     projectsGrid.updateVertices(deltaTime: deltaTime)
-    projectsGrid.testCollisionWith(grid: infoGrid)
-    infoGrid.updateVerlet(deltaTime: deltaTime)
-    Self.cameraZoom = simd_clamp(Float(options.pinchFactor), 0, 1)
-//    orthoCamera.zoom = Self.cameraZoom
-    orthoCamera.right = screenWidth * (1 + (1 - Self.cameraZoom))
-    orthoCamera.bottom = screenHeight * (1 + (1 - Self.cameraZoom))
   }
 
   func draw(in view: MTKView, commandBuffer: MTLCommandBuffer) {
@@ -81,13 +65,7 @@ class WelcomeScreen {
     updateUniforms()
 
     renderEncoder.setRenderPipelineState(pipelineState)
-
-    infoGrid.draw(encoder: renderEncoder, cameraUniforms: orthoCameraUniforms)
     projectsGrid.draw(encoder: renderEncoder, cameraUniforms: orthoCameraUniforms)
-
-    renderEncoder.setRenderPipelineState(debugAABBPipelineState)
-    projectsGrid.drawDebug(encoder: renderEncoder, cameraUniforms: orthoCameraUniforms)
-    infoGrid.drawDebug(encoder: renderEncoder, cameraUniforms: orthoCameraUniforms)
 
     renderEncoder.endEncoding()
   }

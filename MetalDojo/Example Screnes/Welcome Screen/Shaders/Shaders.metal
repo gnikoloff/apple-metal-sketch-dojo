@@ -29,7 +29,7 @@ vertex VertexOut vertex_welcomeScreen(const VertexIn in [[stage_in]],
 }
 
 fragment float4 fragment_welcomeScreen(VertexOut in [[stage_in]],
-                                       texture2d<float> projectTexture [[texture(ProjectTexture)]]) {
+                                       texture2d<float> texture [[texture(ProjectTexture)]]) {
 //  uint texWidth = projectTexture.get_width();
 //  uint texHeight = projectTexture.get_height();
 //  float2 imageSize = float2(texWidth, texHeight);
@@ -37,8 +37,8 @@ fragment float4 fragment_welcomeScreen(VertexOut in [[stage_in]],
   constexpr sampler s(mip_filter::linear,
                       mag_filter::linear,
                       min_filter::linear);
-  return projectTexture.sample(s, in.uv);
-//  return float4(in.uv, 0.0, 1.0);
+  return texture.sample(s, in.uv);
+  return float4(in.uv, 0.0, 1.0);
 }
 
 fragment float4 fragment_welcomeDebugAABB(VertexOut in [[stage_in]]) {

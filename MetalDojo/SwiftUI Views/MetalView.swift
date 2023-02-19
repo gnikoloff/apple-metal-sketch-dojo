@@ -13,8 +13,8 @@ struct MetalView: View {
   @State private var previousTranslation = CGSize.zero
   @State private var previousScroll: CGFloat = 1
   @State private var scale: CGFloat = 1
-  @State private var lastScale: CGFloat = 1
   @State private var isDemoInfoOpen: Bool = false
+  @State private var isInfoOverlayOpen: Bool = false
   @State private var metalView = MTKView()
   @State private var gameController: GameController?
 
@@ -28,9 +28,13 @@ struct MetalView: View {
           width: value.translation.width - previousTranslation.width,
           height: value.translation.height - previousTranslation.height)
         previousTranslation = value.translation
-        options.mouse = value.location
-        options.mouse.x *= dpr
-        options.mouse.y *= dpr
+        options.mouse = value.location.asFloat2()
+        options.realMouse = value.location.asFloat2()
+        let fdpr = Float(dpr)
+        options.mouse.x *= fdpr
+        options.mouse.y *= fdpr
+        options.realMouse.x *= fdpr
+        options.realMouse.y *= fdpr
         InputController.shared.touchLocation = value.location
       }
       .onEnded { _ in
@@ -39,15 +43,15 @@ struct MetalView: View {
       }
     let pinchGesture = MagnificationGesture()
       .onChanged { val in
-        let delta = val / self.lastScale
-        lastScale = val
-        let newScale = scale * delta
-        scale = newScale
-        options.pinchFactor = scale
+        let diff = val - scale
+        if diff < 0 {
+          InputController.shared.pinchFactors[options.activeProjectName]! += 0.1
+        } else {
+          InputController.shared.pinchFactors[options.activeProjectName]! -= 0.1
+        }
+        scale = val
       }
-      .onEnded { _ in
-        self.lastScale = 1
-      }
+      
     let simultGesture = SimultaneousGesture(dragGesture, pinchGesture)
     return ZStack {
       GeometryReader { geometry in
@@ -57,7 +61,7 @@ struct MetalView: View {
         )
           .ignoresSafeArea(.all)
           .onAppear {
-            options.drawableSize = geometry.size * dpr
+            options.drawableSize = (geometry.size * dpr).asFloat2()
             gameController = GameController(
               metalView: metalView,
               options: options
@@ -65,14 +69,17 @@ struct MetalView: View {
           }
           .gesture(simultGesture)
           .onClickGesture { point in
-            options.mouse = point
-            options.mouse.x *= dpr
-            options.mouse.y *= dpr
+            options.mouse = point.asFloat2()
+            options.realMouse = point.asFloat2()
+            let fdpr = Float(dpr)
+            options.mouse.x *= fdpr
+            options.mouse.y *= fdpr
 
             options.mouseDown = true
           }
       }
       if let activeProjectName = options.activeProjectName,
+         !options.isHomescreen,
          !options.isProjectTransition {
         DemoHeaderView(
           activeProjectName: activeProjectName,
@@ -86,6 +93,9 @@ struct MetalView: View {
           )
         }
       }
+
+      MainHeaderView(isInfoOverlayOpen: $isInfoOverlayOpen)
+      InfoOverlayView(isInfoOverlayOpen: $isInfoOverlayOpen)
     }
   }
 }

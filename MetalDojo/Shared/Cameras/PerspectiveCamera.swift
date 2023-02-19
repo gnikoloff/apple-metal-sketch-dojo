@@ -37,7 +37,7 @@ struct PerspectiveCamera: Camera {
     return float4x4(eye: position, center: target, up: up)
   }
 
-  mutating func update(deltaTime: Float) {
+  mutating func update(deltaTime: Float, pinchFactor: Float? = 0) {
 //    let input = InputController.shared
 //    let scrollSensitivity = Settings.mouseScrollSensitivity
 //    distance -= (input.mouseScroll.x + input.mouseScroll.y)

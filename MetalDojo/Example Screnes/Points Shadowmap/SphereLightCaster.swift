@@ -55,6 +55,7 @@ struct SphereLightCaster: Transformable, PipelineStates {
     sphere = Sphere(size: 0.1435)
     centerSphere = Sphere(size: 0.05)
 
+
     shadowCamUniformBuffer = Renderer.device.makeBuffer(
       length: MemoryLayout<PointsShadowmap_View>.stride * SphereLightCaster.SHADOW_CUBE_SIDES
     )!
@@ -81,6 +82,7 @@ struct SphereLightCaster: Transformable, PipelineStates {
   mutating func drawCubeShadow(commandBuffer: MTLCommandBuffer, idx: Int, shadowCastersBuffer: MTLBuffer) {
     shadowPerspCamera.position = position
     shadowPerspCamera.rotation = rotation
+    
     let lightPos = shadowPerspCamera.position
 
     for i in 0 ..< SphereLightCaster.SHADOW_CUBE_SIDES {

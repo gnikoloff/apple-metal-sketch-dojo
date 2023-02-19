@@ -52,7 +52,7 @@ struct OrthographicCamera: Camera {
 //    aspect = size.width / size.height  
   }
 
-  mutating func update(deltaTime: Float) {
+  mutating func update(deltaTime: Float, pinchFactor: Float? = 0) {
 //    let transform = updateInput(deltaTime: deltaTime)
 //    position += transform.position
 //    let input = InputController.shared

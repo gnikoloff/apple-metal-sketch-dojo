@@ -30,7 +30,7 @@ final class Renderer {
 
     metalView.device = device
 //    metalView.clearColor = MTLClearColor(red: 1, green: 0.2, blue: 0.2, alpha: 1)
-    metalView.depthStencilPixelFormat = .depth32Float
+    metalView.depthStencilPixelFormat = .depth16Unorm
 
     mtkView(metalView, drawableSizeWillChange: metalView.bounds.size)
   }

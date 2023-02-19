@@ -21,8 +21,14 @@ class AnimationComponent {
 
   static func load(animation: MDLPackedJointAnimation) -> AnimationClip {
     let name = URL(string: animation.name)?.lastPathComponent ?? "Untitled"
+    print(name)
     let animationClip = AnimationClip(name: name)
     var duration: Float = 0
+
+    let translationsAsFloat3s = animation.translations.float3Array
+    let scalesAsFloat3s = animation.scales.float3Array
+    let quatsAsFloatss = animation.rotations.floatQuaternionArray
+
     for (jointIndex, jointPath) in animation.jointPaths.enumerated() {
       var jointAnimation = Animation()
 
@@ -32,14 +38,11 @@ class AnimationComponent {
         duration < Float(lastTime) {
         duration = Float(lastTime)
       }
-      jointAnimation.rotations =
-        rotationTimes.enumerated().map { index, time in
+      jointAnimation.rotations = rotationTimes.enumerated().map { index, time in
         let startIndex = index * animation.jointPaths.count
         let endIndex = startIndex + animation.jointPaths.count
         let array =
-          Array(
-            animation.rotations
-              .floatQuaternionArray[startIndex..<endIndex])
+          Array(quatsAsFloatss[startIndex..<endIndex])
         return Keyframe(
           time: Float(time),
           value: array[jointIndex])
@@ -56,7 +59,7 @@ class AnimationComponent {
         let startIndex = index * animation.jointPaths.count
         let endIndex = startIndex + animation.jointPaths.count
 
-        let array = Array(animation.translations.float3Array[startIndex..<endIndex])
+        let array = Array(translationsAsFloat3s[startIndex..<endIndex])
         return Keyframe(
           time: Float(time),
           value: array[jointIndex])
@@ -72,7 +75,7 @@ class AnimationComponent {
         let startIndex = index * animation.jointPaths.count
         let endIndex = startIndex + animation.jointPaths.count
 
-        let array = Array(animation.scales.float3Array[startIndex..<endIndex])
+        let array = Array(scalesAsFloat3s[startIndex..<endIndex])
         return Keyframe(
           time: Float(time),
           value: array[jointIndex])

@@ -15,12 +15,16 @@ struct DemoInfoView: View {
 
   var body: some View {
     ZStack {
-      VStack {
-        Text(activeProjectName)
-          .font(.title)
-          .padding(.bottom)
-        Text(.init(demosDescriptions[activeProjectName]!))
-          .frame(maxWidth: 400)
+      ScrollView {
+        VStack {
+          Text(activeProjectName)
+            .font(.title)
+            .padding(.bottom)
+          Text(.init(demosDescriptions[activeProjectName]!))
+            .frame(maxWidth: 400)
+        }
+        .padding(.top, 42)
+        .padding(.bottom, 42)
       }
       VStack {
         HStack {

@@ -238,8 +238,8 @@
             filePath = "MetalDojo/Example Screnes/Points Shadowmap/PointsShadowmap.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "178"
-            endingLineNumber = "178"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
             landmarkName = "draw(in:commandBuffer:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -270,8 +270,8 @@
             filePath = "MetalDojo/Shared/Rendering/GameController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "69"
-            endingLineNumber = "69"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
             landmarkName = "draw(in:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -302,8 +302,8 @@
             filePath = "MetalDojo/Shared/Rendering/GameController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
+            startingLineNumber = "96"
+            endingLineNumber = "96"
             landmarkName = "draw(in:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -318,9 +318,9 @@
             filePath = "MetalDojo/Shared/Cameras/ArcballCamera.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "58"
-            endingLineNumber = "58"
-            landmarkName = "update(deltaTime:)"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
+            landmarkName = "update(deltaTime:pinchFactor:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -350,8 +350,8 @@
             filePath = "MetalDojo/Example Screnes/Points Shadowmap/PointsShadowmap.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "188"
-            endingLineNumber = "188"
+            startingLineNumber = "189"
+            endingLineNumber = "189"
             landmarkName = "draw(in:commandBuffer:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -382,8 +382,8 @@
             filePath = "MetalDojo/Example Screnes/Points Shadowmap/PointsShadowmap.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "187"
-            endingLineNumber = "187"
+            startingLineNumber = "188"
+            endingLineNumber = "188"
             landmarkName = "draw(in:commandBuffer:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -430,25 +430,9 @@
             filePath = "MetalDojo/Example Screnes/Welcome Screen/Draw Meshes/ProjectsGrid/ProjectsGrid.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "129"
-            endingLineNumber = "129"
+            startingLineNumber = "141"
+            endingLineNumber = "141"
             landmarkName = "onProjectClicked(idx:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "FFAAAF72-380F-49CC-9047-6C50C71C3168"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MetalDojo/Shared/Rendering/GameController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
-            landmarkName = "mtkView(_:drawableSizeWillChange:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -462,8 +446,8 @@
             filePath = "MetalDojo/Example Screnes/Cascaded Shadow Maps/CascadedShadowsMap.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "325"
-            endingLineNumber = "325"
+            startingLineNumber = "332"
+            endingLineNumber = "332"
             landmarkName = "updateUniforms()"
             landmarkType = "7">
          </BreakpointContent>
@@ -478,10 +462,10 @@
             filePath = "MetalDojo/Example Screnes/Cascaded Shadow Maps/CascadedShadowsMap.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "308"
-            endingLineNumber = "308"
-            landmarkName = "CascadedShadowsMap"
-            landmarkType = "3">
+            startingLineNumber = "315"
+            endingLineNumber = "315"
+            landmarkName = "update(elapsedTime:deltaTime:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -494,8 +478,8 @@
             filePath = "MetalDojo/Example Screnes/Cascaded Shadow Maps/CascadedShadowsMap.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "362"
-            endingLineNumber = "362"
+            startingLineNumber = "369"
+            endingLineNumber = "369"
             landmarkName = "updateUniforms()"
             landmarkType = "7">
          </BreakpointContent>
@@ -510,10 +494,10 @@
             filePath = "MetalDojo/Example Screnes/Cascaded Shadow Maps/CascadedShadowsMap.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "307"
-            endingLineNumber = "307"
-            landmarkName = "CascadedShadowsMap"
-            landmarkType = "3">
+            startingLineNumber = "314"
+            endingLineNumber = "314"
+            landmarkName = "update(elapsedTime:deltaTime:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -542,8 +526,8 @@
             filePath = "MetalDojo/Example Screnes/Cascaded Shadow Maps/CascadedShadowsMap.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "235"
-            endingLineNumber = "235"
+            startingLineNumber = "247"
+            endingLineNumber = "247"
             landmarkName = "getLightSpaceMatrix(idx:nearPlane:farPlane:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -622,8 +606,8 @@
             filePath = "MetalDojo/Shared/Rendering/Model.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
             landmarkName = "init(name:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -638,8 +622,8 @@
             filePath = "MetalDojo/Shared/Rendering/Model.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
             landmarkName = "init(name:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -686,8 +670,8 @@
             filePath = "MetalDojo/Shared/Rendering/Model.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
             landmarkName = "init(name:)"
             landmarkType = "7">
             <Locations>
@@ -727,102 +711,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "7FEC84A7-C47A-4747-B14B-5E3B2D06A7A8"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MetalDojo/Shared/Rendering/Submesh.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "26"
-            endingLineNumber = "26"
-            landmarkName = "property(with:callback:)"
-            landmarkType = "9">
-            <Locations>
-               <Location
-                  uuid = "7FEC84A7-C47A-4747-B14B-5E3B2D06A7A8 - 426bda71a21bc5fe"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "property(with: __C.MDLMaterialSemantic, callback: (__C.MTLTexture) -&gt; ()) -&gt; ()"
-                  moduleName = "MetalDojo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/georginikoloff/Code/MetalDojo/MetalDojo/Shared/Rendering/Submesh.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "26"
-                  endingLineNumber = "26"
-                  offsetFromSymbolStart = "112">
-               </Location>
-               <Location
-                  uuid = "7FEC84A7-C47A-4747-B14B-5E3B2D06A7A8 - 426bda71a21bc5fe"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "property(with: __C.MDLMaterialSemantic, callback: (__C.MTLTexture) -&gt; ()) -&gt; ()"
-                  moduleName = "MetalDojo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/georginikoloff/Code/MetalDojo/MetalDojo/Shared/Rendering/Submesh.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "26"
-                  endingLineNumber = "26"
-                  offsetFromSymbolStart = "156">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "4CEFDD08-EDA6-4A57-8CE3-E1415285D9BF"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MetalDojo/Shared/Textures/TextureController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "137"
-            endingLineNumber = "137"
-            landmarkName = "loadTexture(texture:callback:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "9C29D222-C844-4ED4-9628-E9083C75D36B"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MetalDojo/Shared/Textures/TextureController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "147"
-            endingLineNumber = "147"
-            landmarkName = "loadTexture(texture:callback:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "D5FD46FD-20BD-4A10-A244-9AD11E7CFD40"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MetalDojo/Shared/Rendering/Submesh.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
-            landmarkName = "property(with:callback:)"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "9FDEE00D-E04A-424A-8824-083CD980DED6"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -846,9 +734,9 @@
             filePath = "MetalDojo/Example Screnes/Welcome Screen/Draw Meshes/ProjectsGrid/Panel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "147"
-            endingLineNumber = "147"
-            landmarkName = "updateInterleavedArray()"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
+            landmarkName = "updateInterleavedArray(uvx:uvy:uvw:uvh:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -866,6 +754,54 @@
             endingLineNumber = "7"
             landmarkName = "unknown"
             landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DB0AFF6C-410D-4AC2-9F57-66D635DDECAD"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MetalDojo/Example Screnes/Welcome Screen/Draw Meshes/InfoGrid/InfoGrid.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "makePanels()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C19FF784-DF3D-4603-8628-6D686666372D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MetalDojo/Example Screnes/Welcome Screen/Draw Meshes/InfoGrid/InfoGrid.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
+            landmarkName = "makePanels()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "928EF8D0-4275-4153-8A06-E721015F211F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MetalDojo/Example Screnes/Welcome Screen/Draw Meshes/ProjectsGrid/Panel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
+            landmarkName = "updateInterleavedArray(uvx:uvy:uvw:uvh:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

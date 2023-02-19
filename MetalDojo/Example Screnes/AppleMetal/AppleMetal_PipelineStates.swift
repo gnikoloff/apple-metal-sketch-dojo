@@ -39,7 +39,7 @@ enum AppleMetalPipelineStates: PipelineStates {
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
     pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
-    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+    pipelineDescriptor.depthAttachmentPixelFormat = .depth16Unorm
     pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultLayout
     return Self.createPSO(descriptor: pipelineDescriptor)
   }

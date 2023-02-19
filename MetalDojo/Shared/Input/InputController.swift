@@ -24,6 +24,14 @@ class InputController {
   var mouseScroll = Point.zero
   var touchLocation = CGPoint()
 
+  var pinchFactors: [String: Float] = [
+    WelcomeScreen.SCREEN_NAME: 1,
+    PointsShadowmap.SCREEN_NAME: 0,
+    InfiniteSpace.SCREEN_NAME: 1,
+    AppleMetalScreen.SCREEN_NAME: 1,
+    CascadedShadowsMap.SCREEN_NAME: 1
+  ]
+
   var motion: CMMotionManager
   var gyroOffsets: [Float] = [0, 0, 0]
 

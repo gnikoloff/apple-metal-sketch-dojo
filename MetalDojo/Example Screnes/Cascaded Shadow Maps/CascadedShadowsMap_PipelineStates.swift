@@ -76,7 +76,7 @@ enum CascadedShadowsMap_PipelineStates: PipelineStates {
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
     pipelineDescriptor.colorAttachments[0].pixelFormat = Renderer.viewColorFormat
-    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+    pipelineDescriptor.depthAttachmentPixelFormat = .depth16Unorm
     pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultLayout
     return Self.createPSO(descriptor: pipelineDescriptor)
   }
@@ -111,7 +111,7 @@ enum CascadedShadowsMap_PipelineStates: PipelineStates {
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
     pipelineDescriptor.colorAttachments[0].pixelFormat = Renderer.viewColorFormat
-    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+    pipelineDescriptor.depthAttachmentPixelFormat = .depth16Unorm
     pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultMTKLayout
     return Self.createPSO(descriptor: pipelineDescriptor)
   }
@@ -148,7 +148,7 @@ enum CascadedShadowsMap_PipelineStates: PipelineStates {
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
     pipelineDescriptor.colorAttachments[0].pixelFormat = Renderer.viewColorFormat
-    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+    pipelineDescriptor.depthAttachmentPixelFormat = .depth16Unorm
     pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultLayout
     return Self.createPSO(descriptor: pipelineDescriptor)
   }
@@ -196,7 +196,7 @@ enum CascadedShadowsMap_PipelineStates: PipelineStates {
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
     pipelineDescriptor.colorAttachments[0].pixelFormat = Renderer.viewColorFormat
-    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+    pipelineDescriptor.depthAttachmentPixelFormat = .depth16Unorm
     return Self.createPSO(descriptor: pipelineDescriptor)
   }
 }

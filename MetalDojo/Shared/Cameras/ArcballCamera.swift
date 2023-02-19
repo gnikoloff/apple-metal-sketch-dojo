@@ -11,7 +11,7 @@ import simd
 enum Settings {
   static var rotationSpeed: Float { 2.0 }
   static var translationSpeed: Float { 3.0 }
-  static var mouseScrollSensitivity: Float { 0.1 }
+  static var dollySensitivity: Float { 0.9 }
   static var mousePanSensitivity: Float { 0.008 }
 }
 
@@ -30,13 +30,19 @@ struct ArcballCamera: Camera {
       aspect: aspect)
   }
 
-  let minDistance: Float = 0.0
-  let maxDistance: Float = 1000
+  var origDistance: Float?
+  var distance: Float = 2.5
+  var minDistance: Float = 1
+  var maxDistance: Float = 1000
 
   var target: float3 = [0, 0, 0]
-  var distance: Float = 2.5
   var minPolarAngle: Float = -.pi / 2
   var maxPolarAngle: Float = .pi / 2
+
+  init(distance: Float) {
+    self.distance = distance
+    self.origDistance = distance
+  }
 
   mutating func update(size: CGSize) {
     aspect = Float(size.width / size.height)
@@ -52,14 +58,13 @@ struct ArcballCamera: Camera {
     return matrix
   }
 
-  mutating func update(deltaTime: Float) {
+  mutating func update(deltaTime: Float, pinchFactor: Float? = 0) {
     let input = InputController.shared
-    let scrollSensitivity = Settings.mouseScrollSensitivity
 
-    distance -= (input.mouseScroll.x + input.mouseScroll.y)
-      * scrollSensitivity
+    distance = origDistance! + pinchFactor!
     distance = min(maxDistance, distance)
     distance = max(minDistance, distance)
+
     if input.leftMouseDown {
       let sensitivity = Settings.mousePanSensitivity
       rotation.x += input.mouseDelta.y * sensitivity

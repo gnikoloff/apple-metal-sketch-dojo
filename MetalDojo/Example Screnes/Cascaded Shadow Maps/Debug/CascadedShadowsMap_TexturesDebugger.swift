@@ -11,12 +11,10 @@ import MetalKit
 
 final class CascadedShadowsMap_TexturesDebugger {
   private let debugCSMTexturesPipelineState: MTLRenderPipelineState
-  private let debugArcballCameraViewPipelineState: MTLRenderPipelineState
 
   private var cascadesCount: Int
 
   weak var shadowsDepthTexture: MTLTexture?
-  weak var debugCamTexture: MTLTexture?
 
   var floorPipelineDebugState: MTLRenderPipelineState
   var cubesPipelineDebugState: MTLRenderPipelineState
@@ -28,10 +26,6 @@ final class CascadedShadowsMap_TexturesDebugger {
       try debugCSMTexturesPipelineState = CascadedShadowsMap_PipelineStates.makeCSMVertexlessPipelineState(
         isTextureDebug: true,
         isCsmTextureDebug: true
-      )
-      try debugArcballCameraViewPipelineState = CascadedShadowsMap_PipelineStates.makeCSMVertexlessPipelineState(
-        isTextureDebug: true,
-        isCamTextureDebug: true
       )
       try floorPipelineDebugState = CascadedShadowsMap_PipelineStates.createMeshPSO(
         usesDebugCamera: true
@@ -53,9 +47,6 @@ final class CascadedShadowsMap_TexturesDebugger {
     if shadowsDepthTexture != nil {
       renderEncoder.setFragmentTexture(shadowsDepthTexture, index: ShadowTexture.index)
     }
-    if debugCamTexture != nil {
-      renderEncoder.setFragmentTexture(debugCamTexture, index: CamDebugTexture.index)
-    }
 
     renderEncoder.setRenderPipelineState(debugCSMTexturesPipelineState)
     renderEncoder.drawPrimitives(
@@ -63,13 +54,6 @@ final class CascadedShadowsMap_TexturesDebugger {
       vertexStart: 0,
       vertexCount: 6,
       instanceCount: cascadesCount
-    )
-
-    renderEncoder.setRenderPipelineState(debugArcballCameraViewPipelineState)
-    renderEncoder.drawPrimitives(
-      type: .triangle,
-      vertexStart: 0,
-      vertexCount: 6
     )
   }
 

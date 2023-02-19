@@ -31,7 +31,7 @@ final class PointsShadowmap: Demo {
   private var sphere1: SphereLightCaster
 
   private var perspCameraUniforms = CameraUniforms()
-  private var perspCamera = ArcballCamera()
+  private var perspCamera = ArcballCamera(distance: 1.5)
 
   lazy private var shadowCastersUniformsBuffer: MTLBuffer = {
     var light0 = PointsShadowmap_Light()
@@ -74,7 +74,6 @@ final class PointsShadowmap: Demo {
       fatalError(error.localizedDescription)
     }
 
-    perspCamera.distance = 3
     perspCamera.update(deltaTime: 0)
 
     depthStencilState = Self.buildDepthStencilState()
@@ -87,13 +86,12 @@ final class PointsShadowmap: Demo {
   }
 
   func resize(view: MTKView) {
-    let size = options.drawableSize
     outputTexture = Self.createOutputTexture(
-      size: options.drawableSize,
+      size: options.drawableSize.asCGSize(),
       label: "PointsShadowmap output texture"
     )
-    outputDepthTexture = Self.createDepthOutputTexture(size: size)
-    self.perspCamera.update(size: size)
+    outputDepthTexture = Self.createDepthOutputTexture(size: options.drawableSize.asCGSize())
+    self.perspCamera.update(size: options.drawableSize.asCGSize())
   }
 
   func updateUniforms() {
@@ -106,7 +104,8 @@ final class PointsShadowmap: Demo {
 
   func update(elapsedTime: Float, deltaTime: Float) {
     if isActive() {
-      perspCamera.update(deltaTime: deltaTime)
+      let pinchFactor = InputController.shared.pinchFactors[PointsShadowmap.SCREEN_NAME]
+      perspCamera.update(deltaTime: deltaTime, pinchFactor: pinchFactor)
     }
     perspCameraUniforms.viewMatrix = perspCamera.viewMatrix
     perspCameraUniforms.projectionMatrix = perspCamera.projectionMatrix
@@ -160,11 +159,13 @@ final class PointsShadowmap: Demo {
 
     let descriptor = outputPassDescriptor
     descriptor.colorAttachments[0].texture = outputTexture
+//    descriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1)
     descriptor.colorAttachments[0].loadAction = .clear
     descriptor.colorAttachments[0].storeAction = .store
     descriptor.depthAttachment.texture = outputDepthTexture
     descriptor.depthAttachment.storeAction = .dontCare
-//    descriptor.depthAttachment.texture?.pixelFormat = .depth16Unorm
+
+//    let descriptor = view.currentRenderPassDescriptor!
 
     guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
       return

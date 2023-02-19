@@ -15,7 +15,7 @@ constant bool is_csm_texture_visualize_debug [[function_constant(11)]];
 constant bool is_cam_texture_visualize_debug [[function_constant(12)]];
 constant bool is_light_space_frustum_vertices_debug [[function_constant(13)]];
 
-constant float DEBUG_CSM_TEX_SCALE = 0.2;
+constant float DEBUG_CSM_TEX_SCALE = 0.13;
 constant float DEBUG_CAM_TEX_SCALE = 0.3;
 constant float DEBUG_TEX_SCALE_BORDER_PADDING = 0.01;
 

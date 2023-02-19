@@ -10,23 +10,19 @@
 import MetalKit
 
 final class CascadedShadowsMap: Demo {
-  static let SCREEN_NAME = "Animated Model"
-
-  internal var isFirstRender = true
+  static let SCREEN_NAME = "Animated Scene"
 
   private static let CUBES_COUNT = 20
   private static let CUBES_POS_RADIUS: Float = 400
   private static let CUBES_SIZE = float3(10, 200, 10)
   private static let FLOOR_SIZE: Float = 1000
   private static let CAMERA_NEAR: Float = 1
-  private static let CAMERA_FAR: Float = 1000
+  private static let CAMERA_FAR: Float = 1500
   private static let SHADOW_RESOLUTION = 1024
   private static let SHADOW_CASCADE_LEVELS_COUNT = 3
   private static let SHADOW_CASCADE_ZMULT: Float = 4
-  private static var SHADOW_CASCADE_LEVELS: [Float] = [200, 450, 750, 1000]
+  private static var SHADOW_CASCADE_LEVELS: [Float] = [200, 670, 1250, 1500]
   private static var SUN_POSITION = float3(700, 600, 500)
-  private static let MODEL_SCALE: Float = 0.5
-  private static let MODEL_OFFSET_Y: Float = 0
 
   var options: Options
   var outputTexture: MTLTexture!
@@ -47,18 +43,19 @@ final class CascadedShadowsMap: Demo {
   private let cubesPipelineState: MTLRenderPipelineState
   private let modelPipelineState: MTLRenderPipelineState
 
-  private var camDebugTexture: MTLTexture!
-  private var camDebugDepthTexture: MTLTexture!
-
   private var lightMatrices: [float4x4] = []
   private var debugCamera = PerspectiveCamera()
-  private var arcballCamera = ArcballCamera()
+  private var arcballCamera = ArcballCamera(distance: 300)
   private var cube: Cube
   private var floor: Plane
   private var texturesDebugger: CascadedShadowsMap_TexturesDebugger
   private var cameraFrustumDebuger: CascadedShadowsMap_CameraDebugger
 
-  private var model = Model(name: "Arcade_Fighter_1")
+  private var models: [Model] = [
+    Model(name: "Animated_T-Rex_Dinosaur_Biting_Attack_Loop"),
+    Model(name: "Junonia_Lemonias_Butterfly_Rigged"),
+    Model(name: "Animated_3D_Tyrannosaurus_Rex_Dinosaur_Loop")
+  ]
 
   lazy private var supportsLayerSelection: Bool = {
     Renderer.device.supportsFamily(MTLGPUFamily.mac2) || Renderer.device.supportsFamily(MTLGPUFamily.apple5)
@@ -201,10 +198,10 @@ final class CascadedShadowsMap: Demo {
     debugCamPassDescriptor = MTLRenderPassDescriptor()
     depthStencilState = Self.buildDepthStencilState()
 
-    arcballCamera.distance = 300
-    arcballCamera.rotation = float3(0, -.pi, .pi * 2)
+    arcballCamera.position = float3(300, 300, 300)
     arcballCamera.maxPolarAngle = -0.1
-    arcballCamera.update(deltaTime: 0)
+    arcballCamera.maxDistance = 700
+//    arcballCamera.update(deltaTime: 0)
     debugCamera.position = float3(500, 500, 50)
 
     cube = Cube(size: Self.CUBES_SIZE)
@@ -212,6 +209,21 @@ final class CascadedShadowsMap: Demo {
     floor = Plane(size: float3(Self.FLOOR_SIZE, Self.FLOOR_SIZE, 1))
 
     floor.rotation.x = .pi * 0.5
+
+    models[0].scale = 1
+    models[0].position.x = -130
+    models[0].position.z = 140
+
+    models[1].scale = 1
+    models[1].rotation.y = -.pi / 2
+    models[1].position.x = 70
+    models[1].position.y = 100
+    models[1].position.z = -70
+    models[1].cullMode = .none
+
+    models[2].scale = 1
+    models[2].rotation.y = -.pi * 0.2
+    models[2].position.x = 300
 
     texturesDebugger = CascadedShadowsMap_TexturesDebugger(
       cascadesCount: Self.SHADOW_CASCADE_LEVELS_COUNT
@@ -276,32 +288,27 @@ final class CascadedShadowsMap: Demo {
   }
 
   func resize(view: MTKView) {
-    let size = options.drawableSize
+    let size = options.drawableSize.asCGSize()
     outputDepthTexture = Self.createDepthOutputTexture(size: size)
     outputTexture = Self.createOutputTexture(
       size: size,
       label: "Cascaded Shadow Maps Output texture"
     )
-    camDebugTexture = TextureController.makeTexture(
-      size: size,
-      pixelFormat: Renderer.viewColorFormat,
-      label: "Debug Arcball Camera texture"
-    )
-    camDebugDepthTexture = TextureController.makeTexture(
-      size: size,
-      pixelFormat: .depth32Float,
-      label: "Debug Arcball Camera Depth texture"
-    )
+
     arcballCamera.update(size: size)
     debugCamera.update(size: size)
   }
 
   func update(elapsedTime: Float, deltaTime: Float) {
     if isActive() {
-      arcballCamera.update(deltaTime: deltaTime)
+      let pinchFactor = InputController.shared.pinchFactors[CascadedShadowsMap.SCREEN_NAME]! * 80
+      arcballCamera.update(deltaTime: deltaTime, pinchFactor: pinchFactor)
+      print(arcballCamera.distance)
     }
 
-    model.update(deltaTime: deltaTime)
+    for model in models {
+      model.update(deltaTime: deltaTime)
+    }
 
     time = elapsedTime
   }
@@ -400,121 +407,25 @@ final class CascadedShadowsMap: Demo {
     floor.draw(renderEncoder: shadowRenderEncoder)
 
     shadowRenderEncoder.setRenderPipelineState(modelShadowPipelineState)
-    model.scale = Self.MODEL_SCALE
-    model.position.y = Self.MODEL_OFFSET_Y
-    model.instanceCount = Self.SHADOW_CASCADE_LEVELS_COUNT
-    model.draw(encoder: shadowRenderEncoder, useTextures: true)
+
+    for model in models {
+      model.instanceCount = Self.SHADOW_CASCADE_LEVELS_COUNT
+      model.draw(encoder: shadowRenderEncoder, useTextures: true)
+    }
 
     shadowRenderEncoder.endEncoding()
   }
 
-  func drawDebugScene(in view: MTKView, commandBuffer: MTLCommandBuffer) {
-    guard let descriptor = view.currentRenderPassDescriptor else {
-      fatalError("Can't create descriptor")
-    }
-    guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
-      return
-    }
-    renderEncoder.setVertexBuffer(
-      cameraBuffer,
-      offset: 0,
-      index: CameraUniformsBuffer.index
-    )
-    renderEncoder.setVertexBuffer(
-      debugCameraBuffer,
-      offset: 0,
-      index: DebugCameraBuffer.index
-    )
-    renderEncoder.setVertexBuffer(
-      lightMatricesBuffer,
-      offset: 0,
-      index: LightsMatricesBuffer.index
-    )
-    renderEncoder.setVertexBuffer(
-      cubesInstancesBuffer,
-      offset: 0,
-      index: CubeInstancesBuffer.index
-    )
-    renderEncoder.setVertexBuffer(
-      settingsBuffer,
-      offset: 0,
-      index: SettingsBuffer.index
-    )
-
-    renderEncoder.setFragmentBuffer(
-      cameraBuffer,
-      offset: 0,
-      index: CameraUniformsBuffer.index
-    )
-    renderEncoder.setFragmentBuffer(
-      meshMaterialBuffer,
-      offset: 0,
-      index: MaterialBuffer.index
-    )
-    renderEncoder.setFragmentBuffer(
-      lightsBuffer,
-      offset: 0,
-      index: LightBuffer.index
-    )
-    renderEncoder.setFragmentBuffer(
-      settingsBuffer,
-      offset: 0,
-      index: SettingsBuffer.index
-    )
-    renderEncoder.setFragmentBuffer(
-      lightMatricesBuffer,
-      offset: 0,
-      index: LightsMatricesBuffer.index
-    )
-    renderEncoder.setFragmentTexture(
-      shadowDepthTexture,
-      index: ShadowTextures.index
-    )
-
-    renderEncoder.setDepthStencilState(depthStencilState)
-
-    renderEncoder.setRenderPipelineState(texturesDebugger.floorPipelineDebugState)
-    floor.instanceCount = 1
-    floor.draw(renderEncoder: renderEncoder)
-
-    renderEncoder.setRenderPipelineState(texturesDebugger.cubesPipelineDebugState)
-    cube.instanceCount = Self.CUBES_COUNT
-    cube.draw(renderEncoder: renderEncoder)
-
-    renderEncoder.setRenderPipelineState(texturesDebugger.modelPipelineDebugState)
-    model.scale = Self.MODEL_SCALE
-    model.position.y = Self.MODEL_OFFSET_Y
-    model.instanceCount = 1
-    model.draw(encoder: renderEncoder, useTextures: true)
-
-    cameraFrustumDebuger.draw(camera: arcballCamera, renderEncoder: renderEncoder)
-    texturesDebugger.shadowsDepthTexture = shadowDepthTexture
-    texturesDebugger.debugCamTexture = camDebugTexture
-    texturesDebugger.draw(renderEncoder: renderEncoder)
-
-    renderEncoder.endEncoding()
-  }
-
   func drawMainScene(in view: MTKView, commandBuffer: MTLCommandBuffer) {
-    var descriptor: MTLRenderPassDescriptor
+//    let descriptor = view.currentRenderPassDescriptor!
 
-    if (isDebugMode) {
-      debugCamPassDescriptor.colorAttachments[0].texture = camDebugTexture
-      debugCamPassDescriptor.colorAttachments[0].loadAction = .clear
-      debugCamPassDescriptor.colorAttachments[0].storeAction = .store
-      debugCamPassDescriptor.depthAttachment.texture = camDebugDepthTexture
-      debugCamPassDescriptor.depthAttachment.loadAction = .clear
-      debugCamPassDescriptor.depthAttachment.storeAction = .store
-      descriptor = debugCamPassDescriptor
-    } else {
-      descriptor = outputPassDescriptor
-      descriptor.colorAttachments[0].texture = outputTexture
-      descriptor.colorAttachments[0].loadAction = .clear
-      descriptor.colorAttachments[0].storeAction = .store
-      descriptor.depthAttachment.texture = outputDepthTexture
-      descriptor.depthAttachment.storeAction = .dontCare
-//      descriptor = view.currentRenderPassDescriptor!
-    }
+    let descriptor = outputPassDescriptor
+    descriptor.colorAttachments[0].texture = outputTexture
+    descriptor.colorAttachments[0].loadAction = .clear
+//    descriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
+    descriptor.colorAttachments[0].storeAction = .store
+    descriptor.depthAttachment.texture = outputDepthTexture
+    descriptor.depthAttachment.storeAction = .dontCare
 
     guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
       return
@@ -574,10 +485,6 @@ final class CascadedShadowsMap: Demo {
     renderEncoder.setFragmentTexture(
       shadowDepthTexture,
       index: ShadowTextures.index
-    )
-    renderEncoder.setFragmentTexture(
-      camDebugTexture,
-      index: CamDebugTexture.index
     )
 
     renderEncoder.setDepthStencilState(depthStencilState)
@@ -591,10 +498,28 @@ final class CascadedShadowsMap: Demo {
     cube.draw(renderEncoder: renderEncoder)
 
     renderEncoder.setRenderPipelineState(modelPipelineState)
-    model.scale = Self.MODEL_SCALE
-    model.position.y = Self.MODEL_OFFSET_Y
-    model.instanceCount = 1
-    model.draw(encoder: renderEncoder, useTextures: true)
+    for model in models {
+      model.instanceCount = 1
+      model.draw(encoder: renderEncoder, useTextures: true)
+    }
+
+    renderEncoder.setRenderPipelineState(texturesDebugger.floorPipelineDebugState)
+    floor.instanceCount = 1
+    floor.draw(renderEncoder: renderEncoder)
+
+    renderEncoder.setRenderPipelineState(texturesDebugger.cubesPipelineDebugState)
+    cube.instanceCount = Self.CUBES_COUNT
+    cube.draw(renderEncoder: renderEncoder)
+
+    renderEncoder.setRenderPipelineState(texturesDebugger.modelPipelineDebugState)
+
+    for model in models {
+      model.instanceCount = 1
+      model.draw(encoder: renderEncoder, useTextures: true)
+    }
+
+    texturesDebugger.shadowsDepthTexture = shadowDepthTexture
+    texturesDebugger.draw(renderEncoder: renderEncoder)
 
     renderEncoder.endEncoding()
   }
@@ -602,9 +527,6 @@ final class CascadedShadowsMap: Demo {
   func draw(in view: MTKView, commandBuffer: MTLCommandBuffer) {
     updateUniforms()
     drawShadowScene(commandBuffer: commandBuffer)
-    if isDebugMode {
-      drawDebugScene(in: view, commandBuffer: commandBuffer)
-    }
     drawMainScene(in: view, commandBuffer: commandBuffer)
   }
 }

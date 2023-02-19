@@ -32,7 +32,7 @@ struct FPCamera: Camera {
     float4x4(rotation: rotation)).inverse
   }
 
-  mutating func update(deltaTime: Float) {
+  mutating func update(deltaTime: Float, pinchFactor: Float? = 0) {
 //    let transform = updateInput(deltaTime: deltaTime)
 //    rotation += transform.rotation
 //    position += transform.position

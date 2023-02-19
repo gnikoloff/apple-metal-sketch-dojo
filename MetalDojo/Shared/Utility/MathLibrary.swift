@@ -10,6 +10,7 @@
 // swiftlint:disable comma
 
 import simd
+import UIKit
 import CoreGraphics
 
 typealias float2 = SIMD2<Float>
@@ -29,7 +30,6 @@ extension Float {
 
 // MARK: - float4
 extension float4x4 {
-  
   // MARK: - Translate
   init(translation: float3) {
     let matrix = float4x4(
@@ -204,6 +204,24 @@ extension float2 {
   static func - (lhs: float2, rhs: CGPoint) -> float2 {
     float2(lhs.x - Float(rhs.x), lhs.y - Float(rhs.y))
   }
+  func asCGSize() -> CGSize {
+    return CGSize(width: CGFloat(self.x), height: CGFloat(self.y))
+  }
+  func isInside(polygon: [float2]) -> Bool {
+    var pJ = polygon.last!
+
+    let x = Float(self.x)
+    let y = Float(self.y)
+
+    for pI in polygon {
+      if (((pI.y >= y) != (pJ.y >= y)) && (x <= (pJ.x - pI.x) * (y - pI.y) / (pJ.y - pI.y) + pI.x)) {
+        return true
+      }
+      pJ = pI
+    }
+
+    return false
+  }
   func dist(to: float2) -> Float {
     let dx = to.x - self.x
     let dy = to.y - self.y
@@ -223,17 +241,6 @@ extension float2 {
       val *= mag
     }
     return val
-  }
-  func isInside(polygon: [float2]) -> Bool {
-    var pJ = polygon.last!
-    var contains = false
-    for pI in polygon {
-      if (((pI.y >= self.y) != (pJ.y >= self.y)) && (self.x <= (pJ.x - pI.x) * (self.y - pI.y) / (pJ.y - pI.y) + pI.x)) {
-            contains = !contains
-      }
-      pJ=pI
-    }
-    return contains
   }
 }
 
@@ -267,3 +274,37 @@ extension float4 {
     self = [Float(d.x), Float(d.y), Float(d.z), Float(d.w)]
   }
 }
+
+// MARK: - CGSize
+extension CGSize {
+  func asFloat2() -> float2 {
+    float2(x: Float(self.width), y: Float(self.height))
+  }
+}
+
+extension CGSize {
+  static func *= (lhs: CGSize, rhs: CGFloat) -> CGSize {
+    CGSize(width: lhs.width * rhs, height: lhs.height * rhs)
+  }
+  static func * (lhs: CGSize, rhs: CGFloat) -> CGSize {
+    CGSize(width: lhs.width * rhs, height: lhs.height * rhs)
+  }
+}
+
+
+// MARK: - CGPoint
+extension CGPoint {
+  func asFloat2() -> float2 {
+    float2(x: Float(self.x), y: Float(self.y))
+  }
+  static func + (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
+    CGPoint(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
+  }
+  static func += (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
+    CGPoint(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
+  }
+  static func * (lhs: CGPoint, rhs: Float) -> CGPoint {
+    CGPoint(x: lhs.x * CGFloat(rhs), y: lhs.y * CGFloat(rhs))
+  }
+}
+

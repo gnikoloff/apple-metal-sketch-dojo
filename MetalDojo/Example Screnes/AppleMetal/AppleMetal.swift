@@ -38,7 +38,7 @@ class AppleMetalScreen: Demo {
   private let updatePointsPipelineState: MTLComputePipelineState
   private var finalTexture: MTLTexture!
 
-  private var perspCamera = ArcballCamera()
+  private var perspCamera = ArcballCamera(distance: 0.5)
   private var mesh = Cube(size: float3(repeating: 0.005), inwardNormals: false)
   private var lightSphere = Sphere(size: 0.0125)
 
@@ -133,6 +133,8 @@ class AppleMetalScreen: Demo {
 
     let frustumWidth: Float = 0.71875 * 2.5
     let frustumHeight = frustumWidth / perspCamera.aspect
+//    perspCamera.rotation.y = .pi
+    perspCamera.minDistance = 0.1
     perspCamera.distance = frustumHeight * 0.5 / tan(perspCamera.fov * 0.5)
     perspCamera.update(deltaTime: 0)
 
@@ -182,7 +184,7 @@ class AppleMetalScreen: Demo {
   }
 
   func resize(view: MTKView) {
-    let size = options.drawableSize
+    let size = options.drawableSize.asCGSize()
     perspCamera.update(size: size)
     postFXTexture = TextureController.makeTexture(
       size: size,
@@ -205,7 +207,8 @@ class AppleMetalScreen: Demo {
 
   func update(elapsedTime: Float, deltaTime: Float) {
     if isActive() {
-      perspCamera.update(deltaTime: deltaTime)
+      let pinchFactor = InputController.shared.pinchFactors[AppleMetalScreen.SCREEN_NAME]
+      perspCamera.update(deltaTime: deltaTime, pinchFactor: pinchFactor)
     }
 
     let cameraBufferPointer = cameraBuffer
@@ -348,6 +351,7 @@ class AppleMetalScreen: Demo {
     let descriptor = outputPassDescriptor
     descriptor.colorAttachments[0].texture = outputTexture
     descriptor.colorAttachments[0].loadAction = .clear
+//    descriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 1)
     descriptor.colorAttachments[0].storeAction = .store
     descriptor.depthAttachment.texture = outputDepthTexture
     descriptor.depthAttachment.storeAction = .dontCare

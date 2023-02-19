@@ -10,7 +10,7 @@ import MetalKit
 
 enum PointsShadowmapPipelineStates: PipelineStates {
   static func createShadowPSO() throws -> MTLRenderPipelineState {
-    let fnConstants = Self.getFnConstants(rendersToTargetArray: true)
+    let fnConstants = Self.getFnConstants(rendersToTargetArray: true, rendersDepth: true)
     let vertexFunction = try Renderer.library?.makeFunction(
       name: "pointsShadowmap_vertex",
       constantValues: fnConstants
@@ -71,7 +71,7 @@ enum PointsShadowmapPipelineStates: PipelineStates {
     pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
 
     pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultLayout
-    pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+    pipelineDescriptor.depthAttachmentPixelFormat = .depth16Unorm
 
     return createPSO(descriptor: pipelineDescriptor)
   }

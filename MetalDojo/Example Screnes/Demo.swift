@@ -16,9 +16,9 @@ protocol Demo: PipelineStates {
   var outputDepthTexture: MTLTexture! { get set }
   var outputPassDescriptor: MTLRenderPassDescriptor { get set }
   func isActive() -> Bool
-  mutating func resize(view: MTKView)
-  mutating func update(elapsedTime: Float, deltaTime: Float)
-  mutating func draw(in view: MTKView, commandBuffer: MTLCommandBuffer)
+  func resize(view: MTKView)
+  func update(elapsedTime: Float, deltaTime: Float)
+  func draw(in view: MTKView, commandBuffer: MTLCommandBuffer)
 }
 
 extension Demo {
@@ -42,7 +42,7 @@ extension Demo {
   static func createDepthOutputTexture(size: CGSize) -> MTLTexture {
     return TextureController.makeTexture(
       size: size,
-      pixelFormat: .depth32Float,
+      pixelFormat: .depth16Unorm,
       label: "Output depth texture"
     )!
   }

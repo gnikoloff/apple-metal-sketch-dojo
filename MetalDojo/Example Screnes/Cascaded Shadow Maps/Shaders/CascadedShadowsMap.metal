@@ -71,7 +71,7 @@ float ShadowCalculate(float3 worldPos,
   } else if (layer == 1) {
     bias *= 1 / (settings.cascadePlaneDistances[layer] * 0.9);
   } else if (layer == 2) {
-    bias *= 1 / (settings.cascadePlaneDistances[layer] * 0.7);
+    bias *= 1 / (settings.cascadePlaneDistances[layer] * 0.35);
   } else {
     bias *= 1 / (cameraUniforms.far * 0.5);
   }
@@ -88,7 +88,7 @@ float ShadowCalculate(float3 worldPos,
     for(int y = -1; y <= 1; ++y) {
       float2 uv = projCoords.xy + float2(x, y) * texelSize;
       float pcfDepth = shadowTextures.sample(s, uv, layer);
-      shadow += (currentDepth - bias) < pcfDepth ? 1 : 0.5;
+      shadow += (currentDepth - bias) < pcfDepth ? 1 : 0.2;
     }
   }
   shadow /= 9.0;
@@ -107,6 +107,7 @@ vertex VertexOut cascadedShadows_vertex(const VertexIn in [[stage_in]],
                                           constant float4x4 *jointMatrices [[buffer(JointBuffer), function_constant(has_skeleton)]]) {
   float4 position = in.position;
   float4 normal = float4(in.normal, 0);
+  VertexOut out;
   if (has_skeleton) {
     float4 weights = in.weights;
     ushort4 joints = in.joints;
@@ -120,6 +121,9 @@ vertex VertexOut cascadedShadows_vertex(const VertexIn in [[stage_in]],
         weights.y * (jointMatrices[joints.y] * normal) +
         weights.z * (jointMatrices[joints.z] * normal) +
         weights.w * (jointMatrices[joints.w] * normal);
+
+    out.worldTangent = uniforms.normalMatrix * in.tangent;
+    out.worldBitangent = uniforms.normalMatrix * in.bitangent;
   }
 
   float4 worldPos = uniforms.modelMatrix * position;
@@ -128,7 +132,6 @@ vertex VertexOut cascadedShadows_vertex(const VertexIn in [[stage_in]],
     worldPos = uniforms.modelMatrix * instanceMatrix * position;
   }
 
-  VertexOut out;
   out.normal = uniforms.normalMatrix * normal.xyz;
   out.uv = in.uv;
   out.worldPos = worldPos.xyz;
@@ -153,8 +156,6 @@ vertex VertexOut cascadedShadows_vertex(const VertexIn in [[stage_in]],
                       worldPos;
     }
   }
-//  out.worldTangent = uniforms.normalMatrix * in.tangent;
-//  out.worldBitangent = uniforms.normalMatrix * in.bitangent;
 
   if (renders_to_texture_array) {
     out.layer = uid;
@@ -262,6 +263,7 @@ fragment float4 fragment_pbr(VertexOut in [[stage_in]],
       in.normal) * normalValue;
   }
   normal = normalize(normal);
+//  return float4(normal, 1);
 
   float3 worldPos = in.worldPos;
 //  return float4(worldPos, 1);

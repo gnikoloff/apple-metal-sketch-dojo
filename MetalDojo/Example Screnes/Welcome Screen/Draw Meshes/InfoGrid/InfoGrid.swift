@@ -10,26 +10,31 @@
 import MetalKit
 
 class InfoGrid: VerletGrid {
-  init(options: Options) {
-    let screenWidth = Float(options.drawableSize.width)
-    let screenHeight = Float(options.drawableSize.height)
-    let idealColWidth = screenWidth / 3
-    let colWidth = idealColWidth * 0.8
-    let rowHeight = colWidth * (screenHeight / screenWidth)
 
-    let totalWidth = 3 * colWidth
+  let texture = try? TextureController.loadTexture(filename: "poster")
+
+  init(options: Options) {
+    let colWidth = options.drawableSize.x * 0.24
+    let rowHeight = colWidth * (options.drawableSize.y / options.drawableSize.x) * 1.3
+
+    let totalWidth = colWidth
     let totalHeight = 3 * rowHeight
+    
     super.init(
       options: options,
       colWidth: colWidth,
       rowHeight: rowHeight,
       totalWidth: totalWidth,
-      totalHeight: totalHeight
+      totalHeight: totalHeight,
+      stechedOutUVs: true,
+      flipPositions: false
     )
 
-    makeVerticalLayout(rowsCount: 4)
+    makeIpadLayout(rowsCount: 4)
     makePanels()
+
   }
+
   func makePanels() {
     for i in 0 ..< 3 {
       let panel = Panel(
@@ -47,4 +52,13 @@ class InfoGrid: VerletGrid {
     }
     sortedPanels = panels
   }
+
+  override func draw(encoder: MTLRenderCommandEncoder, cameraUniforms: CameraUniforms) {
+//    print("render")
+    for panel in sortedPanels {
+      panel.texture = texture
+      panel.draw(encoder: encoder, cameraUniforms: cameraUniforms)
+    }
+  }
+
 }

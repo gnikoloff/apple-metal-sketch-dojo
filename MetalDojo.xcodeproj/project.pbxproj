@@ -15,6 +15,11 @@
 		FF08FB092981893E00689272 /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF08FB082981893E00689272 /* Plane.swift */; };
 		FF09791429958720003E3EA0 /* CascadedShadowsMap_TexturesDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF09791329958720003E3EA0 /* CascadedShadowsMap_TexturesDebugger.swift */; };
 		FF097916299643A6003E3EA0 /* CascadedShadowsMap_CameraDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF097915299643A6003E3EA0 /* CascadedShadowsMap_CameraDebugger.swift */; };
+		FF1485B2299E41C200A2A2A8 /* MainHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1485B1299E41C200A2A2A8 /* MainHeaderView.swift */; };
+		FF1485BC299EA8FE00A2A2A8 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop.usdz in Resources */ = {isa = PBXBuildFile; fileRef = FF1485BB299EA8FE00A2A2A8 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop.usdz */; };
+		FF1485BE299EBCE300A2A2A8 /* Junonia_Lemonias_Butterfly_Rigged.usdz in Resources */ = {isa = PBXBuildFile; fileRef = FF1485BD299EBCE300A2A2A8 /* Junonia_Lemonias_Butterfly_Rigged.usdz */; };
+		FF1485C0299EC86A00A2A2A8 /* Animated_3D_Tyrannosaurus_Rex_Dinosaur_Loop.usdz in Resources */ = {isa = PBXBuildFile; fileRef = FF1485BF299EC86A00A2A2A8 /* Animated_3D_Tyrannosaurus_Rex_Dinosaur_Loop.usdz */; };
+		FF1485C2299ED58900A2A2A8 /* InfoOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1485C1299ED58900A2A2A8 /* InfoOverlayView.swift */; };
 		FF15619F29608791007D14E4 /* PointsShadowmap.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF15619E29608791007D14E4 /* PointsShadowmap.swift */; };
 		FF1561A129608D49007D14E4 /* PointsShadowmap_PipelineStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1561A029608D49007D14E4 /* PointsShadowmap_PipelineStates.swift */; };
 		FF1B99EE299BBB22009306FD /* VerletGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1B99ED299BBB22009306FD /* VerletGrid.swift */; };
@@ -40,7 +45,6 @@
 		FF51997E29794B5E00F25BBF /* AppleMetal_Forward.metal in Sources */ = {isa = PBXBuildFile; fileRef = FF51997D29794B5E00F25BBF /* AppleMetal_Forward.metal */; };
 		FF63BD4B29642E0400A08F8F /* Cube.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF63BD4A29642E0400A08F8F /* Cube.swift */; };
 		FF63BD4D29642F1000A08F8F /* Sphere.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF63BD4C29642F1000A08F8F /* Sphere.swift */; };
-		FF649E7D2997F89000FC61F8 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop-old.usdz in Resources */ = {isa = PBXBuildFile; fileRef = FF649E7C2997F89000FC61F8 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop-old.usdz */; };
 		FF6BD4F62965A72200EB957B /* PerspectiveCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6BD4F52965A72200EB957B /* PerspectiveCamera.swift */; };
 		FF6BD4F82965A74000EB957B /* FPCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6BD4F72965A74000EB957B /* FPCamera.swift */; };
 		FF6BD4FA2965A74E00EB957B /* ArcballCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6BD4F92965A74E00EB957B /* ArcballCamera.swift */; };
@@ -55,13 +59,9 @@
 		FF76AC7B29819F86005A93D1 /* Mesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF76AC7A29819F86005A93D1 /* Mesh.swift */; };
 		FF76AC7D2981A0B0005A93D1 /* MDLVertexDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF76AC7C2981A0B0005A93D1 /* MDLVertexDescriptor.swift */; };
 		FF88380E2990034600F62A9D /* CascadedShadowsMap_Debug.metal in Sources */ = {isa = PBXBuildFile; fileRef = FF88380D2990034600F62A9D /* CascadedShadowsMap_Debug.metal */; };
-		FF8BDA4C297F14A000C0787C /* CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8BDA4B297F14A000C0787C /* CGSize.swift */; };
-		FF9489FE299807400033EE4A /* city.usdz in Resources */ = {isa = PBXBuildFile; fileRef = FF9489FD299807400033EE4A /* city.usdz */; };
 		FF979BBF295DA1DE00021E5D /* Tween.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF979BBE295DA1DE00021E5D /* Tween.swift */; };
 		FF979BC1295DAA9D00021E5D /* EaseFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF979BC0295DAA9D00021E5D /* EaseFunc.swift */; };
-		FF979BC3295DC22C00021E5D /* RangeReplaceableCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF979BC2295DC22C00021E5D /* RangeReplaceableCollection.swift */; };
 		FF979BC6295DC36000021E5D /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF979BC5295DC36000021E5D /* Project.swift */; };
-		FF9FED42299949940037C8E1 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop.usdz in Resources */ = {isa = PBXBuildFile; fileRef = FF9FED41299949940037C8E1 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop.usdz */; };
 		FFB840AF295B243B00B9338D /* MetalDojoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840AE295B243B00B9338D /* MetalDojoApp.swift */; };
 		FFB840B3295B243B00B9338D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFB840B2295B243B00B9338D /* Assets.xcassets */; };
 		FFB840B6295B243B00B9338D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFB840B5295B243B00B9338D /* Preview Assets.xcassets */; };
@@ -80,7 +80,6 @@
 		FFB840EA295B639E00B9338D /* ProjectsGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840E9295B639E00B9338D /* ProjectsGrid.swift */; };
 		FFB840EC295B78C000B9338D /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840EB295B78C000B9338D /* Options.swift */; };
 		FFB840F1295B82B300B9338D /* MTLVertexDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840F0295B82B300B9338D /* MTLVertexDescriptor.swift */; };
-		FFB840F5295C90FA00B9338D /* CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840F4295C90FA00B9338D /* CGPoint.swift */; };
 		FFB840F7295CA97900B9338D /* ClickGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840F6295CA97900B9338D /* ClickGesture.swift */; };
 		FFB840F9295CA99800B9338D /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB840F8295CA99800B9338D /* ViewExtension.swift */; };
 		FFB99DAC2982ED3300F97DDB /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB99DAB2982ED3300F97DDB /* Animation.swift */; };
@@ -92,10 +91,6 @@
 		FFC323C52979603900770BA3 /* ShaderHelpers.metal in Sources */ = {isa = PBXBuildFile; fileRef = FFC323C42979603900770BA3 /* ShaderHelpers.metal */; };
 		FFC323C72979611600770BA3 /* Lighting.metal in Sources */ = {isa = PBXBuildFile; fileRef = FFC323C62979611600770BA3 /* Lighting.metal */; };
 		FFC8DC962979EB03003138F6 /* AppleMetal_Compute.metal in Sources */ = {isa = PBXBuildFile; fileRef = FFC8DC952979EB03003138F6 /* AppleMetal_Compute.metal */; };
-		FFD37E08299961E200D43E45 /* my_animated_tyrannosaurus_rex.usdz in Resources */ = {isa = PBXBuildFile; fileRef = FFD37E07299961E200D43E45 /* my_animated_tyrannosaurus_rex.usdz */; };
-		FFD37E0A2999625100D43E45 /* Arcade_Fighter_1.usdz in Resources */ = {isa = PBXBuildFile; fileRef = FFD37E092999625100D43E45 /* Arcade_Fighter_1.usdz */; };
-		FFD37E0C2999662500D43E45 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop-compressed.usdz in Resources */ = {isa = PBXBuildFile; fileRef = FFD37E0B2999662500D43E45 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop-compressed.usdz */; };
-		FFD37E0E299967B600D43E45 /* Barricade_-_Transformers_Earth_Wars.usdz in Resources */ = {isa = PBXBuildFile; fileRef = FFD37E0D299967B600D43E45 /* Barricade_-_Transformers_Earth_Wars.usdz */; };
 		FFE5330A2985A87F00A55407 /* FunctionConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE533092985A87F00A55407 /* FunctionConstants.swift */; };
 		FFE5330C2985AAB400A55407 /* WelcomeScreen_PipelineStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE5330B2985AAB400A55407 /* WelcomeScreen_PipelineStates.swift */; };
 		FFFE7BBE297AD0D00089EC37 /* WelcomeScreen_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFE7BBD297AD0D00089EC37 /* WelcomeScreen_Extensions.swift */; };
@@ -111,7 +106,11 @@
 		FF08FB082981893E00689272 /* Plane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
 		FF09791329958720003E3EA0 /* CascadedShadowsMap_TexturesDebugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CascadedShadowsMap_TexturesDebugger.swift; sourceTree = "<group>"; };
 		FF097915299643A6003E3EA0 /* CascadedShadowsMap_CameraDebugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CascadedShadowsMap_CameraDebugger.swift; sourceTree = "<group>"; };
-		FF097917299658DE003E3EA0 /* CascadedShadowsMap_ArgumentBuffers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CascadedShadowsMap_ArgumentBuffers.h; sourceTree = "<group>"; };
+		FF1485B1299E41C200A2A2A8 /* MainHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHeaderView.swift; sourceTree = "<group>"; };
+		FF1485BB299EA8FE00A2A2A8 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = "Animated_T-Rex_Dinosaur_Biting_Attack_Loop.usdz"; sourceTree = "<group>"; };
+		FF1485BD299EBCE300A2A2A8 /* Junonia_Lemonias_Butterfly_Rigged.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = Junonia_Lemonias_Butterfly_Rigged.usdz; sourceTree = "<group>"; };
+		FF1485BF299EC86A00A2A2A8 /* Animated_3D_Tyrannosaurus_Rex_Dinosaur_Loop.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = Animated_3D_Tyrannosaurus_Rex_Dinosaur_Loop.usdz; sourceTree = "<group>"; };
+		FF1485C1299ED58900A2A2A8 /* InfoOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoOverlayView.swift; sourceTree = "<group>"; };
 		FF15619E29608791007D14E4 /* PointsShadowmap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsShadowmap.swift; sourceTree = "<group>"; };
 		FF1561A029608D49007D14E4 /* PointsShadowmap_PipelineStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsShadowmap_PipelineStates.swift; sourceTree = "<group>"; };
 		FF1B99ED299BBB22009306FD /* VerletGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerletGrid.swift; sourceTree = "<group>"; };
@@ -140,7 +139,6 @@
 		FF51997D29794B5E00F25BBF /* AppleMetal_Forward.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = AppleMetal_Forward.metal; sourceTree = "<group>"; };
 		FF63BD4A29642E0400A08F8F /* Cube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cube.swift; sourceTree = "<group>"; };
 		FF63BD4C29642F1000A08F8F /* Sphere.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sphere.swift; sourceTree = "<group>"; };
-		FF649E7C2997F89000FC61F8 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop-old.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = "Animated_T-Rex_Dinosaur_Biting_Attack_Loop-old.usdz"; sourceTree = "<group>"; };
 		FF6BD4F52965A72200EB957B /* PerspectiveCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerspectiveCamera.swift; sourceTree = "<group>"; };
 		FF6BD4F72965A74000EB957B /* FPCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPCamera.swift; sourceTree = "<group>"; };
 		FF6BD4F92965A74E00EB957B /* ArcballCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArcballCamera.swift; sourceTree = "<group>"; };
@@ -157,13 +155,9 @@
 		FF76AC7A29819F86005A93D1 /* Mesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mesh.swift; sourceTree = "<group>"; };
 		FF76AC7C2981A0B0005A93D1 /* MDLVertexDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDLVertexDescriptor.swift; sourceTree = "<group>"; };
 		FF88380D2990034600F62A9D /* CascadedShadowsMap_Debug.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = CascadedShadowsMap_Debug.metal; sourceTree = "<group>"; };
-		FF8BDA4B297F14A000C0787C /* CGSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGSize.swift; sourceTree = "<group>"; };
-		FF9489FD299807400033EE4A /* city.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = city.usdz; sourceTree = "<group>"; };
 		FF979BBE295DA1DE00021E5D /* Tween.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tween.swift; sourceTree = "<group>"; };
 		FF979BC0295DAA9D00021E5D /* EaseFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EaseFunc.swift; sourceTree = "<group>"; };
-		FF979BC2295DC22C00021E5D /* RangeReplaceableCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeReplaceableCollection.swift; sourceTree = "<group>"; };
 		FF979BC5295DC36000021E5D /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
-		FF9FED41299949940037C8E1 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; name = "Animated_T-Rex_Dinosaur_Biting_Attack_Loop.usdz"; path = "../../../../../../Documents/Animated_T-Rex_Dinosaur_Biting_Attack_Loop.usdz"; sourceTree = "<group>"; };
 		FFB840AB295B243B00B9338D /* MetalDojo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetalDojo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFB840AE295B243B00B9338D /* MetalDojoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalDojoApp.swift; sourceTree = "<group>"; };
 		FFB840B2295B243B00B9338D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -184,7 +178,6 @@
 		FFB840E9295B639E00B9338D /* ProjectsGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsGrid.swift; sourceTree = "<group>"; };
 		FFB840EB295B78C000B9338D /* Options.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
 		FFB840F0295B82B300B9338D /* MTLVertexDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTLVertexDescriptor.swift; sourceTree = "<group>"; };
-		FFB840F4295C90FA00B9338D /* CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPoint.swift; sourceTree = "<group>"; };
 		FFB840F6295CA97900B9338D /* ClickGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickGesture.swift; sourceTree = "<group>"; };
 		FFB840F8295CA99800B9338D /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		FFB99DAB2982ED3300F97DDB /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
@@ -199,10 +192,6 @@
 		FFC323C82979645E00770BA3 /* LightingHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LightingHelpers.h; sourceTree = "<group>"; };
 		FFC323C92979695B00770BA3 /* Entry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Entry.h; sourceTree = "<group>"; };
 		FFC8DC952979EB03003138F6 /* AppleMetal_Compute.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = AppleMetal_Compute.metal; sourceTree = "<group>"; };
-		FFD37E07299961E200D43E45 /* my_animated_tyrannosaurus_rex.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = my_animated_tyrannosaurus_rex.usdz; sourceTree = "<group>"; };
-		FFD37E092999625100D43E45 /* Arcade_Fighter_1.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = Arcade_Fighter_1.usdz; sourceTree = "<group>"; };
-		FFD37E0B2999662500D43E45 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop-compressed.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = "Animated_T-Rex_Dinosaur_Biting_Attack_Loop-compressed.usdz"; sourceTree = "<group>"; };
-		FFD37E0D299967B600D43E45 /* Barricade_-_Transformers_Earth_Wars.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = "Barricade_-_Transformers_Earth_Wars.usdz"; sourceTree = "<group>"; };
 		FFE533092985A87F00A55407 /* FunctionConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionConstants.swift; sourceTree = "<group>"; };
 		FFE5330B2985AAB400A55407 /* WelcomeScreen_PipelineStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreen_PipelineStates.swift; sourceTree = "<group>"; };
 		FFFE7BBD297AD0D00089EC37 /* WelcomeScreen_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreen_Extensions.swift; sourceTree = "<group>"; };
@@ -251,7 +240,6 @@
 			isa = PBXGroup;
 			children = (
 				FF08FAFD298184D500689272 /* CascadedShadowsMap.h */,
-				FF097917299658DE003E3EA0 /* CascadedShadowsMap_ArgumentBuffers.h */,
 				FF08FAFE298184EF00689272 /* CascadedShadowsMap.metal */,
 				FF88380D2990034600F62A9D /* CascadedShadowsMap_Debug.metal */,
 			);
@@ -425,13 +413,9 @@
 		FF76AC7229819D48005A93D1 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				FFD37E0B2999662500D43E45 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop-compressed.usdz */,
-				FFD37E092999625100D43E45 /* Arcade_Fighter_1.usdz */,
-				FFD37E07299961E200D43E45 /* my_animated_tyrannosaurus_rex.usdz */,
-				FF649E7C2997F89000FC61F8 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop-old.usdz */,
-				FFD37E0D299967B600D43E45 /* Barricade_-_Transformers_Earth_Wars.usdz */,
-				FF9FED41299949940037C8E1 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop.usdz */,
-				FF9489FD299807400033EE4A /* city.usdz */,
+				FF1485BB299EA8FE00A2A2A8 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop.usdz */,
+				FF1485BD299EBCE300A2A2A8 /* Junonia_Lemonias_Butterfly_Rigged.usdz */,
+				FF1485BF299EC86A00A2A2A8 /* Animated_3D_Tyrannosaurus_Rex_Dinosaur_Loop.usdz */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -506,6 +490,8 @@
 				FFB840C6295B279D00B9338D /* MetalView.swift */,
 				FF1B99F5299CDD4A009306FD /* DemoHeaderView.swift */,
 				FF1B99F7299CE1C5009306FD /* DemoInfoView.swift */,
+				FF1485B1299E41C200A2A2A8 /* MainHeaderView.swift */,
+				FF1485C1299ED58900A2A2A8 /* InfoOverlayView.swift */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -562,12 +548,9 @@
 			children = (
 				FF76AC7C2981A0B0005A93D1 /* MDLVertexDescriptor.swift */,
 				FFB840F0295B82B300B9338D /* MTLVertexDescriptor.swift */,
-				FFB840F4295C90FA00B9338D /* CGPoint.swift */,
 				FFB840F8295CA99800B9338D /* ViewExtension.swift */,
-				FF979BC2295DC22C00021E5D /* RangeReplaceableCollection.swift */,
 				FF44A1CB29645BB700C7A4F3 /* Attributes.swift */,
 				FF44A1CD29645BCC00C7A4F3 /* BufferIndices.swift */,
-				FF8BDA4B297F14A000C0787C /* CGSize.swift */,
 				FFE533092985A87F00A55407 /* FunctionConstants.swift */,
 			);
 			path = Extensions;
@@ -645,15 +628,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF1485C0299EC86A00A2A2A8 /* Animated_3D_Tyrannosaurus_Rex_Dinosaur_Loop.usdz in Resources */,
+				FF1485BC299EA8FE00A2A2A8 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop.usdz in Resources */,
+				FF1485BE299EBCE300A2A2A8 /* Junonia_Lemonias_Butterfly_Rigged.usdz in Resources */,
 				FFB840B6295B243B00B9338D /* Preview Assets.xcassets in Resources */,
-				FFD37E0A2999625100D43E45 /* Arcade_Fighter_1.usdz in Resources */,
-				FFD37E0C2999662500D43E45 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop-compressed.usdz in Resources */,
 				FFB840B3295B243B00B9338D /* Assets.xcassets in Resources */,
-				FF649E7D2997F89000FC61F8 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop-old.usdz in Resources */,
-				FFD37E08299961E200D43E45 /* my_animated_tyrannosaurus_rex.usdz in Resources */,
-				FF9489FE299807400033EE4A /* city.usdz in Resources */,
-				FF9FED42299949940037C8E1 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop.usdz in Resources */,
-				FFD37E0E299967B600D43E45 /* Barricade_-_Transformers_Earth_Wars.usdz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -693,13 +672,13 @@
 				FF76AC7929819F2E005A93D1 /* Model.swift in Sources */,
 				FF1B99F8299CE1C5009306FD /* DemoInfoView.swift in Sources */,
 				FF44A1D129648C2100C7A4F3 /* PointsShadowmap_Extensions.swift in Sources */,
-				FFB840F5295C90FA00B9338D /* CGPoint.swift in Sources */,
 				FF51997A2979498200F25BBF /* AppleMetal_PipelineStates.swift in Sources */,
 				FFC323C52979603900770BA3 /* ShaderHelpers.metal in Sources */,
 				FF63BD4D29642F1000A08F8F /* Sphere.swift in Sources */,
 				FF08FB072981852400689272 /* CascadedShadowsMap_PipelineStates.swift in Sources */,
 				FFB99DB32982ED9900F97DDB /* AnimationComponent.swift in Sources */,
 				FFE5330A2985A87F00A55407 /* FunctionConstants.swift in Sources */,
+				FF1485B2299E41C200A2A2A8 /* MainHeaderView.swift in Sources */,
 				FFB840CA295B28CB00B9338D /* GameController.swift in Sources */,
 				FFB99DB52982EDA600F97DDB /* Skeleton.swift in Sources */,
 				FF979BBF295DA1DE00021E5D /* Tween.swift in Sources */,
@@ -709,6 +688,7 @@
 				FF25C918296338650056C317 /* Submesh.swift in Sources */,
 				FF25C91F29633D040056C317 /* InputController.swift in Sources */,
 				FF08FB032981850F00689272 /* CascadedShadowsMap.swift in Sources */,
+				FF1485C2299ED58900A2A2A8 /* InfoOverlayView.swift in Sources */,
 				FFB840E2295B425A00B9338D /* Dot.swift in Sources */,
 				FFB840DE295B3F3D00B9338D /* Shaders.metal in Sources */,
 				FFB840F9295CA99800B9338D /* ViewExtension.swift in Sources */,
@@ -716,7 +696,6 @@
 				FF6BD4FC2965A7A500EB957B /* OrthographicCamera.swift in Sources */,
 				FF6BD4F82965A74000EB957B /* FPCamera.swift in Sources */,
 				FF63BD4B29642E0400A08F8F /* Cube.swift in Sources */,
-				FF979BC3295DC22C00021E5D /* RangeReplaceableCollection.swift in Sources */,
 				FFB840E6295B451700B9338D /* Panel.swift in Sources */,
 				FF6E29E1296736D600D2E59A /* InfiniteSpace.swift in Sources */,
 				FF51997E29794B5E00F25BBF /* AppleMetal_Forward.metal in Sources */,
@@ -759,7 +738,6 @@
 				FF4BABAB2976C9B500FE734C /* Icosahedron.swift in Sources */,
 				FF6BD4FE2965A7B200EB957B /* Camera.swift in Sources */,
 				FFB840EA295B639E00B9338D /* ProjectsGrid.swift in Sources */,
-				FF8BDA4C297F14A000C0787C /* CGSize.swift in Sources */,
 				FFE5330C2985AAB400A55407 /* WelcomeScreen_PipelineStates.swift in Sources */,
 				FF44A1CC29645BB700C7A4F3 /* Attributes.swift in Sources */,
 				FFB99DAC2982ED3300F97DDB /* Animation.swift in Sources */,
@@ -900,17 +878,18 @@
 				DEVELOPMENT_TEAM = KSAD48KSZ4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.graphics-design";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = georgi.MetalDojo3;
+				PRODUCT_BUNDLE_IDENTIFIER = georgi.MetalDojo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -934,17 +913,18 @@
 				DEVELOPMENT_TEAM = KSAD48KSZ4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.graphics-design";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = georgi.MetalDojo3;
+				PRODUCT_BUNDLE_IDENTIFIER = georgi.MetalDojo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
