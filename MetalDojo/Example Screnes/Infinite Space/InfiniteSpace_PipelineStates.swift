@@ -24,7 +24,7 @@ enum InfiniteSpacePipelineStates: PipelineStates {
     return Renderer.device.makeDepthStencilState(descriptor: descriptor)
   }
 
-  static func createGBufferPSO(colorPixelFormat: MTLPixelFormat) throws -> MTLRenderPipelineState {
+  static func createGBufferPSO() throws -> MTLRenderPipelineState {
     let fnConstantValues = Self.getFnConstants()
     let vertexFunction = try Renderer.library?.makeFunction(
       name: "infiniteSpace_vertexCube",
@@ -37,15 +37,13 @@ enum InfiniteSpacePipelineStates: PipelineStates {
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
-    pipelineDescriptor.setColorAttachmentPixelFormatsForInfiniteSpace(colorPixelFormat)
+    pipelineDescriptor.setColorAttachmentPixelFormatsForInfiniteSpace(Renderer.colorPixelFormat)
     pipelineDescriptor.depthAttachmentPixelFormat = .depth16Unorm
     pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultLayout
     return Self.createPSO(descriptor: pipelineDescriptor)
   }
 
-  static func createPointLightPSO(
-    colorPixelFormat: MTLPixelFormat
-  ) throws -> MTLRenderPipelineState {
+  static func createPointLightPSO() throws -> MTLRenderPipelineState {
     let fnConstantValues = Self.getFnConstants()
     let vertexFunction = try Renderer.library?.makeFunction(
       name: "InfiniteSpace_vertexPointLight",
@@ -58,7 +56,7 @@ enum InfiniteSpacePipelineStates: PipelineStates {
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
-    pipelineDescriptor.setColorAttachmentPixelFormatsForInfiniteSpace(colorPixelFormat)
+    pipelineDescriptor.setColorAttachmentPixelFormatsForInfiniteSpace(Renderer.colorPixelFormat)
     pipelineDescriptor.depthAttachmentPixelFormat = .depth16Unorm
     pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultLayout
     let attachment = pipelineDescriptor.colorAttachments[0]
@@ -74,9 +72,7 @@ enum InfiniteSpacePipelineStates: PipelineStates {
     return Self.createPSO(descriptor: pipelineDescriptor)
   }
 
-  static func createSunLightPSO(
-    colorPixelFormat: MTLPixelFormat
-  ) throws -> MTLRenderPipelineState {
+  static func createSunLightPSO() throws -> MTLRenderPipelineState {
     let fnConstantValues = Self.getFnConstants()
     let vertexFunction = try Renderer.library?.makeFunction(
       name: "infiniteSpace_vertexQuad",
@@ -89,7 +85,7 @@ enum InfiniteSpacePipelineStates: PipelineStates {
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
-    pipelineDescriptor.setColorAttachmentPixelFormatsForInfiniteSpace(colorPixelFormat)
+    pipelineDescriptor.setColorAttachmentPixelFormatsForInfiniteSpace(Renderer.colorPixelFormat)
     pipelineDescriptor.depthAttachmentPixelFormat = .depth16Unorm
     return Self.createPSO(descriptor: pipelineDescriptor)
   }

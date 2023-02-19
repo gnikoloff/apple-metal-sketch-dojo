@@ -10,7 +10,6 @@ import MetalKit
 
 enum AppleMetalPipelineStates: PipelineStates {
   static func createForwardPSO(
-    colorPixelFormat: MTLPixelFormat,
     isLight: Bool = false,
     lightsCount: Int = 1
   ) throws -> MTLRenderPipelineState {
@@ -38,7 +37,7 @@ enum AppleMetalPipelineStates: PipelineStates {
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
-    pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
+    pipelineDescriptor.colorAttachments[0].pixelFormat = Renderer.colorPixelFormat
     pipelineDescriptor.depthAttachmentPixelFormat = .depth16Unorm
     pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultLayout
     return Self.createPSO(descriptor: pipelineDescriptor)

@@ -34,7 +34,7 @@ extension Demo {
   static func createOutputTexture(size: CGSize, label: String) -> MTLTexture {
     return TextureController.makeTexture(
       size: size,
-      pixelFormat: Renderer.viewColorFormat,
+      pixelFormat: Renderer.colorPixelFormat,
       label: label,
       storageMode: .private
     )!

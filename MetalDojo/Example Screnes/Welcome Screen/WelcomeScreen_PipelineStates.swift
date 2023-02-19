@@ -24,7 +24,7 @@ enum WelcomeScreen_PipelineStates: PipelineStates {
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
-    pipelineDescriptor.colorAttachments[0].pixelFormat = Renderer.viewColorFormat
+    pipelineDescriptor.colorAttachments[0].pixelFormat = Renderer.colorPixelFormat
 
     let vertexDescriptor = MTLVertexDescriptor()
     // position
@@ -56,7 +56,7 @@ enum WelcomeScreen_PipelineStates: PipelineStates {
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
-    pipelineDescriptor.colorAttachments[0].pixelFormat = Renderer.viewColorFormat
+    pipelineDescriptor.colorAttachments[0].pixelFormat = Renderer.colorPixelFormat
     pipelineDescriptor.depthAttachmentPixelFormat = .depth16Unorm
     return createPSO(descriptor: pipelineDescriptor)
   }

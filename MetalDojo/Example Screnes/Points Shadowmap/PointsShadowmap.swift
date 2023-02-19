@@ -53,21 +53,17 @@ final class PointsShadowmap: Demo {
 
     do {
       try cubeRenderPipeline = PointsShadowmapPipelineStates.createForwardPSO(
-        colorPixelFormat: Renderer.viewColorFormat,
         isSolidColor: false,
         isShadedAndShadowed: true
       )
       try sphereRenderPipelineFront = PointsShadowmapPipelineStates.createForwardPSO(
-        colorPixelFormat: Renderer.viewColorFormat,
         isCutOffAlpha: true
       )
       try sphereRenderPipelineBack = PointsShadowmapPipelineStates.createForwardPSO(
-        colorPixelFormat: Renderer.viewColorFormat,
         isSolidColor: true,
         isCutOffAlpha: true
       )
       try centerSphereRenderPipeline = PointsShadowmapPipelineStates.createForwardPSO(
-        colorPixelFormat: Renderer.viewColorFormat,
         isSolidColor: true
       )
     } catch {

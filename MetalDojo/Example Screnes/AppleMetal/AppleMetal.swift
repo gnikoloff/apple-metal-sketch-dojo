@@ -106,11 +106,9 @@ class AppleMetalScreen: Demo {
     outputPassDescriptor = MTLRenderPassDescriptor()
     do {
       try meshPipelineState = AppleMetalPipelineStates.createForwardPSO(
-        colorPixelFormat: Renderer.viewColorFormat,
         lightsCount: Self.LIGHTS_COUNT
       )
       try lightPipelineState = AppleMetalPipelineStates.createForwardPSO(
-        colorPixelFormat: Renderer.viewColorFormat,
         isLight: true
       )
       try updateLightsPipelineState = AppleMetalPipelineStates.createUpdateComputePSO(
@@ -188,7 +186,7 @@ class AppleMetalScreen: Demo {
     perspCamera.update(size: size)
     postFXTexture = TextureController.makeTexture(
       size: size,
-      pixelFormat: Renderer.viewColorFormat,
+      pixelFormat: Renderer.colorPixelFormat,
       label: "Output Texture",
       usage: [.shaderRead, .shaderWrite]
     )
@@ -199,7 +197,7 @@ class AppleMetalScreen: Demo {
     outputDepthTexture = Self.createDepthOutputTexture(size: size)
     finalTexture = TextureController.makeTexture(
       size: size,
-      pixelFormat: Renderer.viewColorFormat,
+      pixelFormat: Renderer.colorPixelFormat,
       label: "Final Texture",
       usage: [.shaderRead, .shaderWrite]
     )

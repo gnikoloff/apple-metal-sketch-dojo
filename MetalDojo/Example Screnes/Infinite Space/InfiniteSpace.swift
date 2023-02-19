@@ -153,9 +153,9 @@ final class InfiniteSpace: Demo {
     do {
       try computeBoxesPipelineState = InfiniteSpacePipelineStates.createBoxesComputePSO()
       try computePointLightsPipelineState = InfiniteSpacePipelineStates.createPointLightsComputePSO()
-      try sunLightPSO = InfiniteSpacePipelineStates.createSunLightPSO(colorPixelFormat: Renderer.viewColorFormat)
-      try pointLightPSO = InfiniteSpacePipelineStates.createPointLightPSO(colorPixelFormat: Renderer.viewColorFormat)
-      try gBufferPSO = InfiniteSpacePipelineStates.createGBufferPSO(colorPixelFormat: Renderer.viewColorFormat)
+      try sunLightPSO = InfiniteSpacePipelineStates.createSunLightPSO()
+      try pointLightPSO = InfiniteSpacePipelineStates.createPointLightPSO()
+      try gBufferPSO = InfiniteSpacePipelineStates.createGBufferPSO()
     } catch {
       fatalError(error.localizedDescription)
     }

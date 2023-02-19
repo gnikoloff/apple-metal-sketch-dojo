@@ -30,7 +30,6 @@ enum PointsShadowmapPipelineStates: PipelineStates {
   }
 
   static func createForwardPSO(
-    colorPixelFormat: MTLPixelFormat,
     isSolidColor: Bool = false,
     isShadedAndShadowed: Bool = false,
     isCutOffAlpha: Bool = false
@@ -68,7 +67,7 @@ enum PointsShadowmapPipelineStates: PipelineStates {
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
-    pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
+    pipelineDescriptor.colorAttachments[0].pixelFormat = Renderer.colorPixelFormat
 
     pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultLayout
     pipelineDescriptor.depthAttachmentPixelFormat = .depth16Unorm

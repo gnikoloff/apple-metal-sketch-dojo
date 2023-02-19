@@ -12,7 +12,7 @@ final class Renderer {
   static var commandQueue: MTLCommandQueue!
   static var library: MTLLibrary!
   static var meshAllocator: MTKMeshBufferAllocator!
-  static var viewColorFormat: MTLPixelFormat!
+  static var colorPixelFormat: MTLPixelFormat!
 
   var perspCameraUniforms = CameraUniforms()
 
@@ -26,7 +26,7 @@ final class Renderer {
     Renderer.commandQueue = commandQueue
     Renderer.library = device.makeDefaultLibrary()
     Renderer.meshAllocator = MTKMeshBufferAllocator(device: device)
-    Renderer.viewColorFormat = metalView.colorPixelFormat
+    Renderer.colorPixelFormat = metalView.colorPixelFormat
 
     metalView.device = device
 //    metalView.clearColor = MTLClearColor(red: 1, green: 0.2, blue: 0.2, alpha: 1)
