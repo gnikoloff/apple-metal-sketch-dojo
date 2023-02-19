@@ -93,6 +93,7 @@
 		FFC8DC962979EB03003138F6 /* AppleMetal_Compute.metal in Sources */ = {isa = PBXBuildFile; fileRef = FFC8DC952979EB03003138F6 /* AppleMetal_Compute.metal */; };
 		FFE5330A2985A87F00A55407 /* FunctionConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE533092985A87F00A55407 /* FunctionConstants.swift */; };
 		FFE5330C2985AAB400A55407 /* WelcomeScreen_PipelineStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE5330B2985AAB400A55407 /* WelcomeScreen_PipelineStates.swift */; };
+		FFE6BA0629A25B63005CA745 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FFE6BA0529A25B63005CA745 /* Launch Screen.storyboard */; };
 		FFFE7BBE297AD0D00089EC37 /* WelcomeScreen_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFE7BBD297AD0D00089EC37 /* WelcomeScreen_Extensions.swift */; };
 /* End PBXBuildFile section */
 
@@ -194,6 +195,7 @@
 		FFC8DC952979EB03003138F6 /* AppleMetal_Compute.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = AppleMetal_Compute.metal; sourceTree = "<group>"; };
 		FFE533092985A87F00A55407 /* FunctionConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionConstants.swift; sourceTree = "<group>"; };
 		FFE5330B2985AAB400A55407 /* WelcomeScreen_PipelineStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreen_PipelineStates.swift; sourceTree = "<group>"; };
+		FFE6BA0529A25B63005CA745 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		FFFE7BBD297AD0D00089EC37 /* WelcomeScreen_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreen_Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -470,6 +472,7 @@
 				FFB840C5295B274B00B9338D /* SwiftUI Views */,
 				FFB840B2295B243B00B9338D /* Assets.xcassets */,
 				FFB840B9295B243B00B9338D /* MetalDojo.xcdatamodeld */,
+				FFE6BA0529A25B63005CA745 /* Launch Screen.storyboard */,
 				FFB840B4295B243B00B9338D /* Preview Content */,
 			);
 			path = MetalDojo;
@@ -628,6 +631,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFE6BA0629A25B63005CA745 /* Launch Screen.storyboard in Resources */,
 				FF1485C0299EC86A00A2A2A8 /* Animated_3D_Tyrannosaurus_Rex_Dinosaur_Loop.usdz in Resources */,
 				FF1485BC299EA8FE00A2A2A8 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop.usdz in Resources */,
 				FF1485BE299EBCE300A2A2A8 /* Junonia_Lemonias_Butterfly_Rigged.usdz in Resources */,
@@ -870,6 +874,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -882,6 +887,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -905,6 +911,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -917,6 +924,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (

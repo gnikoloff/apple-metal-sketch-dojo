@@ -165,7 +165,7 @@ vertex VertexOut cascadedShadows_vertex(const VertexIn in [[stage_in]],
   return out;
 }
 
-fragment float4 cascadedShadows_fragment(VertexOut in [[stage_in]],
+fragment FragmentOut cascadedShadows_fragment(VertexOut in [[stage_in]],
                                          constant Light *lights [[buffer(LightBuffer)]],
                                          constant Material &material [[buffer(MaterialBuffer)]],
                                          constant CameraUniforms &cameraUniforms [[buffer(CameraUniformsBuffer)]],
@@ -205,10 +205,14 @@ fragment float4 cascadedShadows_fragment(VertexOut in [[stage_in]],
 
 //  return float4(worldPos, 1);
 
-  return color;
+  FragmentOut out {
+    .color = color
+  };
+
+  return out;
 }
 
-fragment float4 fragment_pbr(VertexOut in [[stage_in]],
+fragment FragmentOut fragment_pbr(VertexOut in [[stage_in]],
                              constant Light *lights [[buffer(LightBuffer)]],
                              constant Material &_material [[buffer(MaterialBuffer)]],
                              constant CameraUniforms &cameraUniforms [[buffer(CameraUniformsBuffer)]],
@@ -286,14 +290,18 @@ fragment float4 fragment_pbr(VertexOut in [[stage_in]],
 //  float4 layerColor = float4(colors[layer], 1);
 //  return layerColor;
 
-  return PBRLighting(lights,
-                     settings.lightsCount,
-                     material,
-                     cameraUniforms.position,
-                     worldPos,
-                     normal,
-                     opacity,
-                     shadow);
+  FragmentOut out;
+
+  out.color = PBRLighting(lights,
+                          settings.lightsCount,
+                          material,
+                          cameraUniforms.position,
+                          worldPos,
+                          normal,
+                          opacity,
+                          shadow);
+
+  return out;
 }
 
 fragment float4 cascadedShadows_skybox() {

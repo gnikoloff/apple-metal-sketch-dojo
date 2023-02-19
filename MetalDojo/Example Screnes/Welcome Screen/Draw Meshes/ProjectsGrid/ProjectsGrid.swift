@@ -10,6 +10,10 @@
 import MetalKit
 
 class ProjectsGrid: VerletGrid {
+  lazy private var ctrlPointsBuffer: MTLBuffer = {
+    Renderer.device.makeBuffer(length: MemoryLayout<float2>.stride * 9)!
+  }()
+
   init(options: Options) {
     let fprojectsCount = Float(options.projects.count)
 
@@ -43,18 +47,6 @@ class ProjectsGrid: VerletGrid {
     for i in 0 ..< options.projects.count {
       let project = options.projects[i]
       let dotLayout = dotsLayoutIphone[i]
-      
-//      var dotLayout: [Dot]
-//      if options.isIphone {
-//        dotLayout = dotsLayoutIphone[i]
-//      } else {
-//        dotLayout = [
-//          dots[i * 2 + 0],
-//          dots[i * 2 + 1],
-//          dots[i * 2 + 3],
-//          dots[i * 2 + 2]
-//        ]
-//      }
 
       let panel = Panel(
         width: colWidth,
@@ -85,6 +77,28 @@ class ProjectsGrid: VerletGrid {
     }
 
     super.updateVerlet(deltaTime: deltaTime)
+
+    let ctrlPointsBufferPtr = ctrlPointsBuffer
+      .contents()
+      .bindMemory(to: float2.self, capacity: 9)
+
+    ctrlPointsBufferPtr[0] = dots[0].pos
+    ctrlPointsBufferPtr[1] = dots[1].pos
+    ctrlPointsBufferPtr[2] = dots[2].pos
+    ctrlPointsBufferPtr[3] = dots[3].pos
+    ctrlPointsBufferPtr[4] = dots[4].pos
+    ctrlPointsBufferPtr[5] = dots[5].pos
+    ctrlPointsBufferPtr[6] = dots[6].pos
+    ctrlPointsBufferPtr[7] = dots[7].pos
+    ctrlPointsBufferPtr[8] = dots[8].pos
+//    ctrlPointsBufferPtr[1] = dots[1].pos
+
+//    ctrlPointsBufferPtr[1].x = dots[1].pos.x
+//    ctrlPointsBufferPtr[1].y = dots[1].pos.y
+//
+//    ctrlPointsBufferPtr[2].x = dots[2].pos.x
+//    ctrlPointsBufferPtr[2].y = dots[3].pos.y
+
   }
 
   func dismissSingleProject() {
@@ -158,5 +172,25 @@ class ProjectsGrid: VerletGrid {
     tween.start()
 
     options.resetMousePos()
+  }
+
+  func drawCtrlPoints(encoder: MTLRenderCommandEncoder, camUniforms: CameraUniforms) {
+    var camUniforms = camUniforms
+    encoder.setVertexBytes(
+      &camUniforms,
+      length: MemoryLayout<CameraUniforms>.stride,
+      index: UniformsBuffer.index + 1
+    )
+    encoder.setVertexBuffer(
+      ctrlPointsBuffer,
+      offset: 0,
+      index: UniformsBuffer.index + 2
+    )
+    encoder.drawPrimitives(
+      type: .triangle,
+      vertexStart: 0,
+      vertexCount: 6,
+      instanceCount: 9
+    )
   }
 }

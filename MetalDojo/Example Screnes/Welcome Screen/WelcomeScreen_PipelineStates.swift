@@ -10,11 +10,9 @@
 import MetalKit
 
 enum WelcomeScreen_PipelineStates: PipelineStates {
-  static func createWelcomeScreenPSO(colorPixelFormat: MTLPixelFormat) throws -> MTLRenderPipelineState {
+  static func createWelcomeScreenPSO() throws -> MTLRenderPipelineState {
     let fnConstants = Self.getFnConstants()
-    var hasUv = true
-    fnConstants.setConstantValue(&hasUv, type: .bool, index: CustomFnConstant.index)
-    
+
     let vertexFunction = try Renderer.library?.makeFunction(
       name: "vertex_welcomeScreen",
       constantValues: fnConstants
@@ -26,7 +24,7 @@ enum WelcomeScreen_PipelineStates: PipelineStates {
     let pipelineDescriptor = MTLRenderPipelineDescriptor()
     pipelineDescriptor.vertexFunction = vertexFunction
     pipelineDescriptor.fragmentFunction = fragmentFunction
-    pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
+    pipelineDescriptor.colorAttachments[0].pixelFormat = Renderer.viewColorFormat
 
     let vertexDescriptor = MTLVertexDescriptor()
     // position
@@ -41,6 +39,24 @@ enum WelcomeScreen_PipelineStates: PipelineStates {
     vertexDescriptor.layouts[0].stride = MemoryLayout<float2>.stride * 2
 
     pipelineDescriptor.vertexDescriptor = vertexDescriptor
+    pipelineDescriptor.depthAttachmentPixelFormat = .depth16Unorm
+    return createPSO(descriptor: pipelineDescriptor)
+  }
+
+  static func createWelcomeScreenCtrlPointsPSO() throws -> MTLRenderPipelineState {
+    let fnConstants = Self.getFnConstants()
+    let vertexFunction = try Renderer.library?.makeFunction(
+      name: "vertex_welcomeScreenCtrlPoints",
+      constantValues: fnConstants
+    )
+    let fragmentFunction = try Renderer.library?.makeFunction(
+      name: "fragment_welcomeScreenCtrlPoints",
+      constantValues: fnConstants
+    )
+    let pipelineDescriptor = MTLRenderPipelineDescriptor()
+    pipelineDescriptor.vertexFunction = vertexFunction
+    pipelineDescriptor.fragmentFunction = fragmentFunction
+    pipelineDescriptor.colorAttachments[0].pixelFormat = Renderer.viewColorFormat
     pipelineDescriptor.depthAttachmentPixelFormat = .depth16Unorm
     return createPSO(descriptor: pipelineDescriptor)
   }

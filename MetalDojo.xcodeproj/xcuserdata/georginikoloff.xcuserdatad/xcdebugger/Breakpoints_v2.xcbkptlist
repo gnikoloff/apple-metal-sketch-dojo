@@ -430,8 +430,8 @@
             filePath = "MetalDojo/Example Screnes/Welcome Screen/Draw Meshes/ProjectsGrid/ProjectsGrid.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "139"
-            endingLineNumber = "139"
+            startingLineNumber = "153"
+            endingLineNumber = "153"
             landmarkName = "onProjectClicked(idx:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -802,6 +802,22 @@
             endingLineNumber = "112"
             landmarkName = "updateInterleavedArray(uvx:uvy:uvw:uvh:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5EAA3051-6495-4FD5-B747-CAD74E223254"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MetalDojo/Example Screnes/Welcome Screen/Shaders/Shaders.metal"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "vertex_welcomeScreen(const VertexIn in [[stage_in]], constant CameraUniforms &amp;cameraUniforms [[buffer(UniformsBuffer + 1)]])"
+            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

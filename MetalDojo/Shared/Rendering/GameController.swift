@@ -68,7 +68,7 @@ extension GameController: MTKViewDelegate {
     guard let commandBuffer = Renderer.commandQueue.makeCommandBuffer() else {
       return
     }
-
+//
     if options.isHomescreen {
       for (key, demo) in demos {
         let panel = welcomeScreen.projectsGrid.panels.first { p in

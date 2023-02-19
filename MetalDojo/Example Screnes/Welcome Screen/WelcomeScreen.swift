@@ -13,7 +13,8 @@ class WelcomeScreen {
   static var SCREEN_NAME = "Welcome Screen"
   static var cameraZoom: Float = 1
 
-  private var pipelineState: MTLRenderPipelineState
+  private var meshPipelineState: MTLRenderPipelineState
+  private var ctrlPointsPipelineState: MTLRenderPipelineState
   private var orthoCameraUniforms = CameraUniforms()
   private var orthoCamera = OrthographicCamera()
 
@@ -23,9 +24,8 @@ class WelcomeScreen {
   init(options: Options) {
     self.options = options
     do {
-      try pipelineState = WelcomeScreen_PipelineStates.createWelcomeScreenPSO(
-        colorPixelFormat: Renderer.viewColorFormat
-      )
+      try meshPipelineState = WelcomeScreen_PipelineStates.createWelcomeScreenPSO()
+      try ctrlPointsPipelineState = WelcomeScreen_PipelineStates.createWelcomeScreenCtrlPointsPSO()
     } catch {
       fatalError(error.localizedDescription)
     }
@@ -64,8 +64,11 @@ class WelcomeScreen {
 
     updateUniforms()
 
-    renderEncoder.setRenderPipelineState(pipelineState)
+    renderEncoder.setRenderPipelineState(meshPipelineState)
     projectsGrid.draw(encoder: renderEncoder, cameraUniforms: orthoCameraUniforms)
+
+    renderEncoder.setRenderPipelineState(ctrlPointsPipelineState)
+    projectsGrid.drawCtrlPoints(encoder: renderEncoder, camUniforms: orthoCameraUniforms)
 
     renderEncoder.endEncoding()
   }
