@@ -52,6 +52,7 @@ struct DemoHeaderView: View {
           Spacer()
           Text(activeProjectName)
             .padding(24)
+            .foregroundColor(.white)
           Spacer()
         }
         .padding()

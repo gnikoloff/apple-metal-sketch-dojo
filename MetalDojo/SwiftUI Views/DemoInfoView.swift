@@ -20,8 +20,10 @@ struct DemoInfoView: View {
           Text(activeProjectName)
             .font(.title)
             .padding(.bottom)
+            .foregroundColor(.white)
           Text(.init(demosDescriptions[activeProjectName]!))
             .frame(maxWidth: 400)
+            .foregroundColor(.white)
         }
         .padding(.top, 42)
         .padding(.bottom, 42)

@@ -34,6 +34,7 @@
 		FF25C91F29633D040056C317 /* InputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25C91E29633D040056C317 /* InputController.swift */; };
 		FF25C923296351AD0056C317 /* WelcomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25C922296351AD0056C317 /* WelcomeScreen.swift */; };
 		FF29AC4829798A5D0098BE75 /* EngineError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF29AC4729798A5D0098BE75 /* EngineError.swift */; };
+		FF3FE7A129A27D0800720630 /* OrientCameraInstructionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3FE7A029A27D0800720630 /* OrientCameraInstructionView.swift */; };
 		FF44A1CC29645BB700C7A4F3 /* Attributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF44A1CB29645BB700C7A4F3 /* Attributes.swift */; };
 		FF44A1CE29645BCC00C7A4F3 /* BufferIndices.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF44A1CD29645BCC00C7A4F3 /* BufferIndices.swift */; };
 		FF44A1D129648C2100C7A4F3 /* PointsShadowmap_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF44A1D029648C2100C7A4F3 /* PointsShadowmap_Extensions.swift */; };
@@ -126,6 +127,7 @@
 		FF25C91E29633D040056C317 /* InputController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputController.swift; sourceTree = "<group>"; };
 		FF25C922296351AD0056C317 /* WelcomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreen.swift; sourceTree = "<group>"; };
 		FF29AC4729798A5D0098BE75 /* EngineError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineError.swift; sourceTree = "<group>"; };
+		FF3FE7A029A27D0800720630 /* OrientCameraInstructionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientCameraInstructionView.swift; sourceTree = "<group>"; };
 		FF44A1CB29645BB700C7A4F3 /* Attributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attributes.swift; sourceTree = "<group>"; };
 		FF44A1CD29645BCC00C7A4F3 /* BufferIndices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferIndices.swift; sourceTree = "<group>"; };
 		FF44A1CF2964601600C7A4F3 /* PointsShadowmap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointsShadowmap.h; sourceTree = "<group>"; };
@@ -495,6 +497,7 @@
 				FF1B99F7299CE1C5009306FD /* DemoInfoView.swift */,
 				FF1485B1299E41C200A2A2A8 /* MainHeaderView.swift */,
 				FF1485C1299ED58900A2A2A8 /* InfoOverlayView.swift */,
+				FF3FE7A029A27D0800720630 /* OrientCameraInstructionView.swift */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -694,6 +697,7 @@
 				FF08FB032981850F00689272 /* CascadedShadowsMap.swift in Sources */,
 				FF1485C2299ED58900A2A2A8 /* InfoOverlayView.swift in Sources */,
 				FFB840E2295B425A00B9338D /* Dot.swift in Sources */,
+				FF3FE7A129A27D0800720630 /* OrientCameraInstructionView.swift in Sources */,
 				FFB840DE295B3F3D00B9338D /* Shaders.metal in Sources */,
 				FFB840F9295CA99800B9338D /* ViewExtension.swift in Sources */,
 				FFB840BB295B243B00B9338D /* MetalDojo.xcdatamodeld in Sources */,
@@ -890,6 +894,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -927,6 +932,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

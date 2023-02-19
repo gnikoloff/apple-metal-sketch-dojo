@@ -67,8 +67,10 @@ class WelcomeScreen {
     renderEncoder.setRenderPipelineState(meshPipelineState)
     projectsGrid.draw(encoder: renderEncoder, cameraUniforms: orthoCameraUniforms)
 
-    renderEncoder.setRenderPipelineState(ctrlPointsPipelineState)
-    projectsGrid.drawCtrlPoints(encoder: renderEncoder, camUniforms: orthoCameraUniforms)
+    if options.activeProjectName == WelcomeScreen.SCREEN_NAME {
+      renderEncoder.setRenderPipelineState(ctrlPointsPipelineState)
+      projectsGrid.drawCtrlPoints(encoder: renderEncoder, camUniforms: orthoCameraUniforms)
+    }
 
     renderEncoder.endEncoding()
   }

@@ -20,7 +20,7 @@ struct MainHeaderView: View {
             .padding(.bottom, 3)
             .frame(maxWidth: .infinity, alignment: .leading)
             .font(options.isIphone ? .title3 : .title )
-          Text("Collection of demos using the Apple Metal API written in Swift and C++")
+          Text("Collection of demos showcasing the Apple Metal API written in Swift and C++")
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.bottom, 1)
             .font(options.isIphone ? .subheadline : .body)
