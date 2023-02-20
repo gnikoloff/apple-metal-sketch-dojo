@@ -8,12 +8,15 @@
 import SwiftUI
 
 struct OrientCameraInstructionView: View {
-  @Binding var visible: Bool
+  @Binding var isInstructionViewVisible: Bool
+  @Binding var isDemoInfoOpen: Bool
 
   @EnvironmentObject var options: Options
 
   var body: some View {
     let isInfiniteLightDemo = options.activeProjectName == InfiniteSpace.SCREEN_NAME
+
+    let visible = isInstructionViewVisible && !isDemoInfoOpen
 
     VStack {
       Spacer()

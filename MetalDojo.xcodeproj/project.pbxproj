@@ -35,6 +35,7 @@
 		FF25C923296351AD0056C317 /* WelcomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25C922296351AD0056C317 /* WelcomeScreen.swift */; };
 		FF29AC4829798A5D0098BE75 /* EngineError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF29AC4729798A5D0098BE75 /* EngineError.swift */; };
 		FF3FE7A129A27D0800720630 /* OrientCameraInstructionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3FE7A029A27D0800720630 /* OrientCameraInstructionView.swift */; };
+		FF3FE7A529A2A6C600720630 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3FE7A429A2A6C600720630 /* SplashScreenView.swift */; };
 		FF44A1CC29645BB700C7A4F3 /* Attributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF44A1CB29645BB700C7A4F3 /* Attributes.swift */; };
 		FF44A1CE29645BCC00C7A4F3 /* BufferIndices.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF44A1CD29645BCC00C7A4F3 /* BufferIndices.swift */; };
 		FF44A1D129648C2100C7A4F3 /* PointsShadowmap_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF44A1D029648C2100C7A4F3 /* PointsShadowmap_Extensions.swift */; };
@@ -94,7 +95,6 @@
 		FFC8DC962979EB03003138F6 /* AppleMetal_Compute.metal in Sources */ = {isa = PBXBuildFile; fileRef = FFC8DC952979EB03003138F6 /* AppleMetal_Compute.metal */; };
 		FFE5330A2985A87F00A55407 /* FunctionConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE533092985A87F00A55407 /* FunctionConstants.swift */; };
 		FFE5330C2985AAB400A55407 /* WelcomeScreen_PipelineStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE5330B2985AAB400A55407 /* WelcomeScreen_PipelineStates.swift */; };
-		FFE6BA0629A25B63005CA745 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FFE6BA0529A25B63005CA745 /* Launch Screen.storyboard */; };
 		FFFE7BBE297AD0D00089EC37 /* WelcomeScreen_Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFE7BBD297AD0D00089EC37 /* WelcomeScreen_Extensions.swift */; };
 /* End PBXBuildFile section */
 
@@ -128,6 +128,7 @@
 		FF25C922296351AD0056C317 /* WelcomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreen.swift; sourceTree = "<group>"; };
 		FF29AC4729798A5D0098BE75 /* EngineError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineError.swift; sourceTree = "<group>"; };
 		FF3FE7A029A27D0800720630 /* OrientCameraInstructionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientCameraInstructionView.swift; sourceTree = "<group>"; };
+		FF3FE7A429A2A6C600720630 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		FF44A1CB29645BB700C7A4F3 /* Attributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attributes.swift; sourceTree = "<group>"; };
 		FF44A1CD29645BCC00C7A4F3 /* BufferIndices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferIndices.swift; sourceTree = "<group>"; };
 		FF44A1CF2964601600C7A4F3 /* PointsShadowmap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointsShadowmap.h; sourceTree = "<group>"; };
@@ -197,7 +198,6 @@
 		FFC8DC952979EB03003138F6 /* AppleMetal_Compute.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = AppleMetal_Compute.metal; sourceTree = "<group>"; };
 		FFE533092985A87F00A55407 /* FunctionConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionConstants.swift; sourceTree = "<group>"; };
 		FFE5330B2985AAB400A55407 /* WelcomeScreen_PipelineStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreen_PipelineStates.swift; sourceTree = "<group>"; };
-		FFE6BA0529A25B63005CA745 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		FFFE7BBD297AD0D00089EC37 /* WelcomeScreen_Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreen_Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -474,7 +474,6 @@
 				FFB840C5295B274B00B9338D /* SwiftUI Views */,
 				FFB840B2295B243B00B9338D /* Assets.xcassets */,
 				FFB840B9295B243B00B9338D /* MetalDojo.xcdatamodeld */,
-				FFE6BA0529A25B63005CA745 /* Launch Screen.storyboard */,
 				FFB840B4295B243B00B9338D /* Preview Content */,
 			);
 			path = MetalDojo;
@@ -498,6 +497,7 @@
 				FF1485B1299E41C200A2A2A8 /* MainHeaderView.swift */,
 				FF1485C1299ED58900A2A2A8 /* InfoOverlayView.swift */,
 				FF3FE7A029A27D0800720630 /* OrientCameraInstructionView.swift */,
+				FF3FE7A429A2A6C600720630 /* SplashScreenView.swift */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -634,7 +634,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFE6BA0629A25B63005CA745 /* Launch Screen.storyboard in Resources */,
 				FF1485C0299EC86A00A2A2A8 /* Animated_3D_Tyrannosaurus_Rex_Dinosaur_Loop.usdz in Resources */,
 				FF1485BC299EA8FE00A2A2A8 /* Animated_T-Rex_Dinosaur_Biting_Attack_Loop.usdz in Resources */,
 				FF1485BE299EBCE300A2A2A8 /* Junonia_Lemonias_Butterfly_Rigged.usdz in Resources */,
@@ -705,6 +704,7 @@
 				FF6BD4F82965A74000EB957B /* FPCamera.swift in Sources */,
 				FF63BD4B29642E0400A08F8F /* Cube.swift in Sources */,
 				FFB840E6295B451700B9338D /* Panel.swift in Sources */,
+				FF3FE7A529A2A6C600720630 /* SplashScreenView.swift in Sources */,
 				FF6E29E1296736D600D2E59A /* InfiniteSpace.swift in Sources */,
 				FF51997E29794B5E00F25BBF /* AppleMetal_Forward.metal in Sources */,
 				FFC323C2297953EC00770BA3 /* AppleMetal_Extensions.swift in Sources */,

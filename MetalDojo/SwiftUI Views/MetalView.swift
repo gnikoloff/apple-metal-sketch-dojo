@@ -53,7 +53,7 @@ struct MetalView: View {
         }
         scale = val
       }
-      
+
     let simultGesture = SimultaneousGesture(dragGesture, pinchGesture)
     return ZStack {
       GeometryReader { geometry in
@@ -98,7 +98,10 @@ struct MetalView: View {
 
       MainHeaderView(isInfoOverlayOpen: $isInfoOverlayOpen, visible: $showMainHeader)
       InfoOverlayView(isInfoOverlayOpen: $isInfoOverlayOpen)
-      OrientCameraInstructionView(visible: $isInstructionViewVisible)
+      OrientCameraInstructionView(
+        isInstructionViewVisible: $isInstructionViewVisible,
+        isDemoInfoOpen: $isDemoInfoOpen
+      )
     }
     .onReceive(options.$activeProjectName) { activeProjectName in
       withAnimation {

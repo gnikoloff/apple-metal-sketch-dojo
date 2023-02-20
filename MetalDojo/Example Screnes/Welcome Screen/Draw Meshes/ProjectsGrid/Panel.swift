@@ -30,7 +30,7 @@ class Panel: Equatable {
   var dotSW: Dot
 
   var polygon: [float2] {
-    [dotNW.pos, dotNE.pos, dotSE.pos, dotSW.pos]
+    [dotNE.pos, dotNE.pos, dotSW.pos, dotSE.pos]
   }
 
   private var indices: [UInt16] = [

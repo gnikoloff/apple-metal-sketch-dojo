@@ -60,18 +60,15 @@ class ProjectsGrid: VerletGrid {
   }
 
   func updateVertices(deltaTime: Float) {
-    let screenWidth = Float()
-
     let allowInteractionWithVertices = !options.isProjectTransition && options.isHomescreen
 
     for i in 0 ..< panels.count {
       let p = panels[i]
       if allowInteractionWithVertices && options.mouseDown {
-        var invMouse = options.mouse
-        let isIntersect = invMouse.isInside(polygon: p.polygon)
+        let isIntersect = options.mouse.isInside(polygon: p.polygon)
         if isIntersect {
           onProjectClicked(idx: i)
-          return
+          break
         }
       }
     }

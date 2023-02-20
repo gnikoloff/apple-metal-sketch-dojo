@@ -34,6 +34,8 @@ final class GameController: NSObject {
     demos[InfiniteSpace.SCREEN_NAME] = InfiniteSpace(options: options)
     demos[AppleMetalScreen.SCREEN_NAME] = AppleMetalScreen(options: options)
     demos[CascadedShadowsMap.SCREEN_NAME] = CascadedShadowsMap(options: options)
+
+    options.isAnimationReady = true
   }
 }
 

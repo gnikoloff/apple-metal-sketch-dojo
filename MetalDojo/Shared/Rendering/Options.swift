@@ -22,6 +22,7 @@ class Options: ObservableObject {
   ]
   @Published var isProjectTransition = false
   @Published var isIphone = UIDevice.current.userInterfaceIdiom == .phone
+  @Published var isAnimationReady = false
 
   var drawableSize: float2 = .zero
   var mouse: float2 = OFFSCREEN_MOUSE_POS

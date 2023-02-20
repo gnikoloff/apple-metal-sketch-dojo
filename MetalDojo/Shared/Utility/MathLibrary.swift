@@ -213,8 +213,27 @@ extension float2 {
     let x = Float(self.x)
     let y = Float(self.y)
 
+    var minX = polygon[0].x
+    var maxX = polygon[0].x
+    var minY = polygon[0].y
+    var maxY = polygon[0].y
+
+    for i in 1 ..< polygon.count {
+      let p = polygon[i]
+
+      minX = Swift.min(p.x, minX)
+      maxX = Swift.max(p.x, maxX)
+
+      minY = Swift.min(p.y, minY)
+      maxY = Swift.max(p.y, maxY)
+    }
+
+    if x < minX || x > maxX || y < minY || y > maxY {
+      return false
+    }
+
     for pI in polygon {
-      if (((pI.y >= y) != (pJ.y >= y)) && (x <= (pJ.x - pI.x) * (y - pI.y) / (pJ.y - pI.y) + pI.x)) {
+      if ((pI.y >= y) != (pJ.y >= y)) && (x <= (pJ.x - pI.x) * (y - pI.y) / (pJ.y - pI.y) + pI.x) {
         return true
       }
       pJ = pI

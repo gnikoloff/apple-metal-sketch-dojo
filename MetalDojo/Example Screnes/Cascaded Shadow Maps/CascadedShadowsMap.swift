@@ -203,14 +203,15 @@ final class CascadedShadowsMap: Demo {
 
     models[1].scale = 1
     models[1].rotation.y = -.pi / 2
-    models[1].position.x = 70
-    models[1].position.y = 100
-    models[1].position.z = -70
+    models[1].position.x = 100
+    models[1].position.y = 150
+    models[1].position.z = 0
     models[1].cullMode = .none
 
     models[2].scale = 1
-    models[2].rotation.y = -.pi * 0.2
-    models[2].position.x = 300
+    models[2].rotation.y = -.pi * 0.05
+    models[2].position.x = 200
+    models[2].position.z = 70
 
     texturesDebugger = CascadedShadowsMap_TexturesDebugger(
       cascadesCount: Self.SHADOW_CASCADE_LEVELS_COUNT
