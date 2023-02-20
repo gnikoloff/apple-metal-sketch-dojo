@@ -39,8 +39,7 @@ float3 calculatePoint(Light light, float3 position, float3 normal, Material mate
   float3 lightDirection = normalize(light.position - position);
   float attenuation = calculateAttenuation(light.attenuation, d);
 
-  float diffuseIntensity =
-      saturate(dot(lightDirection, normal));
+  float diffuseIntensity = saturate(dot(lightDirection, normal));
   float3 color = light.color * material.baseColor * diffuseIntensity;
   color *= attenuation;
   return color;

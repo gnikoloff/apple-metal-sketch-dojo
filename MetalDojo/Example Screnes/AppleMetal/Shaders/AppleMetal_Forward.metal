@@ -61,12 +61,14 @@ fragment FragmentOut appleMetal_fragment(VertexOut in [[stage_in]],
   };
 
   float3 color = 0.0;
+  float3 normal = normalize(in.normal);
+  float3 worldPos = in.worldPos.xyz;
 
   if (IS_LIGHT) {
     color += in.color;
   } else {
-    color += phongLighting(in.normal,
-                           in.worldPos.xyz,
+    color += phongLighting(normal,
+                           worldPos,
                            perspCameraUniforms.position,
                            LIGHTS_COUNT,
                            lights,

@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:">
+      location = "self:/Users/georginikoloff/Code/MetalDojo/Metal Sketch Dojo.xcodeproj">
    </FileRef>
 </Workspace>

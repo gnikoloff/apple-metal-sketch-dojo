@@ -17,7 +17,8 @@ class ProjectsGrid: VerletGrid {
   init(options: Options) {
     let fprojectsCount = Float(options.projects.count)
 
-    let idealColWidth = options.drawableSize.x * 0.4
+    let scaleF: Float = options.isIPad ? 0.375 : 0.4
+    let idealColWidth = options.drawableSize.x * scaleF
     let colWidth = idealColWidth * 1
     let rowHeight = colWidth * (options.drawableSize.y / options.drawableSize.x)
 
@@ -30,7 +31,7 @@ class ProjectsGrid: VerletGrid {
       rowHeight: rowHeight,
       totalWidth: totalWidth,
       totalHeight: totalHeight,
-      flipPositions: true //options.isIphone
+      flipPositions: true
     )
 
     makeIphoneLayout(rowsCount: 3, offset: float2(100, 30))
@@ -119,6 +120,7 @@ class ProjectsGrid: VerletGrid {
       },
       onComplete: {
         self.options.isProjectTransition = false
+        self.options.renderControlPoints = true
         for p in self.panels {
           p.afterClose()
           p.zIndex = 0
@@ -146,6 +148,7 @@ class ProjectsGrid: VerletGrid {
 
     options.activeProjectName = p.name
     options.isProjectTransition = true
+    options.renderControlPoints = false
     
     let tween = Tween(
       duration: 1,

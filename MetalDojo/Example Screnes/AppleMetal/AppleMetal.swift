@@ -64,11 +64,13 @@ class AppleMetalScreen: Demo {
       var light = Self.buildDefaultLight()
       light.type = Point
       light.color = float3.random(in: 0.2 ..< 1)
+      light.specularColor = float3.random(in: 0.2 ..< 1)
       light.position = float3(
         Float.random(in: -0.5 ..< 0.5),
         Float.random(in: -0.3 ..< 0.3),
         -0.08
       )
+      light.attenuation = [1, 1, 2]
       light.prevPosition = light.position
       light.velocity = float3.random(in: -0.5 ..< 0.5)
       lights.append(light)

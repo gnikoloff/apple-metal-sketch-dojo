@@ -107,8 +107,12 @@ struct MetalView: View {
       withAnimation {
         self.showMainHeader = activeProjectName == WelcomeScreen.SCREEN_NAME
       }
-      withAnimation {
-        self.isInstructionViewVisible = activeProjectName != WelcomeScreen.SCREEN_NAME
+      if activeProjectName != WelcomeScreen.SCREEN_NAME {
+        withAnimation(.linear.delay(0.5)) {
+          self.isInstructionViewVisible = true
+        }
+      } else {
+        self.isInstructionViewVisible = false
       }
     }
   }

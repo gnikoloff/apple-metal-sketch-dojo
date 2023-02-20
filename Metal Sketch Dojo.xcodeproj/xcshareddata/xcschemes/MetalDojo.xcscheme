@@ -17,7 +17,7 @@
                BlueprintIdentifier = "FFB840AA295B243B00B9338D"
                BuildableName = "MetalDojo.app"
                BlueprintName = "MetalDojo"
-               ReferencedContainer = "container:MetalDojo.xcodeproj">
+               ReferencedContainer = "container:Metal Sketch Dojo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -47,7 +47,7 @@
             BlueprintIdentifier = "FFB840AA295B243B00B9338D"
             BuildableName = "MetalDojo.app"
             BlueprintName = "MetalDojo"
-            ReferencedContainer = "container:MetalDojo.xcodeproj">
+            ReferencedContainer = "container:Metal Sketch Dojo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -64,7 +64,7 @@
             BlueprintIdentifier = "FFB840AA295B243B00B9338D"
             BuildableName = "MetalDojo.app"
             BlueprintName = "MetalDojo"
-            ReferencedContainer = "container:MetalDojo.xcodeproj">
+            ReferencedContainer = "container:Metal Sketch Dojo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

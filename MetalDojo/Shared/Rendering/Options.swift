@@ -24,10 +24,19 @@ class Options: ObservableObject {
   @Published var isIphone = UIDevice.current.userInterfaceIdiom == .phone
   @Published var isAnimationReady = false
 
+  var renderControlPoints: Bool = true
   var drawableSize: float2 = .zero
   var mouse: float2 = OFFSCREEN_MOUSE_POS
   var realMouse: float2 = .zero
   var mouseDown: Bool = false
+
+  var isIPad: Bool {
+    UIDevice.current.userInterfaceIdiom == .pad
+  }
+
+  var isIPhone: Bool {
+    UIDevice.current.userInterfaceIdiom == .phone
+  }
 
   var isHomescreen: Bool {
     get {

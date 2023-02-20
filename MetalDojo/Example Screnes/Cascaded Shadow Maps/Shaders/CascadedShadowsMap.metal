@@ -193,24 +193,21 @@ fragment FragmentOut cascadedShadows_fragment(VertexOut in [[stage_in]],
                              opacity,
                              shadow);
 
-  constexpr array<float3, 4> colors = {
-    float3(1, 0, 0),
-    float3(0, 1, 0),
-    float3(0, 0, 1),
-    float3(1, 1, 1)
-  };
-  uint layer = ShadowLayerIdxCalculate(worldPos, cameraUniforms, settings);
-  float4 layerColor = float4(colors[layer], 1);
-  FragmentOut out {
-    .color = layerColor
-  };
-  return out;
+//  constexpr array<float3, 4> colors = {
+//    float3(1, 0, 0),
+//    float3(0, 1, 0),
+//    float3(0, 0, 1),
+//    float3(1, 1, 1)
+//  };
+//  uint layer = ShadowLayerIdxCalculate(worldPos, cameraUniforms, settings);
+//  float4 layerColor = float4(colors[layer], 1);
 //  return layerColor;
 
+//  return float4(worldPos, 1);
 
-//  FragmentOut out {
-//    .color = color
-//  };
+  FragmentOut out {
+    .color = color
+  };
 
   return out;
 }
@@ -283,18 +280,17 @@ fragment FragmentOut fragment_pbr(VertexOut in [[stage_in]],
                                  instanceLightMatrices,
                                  shadowTextures);
 
-  FragmentOut out;
-  constexpr array<float3, 4> colors = {
-    float3(1, 0, 0),
-    float3(0, 1, 0),
-    float3(0, 0, 1),
-    float3(1, 1, 1)
-  };
-  uint layer = ShadowLayerIdxCalculate(worldPos, cameraUniforms, settings);
-  float4 layerColor = float4(colors[layer], 1);
-  out.color = layerColor;
-  return out;
+//  constexpr array<float3, 4> colors = {
+//    float3(1, 0, 0),
+//    float3(0, 1, 0),
+//    float3(0, 0, 1),
+//    float3(1, 1, 1)
+//  };
+//  uint layer = ShadowLayerIdxCalculate(worldPos, cameraUniforms, settings);
+//  float4 layerColor = float4(colors[layer], 1);
+//  return layerColor;
 
+  FragmentOut out;
 
   out.color = PBRLighting(lights,
                           settings.lightsCount,
