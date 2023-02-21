@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FFB840AA295B243B00B9338D"
-               BuildableName = "MetalDojo.app"
+               BuildableName = "Metal Dojo.app"
                BlueprintName = "MetalDojo"
                ReferencedContainer = "container:Metal Sketch Dojo.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FFB840AA295B243B00B9338D"
-            BuildableName = "MetalDojo.app"
+            BuildableName = "Metal Dojo.app"
             BlueprintName = "MetalDojo"
             ReferencedContainer = "container:Metal Sketch Dojo.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FFB840AA295B243B00B9338D"
-            BuildableName = "MetalDojo.app"
+            BuildableName = "Metal Dojo.app"
             BlueprintName = "MetalDojo"
             ReferencedContainer = "container:Metal Sketch Dojo.xcodeproj">
          </BuildableReference>

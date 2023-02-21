@@ -162,7 +162,7 @@
 		FF979BBE295DA1DE00021E5D /* Tween.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tween.swift; sourceTree = "<group>"; };
 		FF979BC0295DAA9D00021E5D /* EaseFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EaseFunc.swift; sourceTree = "<group>"; };
 		FF979BC5295DC36000021E5D /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
-		FFB840AB295B243B00B9338D /* MetalDojo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetalDojo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFB840AB295B243B00B9338D /* Metal Dojo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Metal Dojo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFB840AE295B243B00B9338D /* MetalDojoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalDojoApp.swift; sourceTree = "<group>"; };
 		FFB840B2295B243B00B9338D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FFB840B5295B243B00B9338D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -452,7 +452,7 @@
 		FFB840A2295B243B00B9338D = {
 			isa = PBXGroup;
 			children = (
-				FFB840AD295B243B00B9338D /* MetalDojo */,
+				FFB840AD295B243B00B9338D /* Metal Dojo */,
 				FFB840AC295B243B00B9338D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -460,12 +460,12 @@
 		FFB840AC295B243B00B9338D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FFB840AB295B243B00B9338D /* MetalDojo.app */,
+				FFB840AB295B243B00B9338D /* Metal Dojo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		FFB840AD295B243B00B9338D /* MetalDojo */ = {
+		FFB840AD295B243B00B9338D /* Metal Dojo */ = {
 			isa = PBXGroup;
 			children = (
 				FF15619A296086B9007D14E4 /* Example Screnes */,
@@ -476,7 +476,7 @@
 				FFB840B9295B243B00B9338D /* MetalDojo.xcdatamodeld */,
 				FFB840B4295B243B00B9338D /* Preview Content */,
 			);
-			path = MetalDojo;
+			path = "Metal Dojo";
 			sourceTree = "<group>";
 		};
 		FFB840B4295B243B00B9338D /* Preview Content */ = {
@@ -592,7 +592,7 @@
 			);
 			name = MetalDojo;
 			productName = MetalDojo;
-			productReference = FFB840AB295B243B00B9338D /* MetalDojo.app */;
+			productReference = FFB840AB295B243B00B9338D /* Metal Dojo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -883,7 +883,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"MetalDojo/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Metal Dojo/Preview Content\"";
 				DEVELOPMENT_TEAM = KSAD48KSZ4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -902,10 +902,10 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = georgi.MetalDojo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Metal Dojo";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = MetalDojo/Shared/Shader/Entry.h;
+				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "Metal Dojo/Shared/Shader/Entry.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -922,7 +922,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"MetalDojo/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Metal Dojo/Preview Content\"";
 				DEVELOPMENT_TEAM = KSAD48KSZ4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -941,10 +941,10 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = georgi.MetalDojo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Metal Dojo";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = MetalDojo/Shared/Shader/Entry.h;
+				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "Metal Dojo/Shared/Shader/Entry.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
