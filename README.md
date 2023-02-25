@@ -97,11 +97,31 @@ It renders a cube with front face culling enabled and two shadow casters represe
 
 Metal has no preprocessor directives, rather it uses [function constants](https://developer.apple.com/documentation/metal/mtlfunctionconstantvalues) to permutate a graphics or a compute function. Since Metal shaders are precompiled, different permutations do not result in different binaries, rather things are lazily turned on or off conditionally upon shader pipeline creation.
 
-The sphere below is three drawcalls, using three different pipelines backed by the same vertex and fragment shaders. Each pipeline permutation has different inputs / outputs and codepaths toggled by function constants:
+The sphere below is made of three drawcalls, using three different pipelines backed by the same vertex and fragment shaders. Each pipeline permutation has different inputs / outputs and codepaths toggled by function constants:
 
 1. **Front part of the sphere** - has a gradient as color and is cut-off along the Y axis
 2. **Back side of the sphere** - has a solid white as color and is cut-off along the Y axis
 3. **Center part** - another sphere with a solid white as color and no cut-off
+
+The function constants look like this:
+
+```
+constant bool is_sphere_back_side [[function_constant(0)]];
+constant bool is_shaded_and_shadowed [[function_constant(1)]];
+constant bool is_cut_off_alpha [[function_constant(2)]];
+
+// later on in the shader code
+
+fragment float4 fragment_main() {
+   if (is_cut_off_alpha) {
+      float a = computeOpacity(in.uv);
+      if (a < 0.5) {
+        discard_fragment();
+      }
+   }
+}
+
+```
 
 ![Preview of sphere rendering](previews/cut-off-sphere.webp)
 
