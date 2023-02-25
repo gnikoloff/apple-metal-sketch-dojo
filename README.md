@@ -2,7 +2,16 @@
 
 ## Graphics and animations with the Apple Metal API
 
-This project served as playground for me to explore Swift and the Metal rendering API. It has no external libraries, all animations and graphics are written from scratch. Coming from web development and WebGL / WebGPU, I have always had interest in expanding my skillset and developing for iOS.
+This is my first iOS app and a playground for me to explore Swift and the Apple Metal rendering API.
+
+This project has no external libraries: all animations, physics and graphics are written from scratch. I worked on it in my spare time for almost 2 months, learning a ton about Swift, Metal and different rendering techniques in the process. For studying I used these resources (in the following order):
+
+- [Hacking with Swift](https://www.hackingwithswift.com/)
+- [Expert Swift](https://www.kodeco.com/books/expert-swift)
+- [SwiftUI Apprentice](https://www.kodeco.com/books/swiftui-apprentice)
+- [Metal by Tutorials](https://www.kodeco.com/books/metal-by-tutorials)
+
+Coming from web development with Javascript and WebGL / WebGPU, I have always had interest in expanding my skillset and developing for iOS since I find Swift and the Apple ecosystem really cool and exciting. This app is just the beginning as I will continue improving on my skills and code.
 
 Sadly, Apple refused to approve this app for the App Store, as it really has no concrete purpose and minimal functionality, outside of serving as a demonstration of animations and different rendering techniques. I don't mind it (and honestly was half expecting it anyway), since I learned a lot from this project.
 
