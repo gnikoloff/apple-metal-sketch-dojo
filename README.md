@@ -22,9 +22,9 @@ Metal has no preprocessor directives, rather it uses [function constants](https:
 
 The sphere below is three drawcalls, using three different pipelines backed by the same vertex and fragment shaders. Each pipeline permutation has different inputs / outputs and codepaths toggled by function constants:
 
-1. Front part of the sphere: has a gradient as color and is cut-off along the Y axis
-2. Back side of the sphere: has a solid white as color and is cut-off along the Y axis
-3. Center part: another sphere with a solid white as color and no cut-off
+1. **Front part of the sphere** - has a gradient as color and is cut-off along the Y axis
+2. **Back side of the sphere** - has a solid white as color and is cut-off along the Y axis
+3. **Center part** - another sphere with a solid white as color and no cut-off
 
 ![Preview of sphere rendering](previews/cut-off-sphere.webp)
 
@@ -58,13 +58,15 @@ In traditional deferred rendering we render our intermediate G-Buffer textures t
 
 However tile-based deferred rendering (TBDR) capable GPUs introduce the concept of tile memory:
 
-> Tile memory is fast, temporary storage that resides on the GPU itself. After the GPU finishes rendering each tile into tile memory, it writes the final result to devie memory.
+> Tile memory is fast, temporary storage that resides on the GPU itself. After the GPU finishes rendering each tile into tile memory, it writes the final result to device memory.
 
 Here is how it looks in Xcode debugger:
 
 ![](previews/xcode-tile-memory.png)
 
-The three textures on the right are transient and stored in "tile memory" only. They are marked as `"Don't care"`, so they are discarded after the render pass is completed. The right one is the final render submitted to device memory (marked as `"Store"`). The textures on the right are written to and sampled from by the texture on the left all in the same pass!
+The three textures on the right are transient and stored in "tile memory" only. They are marked as `"Don't care"`, so they are discarded after the render pass is completed. The right one is the final render submitted to device memory (marked as `"Store"`).
+
+The textures on the right are written to and sampled from by the texture on the left all in the same pass!
 
 #### 2.2. Frame render graph
 
