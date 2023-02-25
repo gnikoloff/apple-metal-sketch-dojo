@@ -95,7 +95,7 @@ It renders a cube with front face culling enabled and two shadow casters represe
 
 #### 2.1. Different spheres, same underlying shaders: Metal function constants
 
-Metal has no preprocessor directives, rather it uses [function constants](https://developer.apple.com/documentation/metal/mtlfunctionconstantvalues) to permutate a graphics or a compute function. Since Metal shaders are precompiled, different permutations do no result in different binaries, rather things are lazily turned on or off conditionally upon shader pipeline creation.
+Metal has no preprocessor directives, rather it uses [function constants](https://developer.apple.com/documentation/metal/mtlfunctionconstantvalues) to permutate a graphics or a compute function. Since Metal shaders are precompiled, different permutations do not result in different binaries, rather things are lazily turned on or off conditionally upon shader pipeline creation.
 
 The sphere below is three drawcalls, using three different pipelines backed by the same vertex and fragment shaders. Each pipeline permutation has different inputs / outputs and codepaths toggled by function constants:
 
