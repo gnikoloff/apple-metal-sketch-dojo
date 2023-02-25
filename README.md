@@ -12,7 +12,7 @@ That being said, this app can't be downloaded on the App Store, but you can alwa
 
 1. [App architecture](#1-app-architecture)
 
-2. [Point Light Casters](#2-point-light-casters)
+2. ["Point Light Casters" Demo](#2-point-light-casters)
 
    2.1. [Different spheres, same underlying shaders: Metal function constants](#21-different-spheres-same-underlying-shaders-metal-function-constants)
 
@@ -22,7 +22,7 @@ That being said, this app can't be downloaded on the App Store, but you can alwa
 
    2.4. [References and readings](#24-references-and-readings)
 
-3. [Infinite Space](#3-infinite-space)
+3. ["Infinite Space" Demo](#3-infinite-space)
 
    3.1. [Tile-Based Deferred Rendering](#31-tile-based-deferred-rendering)
 
@@ -30,11 +30,11 @@ That being said, this app can't be downloaded on the App Store, but you can alwa
 
    3.3. [References and readings](#33-references-and-readings)
 
-4. ["Apple Metal"](#4-apple-metal)
+4. ["Apple Metal" Demo](#4-apple-metal)
 
    4.1. [Frame render graph](#41-frame-render-graph)
 
-5. [Skeleton animations and cascaded shadows](#5-skeleton-animations-and-cascaded-shadows)
+5. ["Skeleton animations and cascaded shadows" Demo](#5-skeleton-animations-and-cascaded-shadows)
 
    5.1. [Physically Based Rendering](#51-physically-based-rendering)
 
