@@ -76,10 +76,10 @@ class Options: ObservableObject {
 
 A good example would be:
 
-1. The user clicks on the homescreen menu drawn by the Metal layer, bounding box detection is performed and the correct project to be opened is determined.
-2. The Metal layer dispatches the name of the clicked project as a string to `activeProjectName` property inside `Options`.
-3. The SwiftUI layer observes the change of `activeProjectName` inside the `ObservableObject` and displays the project name, "Back" and "Info" buttons on top with a subtle animation.
-4. When the user clicks on the "Back" button, the `activeProjectName` is set to `nil` inside the `ObservableObject`. This change is observed by the Metal layer which closes down the active project with an animation.
+1. The user clicks on the homescreen menu drawn by the Metal layer, bounding box detection is performed and the correct demo to be opened is determined.
+2. The Metal layer opens the demo with an animation and dispatches the name of the clicked demo as a string to `activeProjectName` property inside `Options`.
+3. The SwiftUI layer observes the change of `activeProjectName` inside the `ObservableObject` and displays the demo name, "Back" and "Demo Info" buttons on top with a subtle animation.
+4. When the user clicks on the "Back" button, the `activeProjectName` is set to `nil` inside the `ObservableObject`. This change is observed by the Metal layer which closes down the active demo with an animation.
 
 And here is a small visualisation of these steps:
 
