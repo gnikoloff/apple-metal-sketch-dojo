@@ -67,6 +67,8 @@ And here is a small visualisation of these steps:
 
 ![SwiftUI - Metal communication visualised](previews/metal-swiftui-communication.gif)
 
+---
+
 ### 2. Point Light Casters
 
 ![Render of "Point Lights Shadows" Demo](previews/point-light-shadows.jpeg)
@@ -126,6 +128,8 @@ The Metal API however makes things interesting by **allowing us to render all 6 
 - [THREE.PointLight ShadowMap Demo](https://threejs.org/examples/?q=point#webgl_shadowmap_pointlight)
 - [Rendering Reflections with Fewer Render Passes](https://developer.apple.com/documentation/metal/metal_sample_code_library/rendering_reflections_with_fewer_render_passes)
 - [Learn OpenGL - Point Shadows](https://learnopengl.com/Advanced-Lighting/Shadows/Point-Shadows)
+
+---
 
 ### 3. Infinite space
 
@@ -204,6 +208,8 @@ depthTexture = TextureController.makeTexture(
 - [The Arm Manga Guide to the Mali GPU](https://interactive.arm.com/story/the-arm-manga-guide-to-the-mali-gpu/page/1)
 - [Compact Normal Storage for small G-Buffers](https://aras-p.info/texts/CompactNormalStorage.html)
 
+---
+
 ### 4. "Apple Metal"
 
 ![Render of the "Apple Metal" demo](previews/apple-metal-preview.jpeg)
@@ -215,6 +221,8 @@ The words particles positions were created by rendering text via the HTML5 [`<ca
 #### 4.1. Frame render graph
 
 ![](previews/apple-metal-frame.png)
+
+---
 
 ### 5. Skeleton animations and cascaded shadows
 
