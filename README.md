@@ -24,7 +24,10 @@ The sphere below is three drawcalls, using three different pipelines backed by t
 2. Back side of the sphere: has a solid white as color and is cut-off along the Y axis
 3. Center part: another sphere with a solid white as color and no cut-off
 
-![Preview of sphere rendering](previews/cut-off-sphere.webp)
+<figure>
+    <img src="previews/cut-off-sphere.webp" alt="Preview of sphere rendering">
+    <figcaption>An elephant at sunset</figcaption>
+</figure>
 
 #### 1.2. Cube shadows via depth cubemaps in a single drawcall
 
