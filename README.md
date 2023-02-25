@@ -129,7 +129,7 @@ fragment float4 fragment_main() {
 
 #### 2.2. Cube shadows via depth cubemaps in a single drawcall
 
-Point shadow casting is straightforward and hardly a new technique: we place a camera where the light should be, orient it to face left, right, top, bottom, forward and backwards, rendering in the process each of these views into the sides of a cube depth texture. We then use this cube texture in our main fragment shader to determine which pixels are in shadow and which ones are not. Nothin' that fancy.
+Point shadow casting is straightforward and hardly a new technique: we place a camera where the light should be, orient it to face left, right, top, bottom, forward and backwards, in the process rendering each of these views into the sides of a cube depth texture. We then use this cube texture in our main fragment shader to determine which pixels are in shadow and which ones are not. Nothin' that fancy.
 
 ![Visualisation of the first shadow map from the point of view of the first light](previews/cube-shadowmap-0.png)
 
@@ -163,9 +163,54 @@ Here is how it looks in Xcode debugger:
 
 ![](previews/xcode-tile-memory.png)
 
-The three textures on the right are transient and stored in "tile memory" only. They are marked as `"Don't care"`, so they are discarded after the render pass is completed. The right one is the final render submitted to device memory (marked as `"Store"`).
+The three textures on the right are transient and stored in "tile memory" only. They are marked as `"Don't care"`, so they are discarded after the render pass is completed. The right one is the final render submitted to device memory (marked as `"Store"`). The textures on the right are written to and sampled from by the texture on the left all in the same pass!
 
-The textures on the right are written to and sampled from by the texture on the left all in the same pass!
+From left to right we have the following G-Buffer textures:
+
+1. G-Buffer output texture with `BGRA8Unorm` value. Storage mode is `Store`, as we want this texture stored in video memory in order to show it on the device screen.
+
+2. Normal + Shininess + Base Color with `RGBA16Float` pixel format. Storage mode is `.memoryless` which marks it as transient and to be **stored in tile memory only**
+
+   2.1. The normal is tightly packed into the first 2 `rg` channels and unpacked back into 3 channels in the final step
+
+   2.2. Shininess is packed into the `b` channel
+
+   2.3. And finally, the base color is encoded into the last `a` channel. You may ask yourself how can an RGB color be encoded into a single float and it is really not. Rather all of the boxes use the same float value for their RGB channels. Perhaps Color is not the best word here?
+
+3. Position + Specular with `RGBA16Float` pixel format. Storage mode is `.memoryless` which marks it as transient and to be **stored in tile memory only**
+
+   3.1. The XYZ position is encoded into the `rgb` components
+
+   3.2. Specular into the remaining `a` component
+
+4. Depth texture with `DepthUNorm` pixel format. Storage mode is `.memoryless` which marks it as transient and to be **stored in tile memory only**
+
+Here is how they are created in Swift code:
+
+```
+outputTexture = Self.createOutputTexture(
+  size: size,
+  label: "InfiniteSpace output texture"
+)
+normalShininessBaseColorTexture = TextureController.makeTexture(
+  size: size,
+  pixelFormat: .rgba16Float,
+  label: "G-Buffer Normal + Shininess + Color Base Texture",
+  storageMode: .memoryless
+)
+positionSpecularColorTexture = TextureController.makeTexture(
+  size: size,
+  pixelFormat: .rgba16Float,
+  label: "G-Buffer Position + Specular Color Base Texture",
+  storageMode: .memoryless
+)
+depthTexture = TextureController.makeTexture(
+  size: size,
+  pixelFormat: .depth16Unorm,
+  label: "G-Buffer Depth Texture",
+  storageMode: .memoryless
+)
+```
 
 #### 3.2. Frame render graph
 
@@ -174,6 +219,7 @@ The textures on the right are written to and sampled from by the texture on the 
 #### 3.3. References and readings
 
 - [Metal Docs - Tile-Based Deferred Rendering](https://developer.apple.com/documentation/metal/tailor_your_apps_for_apple_gpus_and_tile-based_deferred_rendering)
+- [The Arm Manga Guide to the Mali GPU](https://interactive.arm.com/story/the-arm-manga-guide-to-the-mali-gpu/page/1)
 - [Compact Normal Storage for small G-Buffers](https://aras-p.info/texts/CompactNormalStorage.html)
 
 ### 4. "Apple Metal"
@@ -194,7 +240,7 @@ The words particles positions were created by rendering text via the HTML5 [`<ca
 
 #### 5.1. Physically Based Rendering
 
-This demo features directional lighting and a PBR surface model, albeit mostly copy-pasted from LearnOpenGL and ported to Metal Shading Language. The models are loaded and parsed from USDZ files and the appropriate textures are used in each step of the lighting equation.
+This demo features directional lighting and a PBR surface model, albeit mostly copy-pasted from LearnOpenGL and ported to the Metal Shading Language. The models are loaded and parsed from USDZ files and the appropriate textures are used in each step of the lighting equations.
 
 #### 5.2. Skeleton animations
 
@@ -206,7 +252,7 @@ CSM is an upgrade to traditional shadow mapping and addresses its few shortcommi
 
 CSM is a direct answer to that. The core insight is that we do not need the same amount of shadow detail for things that are far away from us. We want crisp shadows for stuff that’s near to the near plane, and we are absolutely fine with blurriness for objects that are hundreds of units away: it’s not going to be noticeable at all.
 
-To do that, we divide our camera frustum into N sub-frustum and for each sub-frustum render a shadow map as seen from the light point of view. Send the resulting shadow map textures to the fragment shader and sample from the correct shadow map texture using the fragment depth value.
+To do that, we divide our camera frustum into N sub-frustums and for each sub-frustum render a shadow map as seen from the light point of view. Send the resulting shadow map textures to the fragment shader and sample from the correct shadow map texture using the fragment depth value.
 
 The scene in this demo is separated into three sections:
 
