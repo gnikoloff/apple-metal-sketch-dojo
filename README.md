@@ -68,7 +68,7 @@ These two layers communicate with each other by using [published properties](htt
 
 Let's assume that this object definition looks like this:
 
-```
+```swift
 class Options: ObservableObject {
 	@Published var activeProjectName: String = WelcomeScreen.SCREEN_NAME
 }
@@ -107,7 +107,7 @@ The sphere above is made of three drawcalls, using three different pipelines bac
 
 The function constants look like this:
 
-```
+```c++
 constant bool is_sphere_back_side [[function_constant(0)]];
 constant bool is_shaded_and_shadowed [[function_constant(1)]];
 constant bool is_cut_off_alpha [[function_constant(2)]];
@@ -115,7 +115,7 @@ constant bool is_cut_off_alpha [[function_constant(2)]];
 
 Later on in the shader code these values can be used to achieve the different spheres look. For example, to cutoff a sphere the code might look like this:
 
-```
+```c++
 fragment float4 fragment_main() {
    // ...
    if (is_cut_off_alpha) {
@@ -187,7 +187,7 @@ From left to right we have the following G-Buffer textures:
 
 Here is how they are created in Swift code:
 
-```
+```swift
 outputTexture = Self.createOutputTexture(
   size: size,
   label: "InfiniteSpace output texture"
