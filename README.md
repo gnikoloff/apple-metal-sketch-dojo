@@ -36,7 +36,7 @@ Point shadow casting is straightforward and hardly a new technique: we place a c
 
 The Metal API however makes things interesting by **allowing us to render all 6 sides of the cube texture in a single draw call**. It does so by utilising [layer selection](https://developer.apple.com/documentation/metal/render_passes/rendering_to_multiple_texture_slices_in_a_draw_command). It allows us to render to multiple layers (slices) of a textture array, 3d texture or a cube texture. We can choose a destination slice for each primitive in the vertex shader. So each sphere is rendered 6 times with a single draw call, each render using a different camera orientation and storing its result in the appropriate cube texture side.
 
-#### 1.3. Render frame render graph
+#### 1.3. Frame render graph
 
 ![](previews/pointshadowmap-render-graph.png)
 
@@ -52,6 +52,8 @@ The Metal API however makes things interesting by **allowing us to render all 6 
 
 This demo renders 3000 boxes lighted by 300 point lights. It uses compute shaders to animate the boxes / lights positions on the GPU and deferred rendering to decouple scene geometry complexity from shading. It takes advantage of [modern tile-based architecture](https://developer.apple.com/documentation/metal/tailor_your_apps_for_apple_gpus_and_tile-based_deferred_rendering) on Apple hardware. Each point light is represented as a solid colored sphere, rendered to the framebuffer with additive blending enabled.
 
+#### 2.1. Tile-Based Deferred Rendering
+
 In traditional deferred rendering we render our intermediate G-Buffer textures to video memory and fetch them at the final light accumulation pass.
 
 However tile-based deferred rendering (TBDR) capable GPUs introduce the concept of tile memory:
@@ -64,6 +66,15 @@ Here is how it looks in Xcode debugger:
 
 The three textures on the right are transient and stored in "tile memory" only. They are marked as `"Don't care"`, so they are discarded after the render pass is completed. The right one is the final render submitted to device memory (marked as `"Store"`). The textures on the right are written to and sampled from by the texture on the left all in the same pass!
 
+#### 2.2. Frame render graph
+
+![](previews/infinite-scene-graph.png)
+
+#### 2.3. References and readings
+
+- [Metal Docs - Tile-Based Deferred Rendering](https://developer.apple.com/documentation/metal/tailor_your_apps_for_apple_gpus_and_tile-based_deferred_rendering)
+- [Compact Normal Storage for small G-Buffers](https://aras-p.info/texts/CompactNormalStorage.html)
+
 ### 3. "Apple Metal"
 
 ![Render of the "Apple Metal" demo](previews/apple-metal-preview.jpeg)
@@ -71,6 +82,10 @@ The three textures on the right are transient and stored in "tile memory" only. 
 While this is arguably the easiest demo technically, I had the most fun creating it. It features particles with simple verlet physics and transitions between the words "APPLE" and "METAL". The particle and lights movement is animated on the GPU via compute shaders. The particles are colored by the lights via Phong shading.
 
 The words particles positions were created by rendering text via the HTML5 [`<canvas />`](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API) API and scanning it's positions on a 2D grid and storing them in a Javascript arrays. The resulting 2D grid positions were exported from JS to Swift arrays.
+
+#### 3.1. Frame render graph
+
+![](previews/apple-metal-frame.png)
 
 ### 4. Skeleton animations and cascaded shadows
 
@@ -103,3 +118,18 @@ You may have noticed the 3 shadow textures displayed in the bottom left for debu
 ![](previews/csm-pov-debug.png)
 
 The whole scene is rendered into three separate shadow map textures. The trick here is the same as in the first demo - we are able to render the whole scene into the 3 different texture slices in a single draw call via Metal layer selection. We can select with CSM shadow cascade to render to in dynamically in the vertex shader.
+
+#### 4.4. Frame render graph
+
+![](previews/cascaded-shadows-map-frame.png)
+
+#### 4.5. References and readings
+
+- [WebGPU Cascaded Shadow Maps](https://github.com/toji/webgpu-shadow-playground)
+- [Rendering Reflections with Fewer Render Passes](https://developer.apple.com/documentation/metal/metal_sample_code_library/rendering_reflections_with_fewer_render_passes)
+- [Learn OpenGL - Cascaded Shadow Mapping](https://learnopengl.com/Guest-Articles/2021/CSM)
+
+#### 4.6. Models used
+
+- [Junonia Lemonias Butterfly Rigged](https://sketchfab.com/3d-models/junonia-lemonias-butterfly-rigged-d912ff1fcd0e477c8a84e08ec280377a)
+- [Animated T-Rex Dinosaur Biting Attack Loop](https://sketchfab.com/3d-models/animated-t-rex-dinosaur-biting-attack-loop-5bbcadb7d9274843abb5ada35767dba1)
