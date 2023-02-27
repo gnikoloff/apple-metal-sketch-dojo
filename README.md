@@ -67,9 +67,9 @@ A good example would be:
 1. The user clicks on the homescreen menu drawn by the Metal layer, bounding box detection is performed and the correct demo to be opened is determined.
 2. The Metal layer opens the demo with an animation and dispatches the name of the clicked demo as a string to `activeProjectName` property inside `Options`.
 3. The SwiftUI layer observes the change of `activeProjectName` inside the `ObservableObject` and displays the demo name, "Back" and "Demo Info" buttons on top with a subtle animation.
-4. When the user clicks on the "Back" button, the `activeProjectName` is set to `nil` inside the `ObservableObject`. This change is observed by the Metal layer which closes down the active demo with an animation.
+4. When the user clicks on the "Back" button inside the SwiftUI layer, the `activeProjectName` is set to `nil` inside the `ObservableObject`. This change is observed by the Metal layer which closes down the active demo with an animation.
 
-And here is a small visualisation of these steps:
+And here are these steps visualised:
 
 ![SwiftUI - Metal communication visualised](previews/metal-swiftui-communication.gif)
 
@@ -77,7 +77,7 @@ And here is a small visualisation of these steps:
 
 ### 3. Point Light Casters
 
-![Render of "Point Lights Shadows" Demo](previews/point-light-shadows.jpeg)
+[![Render of "Point Lights Shadows" Demo](previews/point-light-casters-preview.png)](https://www.youtube.com/watch?v=QPfK8xAckAw&ab_channel=GeorgiNikoloff)
 
 The visuals of this demo are borrowed from [this Threejs example](https://threejs.org/examples/?q=point#webgl_shadowmap_pointlight). I really like the interplay of shadows and lights so was curious to implement it via the Metal API.
 
@@ -139,7 +139,7 @@ The Metal API however makes things interesting by **allowing us to render all 6 
 
 ### 4. Infinite space
 
-![Render of "Infinite Space" Metal demo](previews/infinite-space-preview.jpeg)
+[![Render of "Infinite Space" Metal demo](previews/infinite-space-preview.png)](https://www.youtube.com/watch?v=G13mUAIfcpg&ab_channel=GeorgiNikoloff)
 
 This demo renders 3000 boxes lighted by 300 point lights. It uses compute shaders to animate the boxes / lights positions on the GPU and deferred rendering to decouple scene geometry complexity from shading. It takes advantage of [modern tile-based architecture](https://developer.apple.com/documentation/metal/tailor_your_apps_for_apple_gpus_and_tile-based_deferred_rendering) on Apple hardware. Each point light is represented as a solid colored sphere, rendered to the framebuffer with additive blending enabled.
 
@@ -218,7 +218,7 @@ depthTexture = TextureController.makeTexture(
 
 ### 5. "Apple Metal"
 
-![Render of the "Apple Metal" demo](previews/apple-metal-preview.jpeg)
+[![Render of the "Apple Metal" demo](previews/apple-metal-preview.png)](https://www.youtube.com/watch?v=VLKNaHSXFYI&ab_channel=GeorgiNikoloff)
 
 While this is arguably the easiest demo technically, I had the most fun creating it. It features particles with simple verlet physics and transitions between the words "APPLE" and "METAL". The particle and lights movement is animated on the GPU via compute shaders. The particles are colored by the lights via Phong shading.
 
@@ -226,13 +226,13 @@ The words particles positions were created by rendering text via the HTML5 [`<ca
 
 #### 5.1. Frame render graph
 
-![](previews/apple-metal-frame.png)
+[![Apple Metal Demo Preview](previews/apple-metal-frame.png)](https://www.youtube.com/watch?v=VLKNaHSXFYI)
 
 ---
 
 ### 6. Skeleton animations and cascaded shadows
 
-![Render of the "Cascaded Shadows" demo](previews/cascaded-shadows-preview.jpeg)
+![Render of the "Cascaded Shadows" demo](previews/csm-preview.png)
 
 #### 6.1. Physically Based Rendering
 
@@ -252,7 +252,7 @@ To do that, we divide our camera frustum into N sub-frustums and for each sub-fr
 
 The scene in this demo is separated into three sections:
 
-![Render view of the shadow map cascades](previews/csm-debug.jpeg)
+[![Render view of the shadow map cascades](previews/csm-debug.jpeg)](https://www.youtube.com/watch?v=MmjMqpiy44U&ab_channel=GeorgiNikoloff)
 
 The red section will get the best shadow quality as it's nearest to the viewer camera. Next is green and then blue: these two levels will get progressively less shadow detail as they are further away.
 

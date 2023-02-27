@@ -887,7 +887,7 @@
 				DEVELOPMENT_TEAM = KSAD48KSZ4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Metal Sketch Dojo";
+				INFOPLIST_KEY_CFBundleDisplayName = "Metallic Sketch Dojo";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.graphics-design";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -926,7 +926,7 @@
 				DEVELOPMENT_TEAM = KSAD48KSZ4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Metal Sketch Dojo";
+				INFOPLIST_KEY_CFBundleDisplayName = "Metallic Sketch Dojo";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.graphics-design";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
