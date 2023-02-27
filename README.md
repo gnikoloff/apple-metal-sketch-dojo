@@ -232,7 +232,7 @@ The words particles positions were created by rendering text via the HTML5 [`<ca
 
 ### 6. Skeleton animations and cascaded shadows
 
-![Render of the "Cascaded Shadows" demo](previews/csm-preview.png)
+[![Render of the "Cascaded Shadows" demo](previews/csm-preview.png)](https://www.youtube.com/watch?v=MmjMqpiy44U&ab_channel=GeorgiNikoloff)
 
 #### 6.1. Physically Based Rendering
 
@@ -252,7 +252,7 @@ To do that, we divide our camera frustum into N sub-frustums and for each sub-fr
 
 The scene in this demo is separated into three sections:
 
-[![Render view of the shadow map cascades](previews/csm-debug.jpeg)](https://www.youtube.com/watch?v=MmjMqpiy44U&ab_channel=GeorgiNikoloff)
+![Render view of the shadow map cascades](previews/csm-debug.jpeg)
 
 The red section will get the best shadow quality as it's nearest to the viewer camera. Next is green and then blue: these two levels will get progressively less shadow detail as they are further away.
 
