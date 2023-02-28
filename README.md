@@ -2,6 +2,9 @@
 
 ## Graphics and animations with the Apple Metal API
 
+![Render of the app on iPad](previews/project-preview.jpeg)
+![Render of the app on iPhone](previews/project-preview-2.jpeg)
+
 ### Table of contents
 
 1. [Introduction](#1-introduction)
