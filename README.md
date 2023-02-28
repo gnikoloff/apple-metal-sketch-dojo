@@ -5,7 +5,6 @@
 ### Table of contents
 
 1. [Introduction](#1-introduction)
-   1. [Running this project](#11-running-this-project)
 2. [App architecture](#2-app-architecture)
 3. ["Point Light Casters" Demo](#3-point-light-casters)
    1. [Different spheres, same underlying shaders: Metal function constants](#31-different-spheres-same-underlying-shaders-metal-function-constants)
@@ -37,13 +36,7 @@ This project has no external libraries: all animations, physics and graphics are
 - [SwiftUI Apprentice](https://www.kodeco.com/books/swiftui-apprentice)
 - [Metal by Tutorials](https://www.kodeco.com/books/metal-by-tutorials)
 
-Coming from web development with Javascript and WebGL / WebGPU, I have always had interest in expanding my skillset and developing for iOS since I find Swift and the Apple ecosystem really cool and exciting. This app is just the beginning as I will continue improving on my skills and code.
-
-Sadly, Apple refused to approve this app for the App Store, as it really has no concrete purpose and minimal functionality, outside of serving as a demonstration of animations and different rendering techniques. I don't mind it (and honestly was half expecting it anyway), since I learned a lot from this project.
-
-That being said, this app can't be downloaded on the App Store, but you can always run it on real hardware by cloning this repo and running it in Xcode.
-
-#### 2.1. Running this project
+Coming from web development with Javascript and WebGL / WebGPU, this project was really fun to do as my first iOS app.
 
 ### 2. App architecture
 
@@ -77,7 +70,7 @@ And here are these steps visualised:
 
 ### 3. Point Light Casters
 
-![Render of "Point Lights Shadows" Demo](previews/point-light-casters-preview.webp)
+![Render of "Point Lights Shadows" Demo](previews/point-light-casters-preview.gif)
 
 ##### [Open in Youtube](https://www.youtube.com/watch?v=QPfK8xAckAw&ab_channel=GeorgiNikoloff)
 
