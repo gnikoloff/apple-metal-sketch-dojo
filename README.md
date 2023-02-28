@@ -77,7 +77,9 @@ And here are these steps visualised:
 
 ### 3. Point Light Casters
 
-[![Render of "Point Lights Shadows" Demo](previews/point-light-casters-preview.png)](https://www.youtube.com/watch?v=QPfK8xAckAw&ab_channel=GeorgiNikoloff)
+![Render of "Point Lights Shadows" Demo](previews/point-light-casters-preview.webp)
+
+##### [Open in Youtube](https://www.youtube.com/watch?v=QPfK8xAckAw&ab_channel=GeorgiNikoloff)
 
 The visuals of this demo are borrowed from [this Threejs example](https://threejs.org/examples/?q=point#webgl_shadowmap_pointlight). I really like the interplay of shadows and lights so was curious to implement it via the Metal API.
 
@@ -139,7 +141,9 @@ The Metal API however makes things interesting by **allowing us to render all 6 
 
 ### 4. Infinite space
 
-[![Render of "Infinite Space" Metal demo](previews/infinite-space-preview.png)](https://www.youtube.com/watch?v=G13mUAIfcpg&ab_channel=GeorgiNikoloff)
+![Render of "Infinite Space" Metal demo](previews/infinite-space-preview.webp)
+
+##### [Open in Youtube](https://www.youtube.com/watch?v=G13mUAIfcpg&ab_channel=GeorgiNikoloff)
 
 This demo renders 3000 boxes lighted by 300 point lights. It uses compute shaders to animate the boxes / lights positions on the GPU and deferred rendering to decouple scene geometry complexity from shading. It takes advantage of [modern tile-based architecture](https://developer.apple.com/documentation/metal/tailor_your_apps_for_apple_gpus_and_tile-based_deferred_rendering) on Apple hardware. Each point light is represented as a solid colored sphere, rendered to the framebuffer with additive blending enabled.
 
@@ -218,7 +222,9 @@ depthTexture = TextureController.makeTexture(
 
 ### 5. "Apple Metal"
 
-[![Render of the "Apple Metal" demo](previews/apple-metal-preview.png)](https://www.youtube.com/watch?v=VLKNaHSXFYI&ab_channel=GeorgiNikoloff)
+![Render of the "Apple Metal" demo](previews/apple-metal-preview.webp)
+
+##### [Open in Youtube](https://www.youtube.com/watch?v=VLKNaHSXFYI&ab_channel=GeorgiNikoloff)
 
 While this is arguably the easiest demo technically, I had the most fun creating it. It features particles with simple verlet physics and transitions between the words "APPLE" and "METAL". The particle and lights movement is animated on the GPU via compute shaders. The particles are colored by the lights via Phong shading.
 
@@ -232,7 +238,9 @@ The words particles positions were created by rendering text via the HTML5 [`<ca
 
 ### 6. Skeleton animations and cascaded shadows
 
-[![Render of the "Cascaded Shadows" demo](previews/csm-preview.png)](https://www.youtube.com/watch?v=MmjMqpiy44U&ab_channel=GeorgiNikoloff)
+![Render of the "Cascaded Shadows" demo](previews/csm-preview.webp)
+
+##### [Open in Youtube](https://www.youtube.com/watch?v=MmjMqpiy44U&ab_channel=GeorgiNikoloff)
 
 #### 6.1. Physically Based Rendering
 
