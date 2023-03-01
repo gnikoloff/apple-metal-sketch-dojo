@@ -123,7 +123,7 @@ Point shadow casting is straightforward and hardly a new technique: we place a c
 
 ![Visualisation of the first shadow map from the point of view of the first light](previews/cube-shadowmap-0.png)
 
-The Metal API however makes things interesting by **allowing us to render all 6 sides of the cube texture in a single draw call**. It does so by utilising [layer selection](https://developer.apple.com/documentation/metal/render_passes/rendering_to_multiple_texture_slices_in_a_draw_command). It allows us to render to multiple layers (slices) of a textture array, 3d texture or a cube texture. We can choose a destination slice for each primitive in the vertex shader. So each sphere is rendered 6 times with a single draw call, each render using a different camera orientation and storing its result in the appropriate cube texture side.
+The Metal API however makes things interesting by **allowing us to render all 6 sides of the cube texture in a single draw call**. It does so by utilising [layer selection](https://developer.apple.com/documentation/metal/render_passes/rendering_to_multiple_texture_slices_in_a_draw_command). It allows us to render to multiple layers (slices) of a textture array, 3d texture or a cube texture. We can choose a destination slice for each primitive in the vertex shader. So each sphere is rendered 6 times with a single draw call, each render done with a different camera orientation and its result stored in the appropriate cube texture side.
 
 #### 3.3. Frame render graph
 
@@ -161,7 +161,7 @@ The three textures on the right are transient and stored in "tile memory" only. 
 
 From left to right we have the following G-Buffer textures:
 
-1. G-Buffer output texture with `BGRA8Unorm` value. Storage mode is `Store`, as we want this texture stored in video memory in order to show it on the device screen.
+1. G-Buffer output texture. Storage mode is `Store`, as we want this texture stored in video memory in order to show it on the device screen. It uses `BGRA8Unorm` pixel color format as this is the pixel format of the backing metal view (`MTKView.colorPixelFormat`).
 
 2. Normal + Shininess + Base Color with `RGBA16Float` pixel format. Storage mode is `.memoryless` which marks it as transient and to be **stored in tile memory only**
 
