@@ -268,6 +268,8 @@ You may have noticed the 3 shadow textures displayed in the bottom left for debu
 
 The whole scene is rendered into three separate shadow map textures. The trick here is the same as in the first demo - we are able to render the whole scene into the 3 different texture slices in a single draw call via Metal layer selection. We can select with CSM shadow cascade to render to in dynamically in the vertex shader.
 
+Additional Percentage Close Filtering is applied to the shadows to reduce aliasing.
+
 #### 6.4. Frame render graph
 
 ![](previews/cascaded-shadows-map-frame.png)
