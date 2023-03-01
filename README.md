@@ -2,6 +2,8 @@
 
 ## Graphics and animations with the Apple Metal API
 
+Try the public beta: [https://testflight.apple.com/join/neaw91ke](https://testflight.apple.com/join/neaw91ke)
+
 ![Render of the app on iPhone](previews/project-preview-2.jpeg)
 ![Render of the app on iPad](previews/project-preview.jpeg)
 
@@ -60,7 +62,7 @@ class Options: ObservableObject {
 
 A good example would be:
 
-1. The user clicks on the homescreen menu drawn by the Metal layer, bounding box detection is performed and the correct demo to be opened is determined.
+1. The user clicks on the homescreen menu drawn by the Metal layer, bounding box detection is performed on the polygons formed by the vertices and the correct demo to be opened is determined.
 2. The Metal layer opens the demo with an animation and dispatches the name of the clicked demo as a string to `activeProjectName` property inside `Options`.
 3. The SwiftUI layer observes the change of `activeProjectName` inside the `ObservableObject` and displays the demo name, "Back" and "Demo Info" buttons on top with a subtle animation.
 4. When the user clicks on the "Back" button inside the SwiftUI layer, the `activeProjectName` is set to `nil` inside the `ObservableObject`. This change is observed by the Metal layer which closes down the active demo with an animation.
