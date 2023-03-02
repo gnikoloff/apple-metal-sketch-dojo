@@ -149,19 +149,15 @@ final class PointsShadowmap: Demo {
 //      return
 //    }
 
-//    view.clearColor = MTLClearColor(red: 1, green: 0.2, blue: 1, alpha: 1)
-
     var camUniforms = perspCameraUniforms
 
-//    let descriptor = outputPassDescriptor
-//    descriptor.colorAttachments[0].texture = outputTexture
-////    descriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1)
-//    descriptor.colorAttachments[0].loadAction = .clear
-//    descriptor.colorAttachments[0].storeAction = .store
-//    descriptor.depthAttachment.texture = outputDepthTexture
-//    descriptor.depthAttachment.storeAction = .dontCare
-
-    let descriptor = view.currentRenderPassDescriptor!
+    let descriptor = outputPassDescriptor
+    descriptor.colorAttachments[0].texture = outputTexture
+//    descriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1)
+    descriptor.colorAttachments[0].loadAction = .clear
+    descriptor.colorAttachments[0].storeAction = .store
+    descriptor.depthAttachment.texture = outputDepthTexture
+    descriptor.depthAttachment.storeAction = .dontCare
 
     guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
       return
