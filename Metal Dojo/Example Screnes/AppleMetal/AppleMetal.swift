@@ -401,6 +401,6 @@ class AppleMetalScreen: Demo {
 
     renderEncoder.endEncoding()
 
-    postProcess(in: view, commandBuffer: commandBuffer)
+//    postProcess(in: view, commandBuffer: commandBuffer)
   }
 }
