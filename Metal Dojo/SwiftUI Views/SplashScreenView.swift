@@ -21,10 +21,6 @@ struct SplashScreenView: View {
           Text("Metal Sketch Dojo")
             .font(.title)
             .foregroundColor(.black)
-          Text("Experiments with the Metal API")
-            .font(.title3)
-            .foregroundColor(.black)
-            .padding(.top)
         }
       }
     }
