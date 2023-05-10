@@ -80,17 +80,16 @@ struct MetalView: View {
             options.mouseDown = true
           }
       }
-      if let activeProjectName = options.activeProjectName,
-         !options.isHomescreen,
+      if !options.isHomescreen,
          !options.isProjectTransition {
         DemoHeaderView(
-          activeProjectName: activeProjectName,
+          activeProjectName: options.activeProjectName,
           isDemoInfoOpen: $isDemoInfoOpen,
           gameController: $gameController
         )
         if isDemoInfoOpen {
           DemoInfoView(
-            activeProjectName: activeProjectName,
+            activeProjectName: options.activeProjectName,
             isDemoInfoOpen: $isDemoInfoOpen
           )
         }
