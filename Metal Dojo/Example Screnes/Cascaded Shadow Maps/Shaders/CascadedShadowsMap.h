@@ -23,11 +23,11 @@ typedef enum {
 } CascadedShadowsMap_TextureIndices;
 
 typedef struct {
-  uint cubesCount;
-  uint cascadesCount;
+  int cubesCount;
+  int cascadesCount;
   float cascadePlaneDistances[4];
   vector_float2 shadowTexSize;
-  uint lightsCount;
+  int lightsCount;
   vector_float3 worldSize;
   float time;
 } CascadedShadowsMap_Settings;

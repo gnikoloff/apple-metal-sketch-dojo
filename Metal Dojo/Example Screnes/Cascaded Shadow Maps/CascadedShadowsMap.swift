@@ -130,8 +130,8 @@ final class CascadedShadowsMap: Demo {
     )
     let texRes = Float(Self.SHADOW_RESOLUTION)
     buffPointer.pointee = CascadedShadowsMap_Settings(
-      cubesCount: uint(Self.CUBES_COUNT),
-      cascadesCount: uint(Self.SHADOW_CASCADE_LEVELS_COUNT + 1),
+      cubesCount: Int32(Self.CUBES_COUNT),
+      cascadesCount: Int32(Self.SHADOW_CASCADE_LEVELS_COUNT + 1),
       cascadePlaneDistances: cascadePlaneDistances,
       shadowTexSize: [texRes, texRes],
       lightsCount: 2,

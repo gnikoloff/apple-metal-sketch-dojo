@@ -97,7 +97,7 @@ typedef struct {
 } Material;
 
 typedef struct {
-  uint lightsCount;
+  int lightsCount;
   vector_float3 worldSize;
 } Params;
 

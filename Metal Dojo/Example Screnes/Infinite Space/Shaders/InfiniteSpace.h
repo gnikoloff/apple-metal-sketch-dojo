@@ -35,7 +35,7 @@ typedef enum {
 } InfiniteSpace_Textures;
 
 typedef struct {
-  uint boxSegmentsCount;
+  int boxSegmentsCount;
   vector_float3 worldSize;
 } InfiniteSpace_BoidsSettings;
 

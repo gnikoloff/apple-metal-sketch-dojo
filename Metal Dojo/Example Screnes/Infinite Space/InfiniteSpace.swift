@@ -175,7 +175,7 @@ final class InfiniteSpace: Demo {
     cube.cullMode = .none
     pointLightSphere = Sphere(size: 1)
 
-    boidsSettings.boxSegmentsCount = UInt32(Self.BOX_SEGMENTS_COUNT)
+    boidsSettings.boxSegmentsCount = Int32(Self.BOX_SEGMENTS_COUNT)
     boidsSettings.worldSize = Self.WORLD_SIZE
 
     deferredSettings.cameraProjectionInverse = perspCamera.projectionMatrix.inverse

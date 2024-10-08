@@ -26,7 +26,7 @@ extension Demo {
     return Self.SCREEN_NAME == options.activeProjectName
   }
 
-  static func createParamsBuffer(lightsCount: UInt32 = 1, worldSize: float3 = [1, 1, 1]) -> MTLBuffer {
+  static func createParamsBuffer(lightsCount: Int32 = 1, worldSize: float3 = [1, 1, 1]) -> MTLBuffer {
     var params = Params(lightsCount: lightsCount, worldSize: worldSize)
     return Renderer.device.makeBuffer(bytes: &params, length: MemoryLayout<Params>.stride)!
   }
